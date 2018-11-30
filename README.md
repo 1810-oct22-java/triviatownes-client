@@ -1,3 +1,10 @@
+# Initial Setup
+- Clone the repo
+- CD into the repo via a bash terminal
+- Run "npm install" in the repo
+- Run ng serve
+- If all went well you will have no errors, if not lmk and we can figure it out
+
 # TriviaTownesClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
