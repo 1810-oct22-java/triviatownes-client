@@ -1,11 +1,11 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-create-page',
   templateUrl: './create-page.component.html',
   styleUrls: ['./create-page.component.scss']
 })
-export class CreatePageComponent implements OnInit, OnChanges {
+export class CreatePageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geography', 'Literature'];
   selectedCategory: string;
   seats = '';
@@ -28,7 +28,7 @@ export class CreatePageComponent implements OnInit, OnChanges {
     console.log(this.questions);
   }
 
-  publicOrPrivate() {
+  privateOrPublic() {
     this.private = !this.private;
     console.log(this.private);
   }
@@ -38,21 +38,14 @@ export class CreatePageComponent implements OnInit, OnChanges {
     console.log(this.name);
   }
 
+  // $http.post('/', data, config).then(successCallback, errorCallback);
+
   create() {
-    // take all inputs and send somewhere
   }
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  ngOnChanges() {
-
-  }
-
-
-
-
 
 }
