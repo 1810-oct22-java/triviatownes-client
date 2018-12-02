@@ -7,14 +7,17 @@ body {
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
-    margin: 0 auto;
-    text-align: center;
 }
 
 p {
     text-decoration: none;
 }
 
-.container {
-    // display: flex
+.row {
+    display: flex;
+    padding: 1em;
+}
+
+#outerCategory {
+    padding: 1em;
 }

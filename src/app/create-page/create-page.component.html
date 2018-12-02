@@ -10,40 +10,42 @@
 </head>
 
 <body>
-  <span class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-      {{questions}} Questions
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
-      <br>
-      <a class="dropdown-item" (click)='selectedQuestions(25)'>25</a>
-      <br>
-      <a class="dropdown-item" (click)='selectedQuestions(50)'>50</a>
-    </div>
-  </span>
-  <h3>Lobby Name</h3>
-  <span class="input-group mb-3">
-    <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
-  </span>
-  <span class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-      {{seats}} Seats
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
-      <br>
-      <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
-    </div>
-  </span>
-  <input (click)="publicOrPrivate()" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public" data-off="Private" data-onstyle="success" data-offstyle="danger">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false" (click)='create()'>
-    Create
-  </button>
   <div class="container">
+    <span class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        {{questions}} Questions
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
+        <br>
+        <a class="dropdown-item" (click)='selectedQuestions(25)'>25</a>
+        <br>
+        <a class="dropdown-item" (click)='selectedQuestions(50)'>50</a>
+      </div>
+    </span>
+    <span class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        {{seats}} Seats
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
+        <br>
+        <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
+      </div>
+    </span>
+    <h3>Lobby Name</h3>
+    <div class="input-group mb-3">
+      <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder=""
+        aria-describedby="basic-addon1">
+    </div>
+    <input (click)="publicOrPrivate()" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
+      data-off="Private" data-onstyle="success" data-offstyle="danger">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" (click)='create()'>
+      Create
+    </button>
     <div class="row">
       <div id="outerCategory" class="col" *ngFor="let category of categories">
         <button (click)="selectCategory(category)">
