@@ -3,15 +3,15 @@
           <h1 >Join Private</h1>
         </div>
         <div>
-          <input type="text">
+          <input id="pin" type="text">
           <button (click)="joinLobby()">Join</button>
         </div>
       </div>
       <!--Load all the categories-->
-      <div  id="categories" >
+      <div class="grid grid-pad" id="categories" >
         <div class="container" id="catContainer">
           <div>
-            <a class="col-4" *ngFor="let category of categories" (click)='pickCategory()'>
+            <a class="col-4" *ngFor="let category of categories" (click)='pickCategory(category)'>
               <!--we want to add an image here instead of the h3-->
               <div class="module hero">
                 <h3>{{category}}</h3>
