@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <base href="/create">
-  <title>Document</title>
+  <title>Create Page</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
   </span>
   <h3>Lobby Name</h3>
   <span class="input-group mb-3">
-    <input id="nameInput" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+    <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
   </span>
   <span class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -38,8 +38,7 @@
       <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
     </div>
   </span>
-  <h3>Private Mode</h3>
-  <input type="checkbox" checked data-toggle="toggle" *ngIf="expression">
+  <input (click)="publicOrPrivate()" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public" data-off="Private" data-onstyle="success" data-offstyle="danger">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false" (click)='create()'>
     Create

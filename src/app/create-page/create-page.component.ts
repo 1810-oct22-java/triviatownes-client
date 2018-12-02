@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-create-page',
@@ -11,6 +12,7 @@ export class CreatePageComponent implements OnInit, OnChanges {
   seats = '';
   questions = '';
   private = false;
+  name = '';
 
   selectCategory(category) {
     this.selectedCategory = category;
@@ -27,9 +29,14 @@ export class CreatePageComponent implements OnInit, OnChanges {
     console.log(this.questions);
   }
 
-  publicOrPrivate () {
+  publicOrPrivate() {
     this.private = !this.private;
     console.log(this.private);
+  }
+
+  lobbyName(value: string) {
+    this.name = value;
+    console.log(this.name);
   }
 
   create() {
