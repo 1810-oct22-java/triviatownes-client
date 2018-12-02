@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LobbyInfoService } from '../lobby-info.service';
-import { DataTableDirective } from 'angular-datatables';
+import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-server-lobby',
@@ -10,27 +11,37 @@ import { Router } from '@angular/router';
 })
 export class ServerLobbyComponent implements OnInit {
 
-  @ViewChild(DataTableDirective) datatable: DataTableDirective;
+  // @ViewChild(DataTableDirective) datatable: DataTableDirective;
 
-  dtOptions: DataTables.Settings;
+  dtOptions: DataTables.Settings = {};
 
+  // elements: any [];
 
+  // populate elements with lobby info from API
+  // lobbyName, category, lobbyStatus, Seats
+  lobbyInf: any [];
   constructor(
 
-    // public dataInfo: LobbyInfoService,
-    // public router: Router
+    public dataInfo: LobbyInfoService,
+    public router: Router,
+    private http: HttpClient
 
   ) { }
 
   ngOnInit() {
 
-    // this.loadServers();
+    // this.dtOptions = {
+
+    //   pagingType: 'full_numbers'
+
+    // };
+
+    this.http.get(this.dataInfo.getAPI() + 'get-all-lobby-info').subscribe((data: any[]) => this.lobbyInf = data);
+  // this.loadServers();
 
   }
 
   // loadServers(): void {
-
-  //   const self = this;
 
   //   this.dtOptions = {
 

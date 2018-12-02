@@ -1,6 +1,7 @@
 <div id="server-lobby-component" class="container">
   <!-- add in dtOptions in table tag -->
-    <table datable  id="lobbyList" class="table table-dark table-hover">
+  <!-- [dtOptions]="dtOptions"  -->
+    <table datable id="lobbyList" class="table table-dark table-hover">
       <thead>
         <tr>
           <th>Lobby Name</th>
@@ -10,6 +11,12 @@
         </tr>
       </thead>
       <tbody id="lobbyInfo">
+        <!-- <tr *ngFor = "let el of lobbyInf">
+          <td>{{el.lobbyName}}</td>
+          <td>{{el.Category}}</td>
+          <td>{{el.lobbyStatus}}</td>
+          <td>{{el.Seats}}</td>
+        </tr> -->
         <tr>
           <td>Lobby 1</td>
           <td>Entertainment: Films</td>
