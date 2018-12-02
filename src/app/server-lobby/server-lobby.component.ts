@@ -1,19 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LobbyInfoService } from '../lobby-info.service';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-server-lobby',
   templateUrl: './server-lobby.component.html',
   styleUrls: ['./server-lobby.component.scss']
 })
-export class ServerLobbyComponent implements OnInit {
+export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // @ViewChild(DataTableDirective) datatable: DataTableDirective;
+  @ViewChild(DataTableDirective)
 
-  dtOptions: DataTables.Settings = {};
+  dtElement: DataTableDirective;
+
+  dtOptions: DataTables.Settings;
+
+  dtTrigger: any = new Subject();
 
   // elements: any [];
 
@@ -28,6 +34,32 @@ export class ServerLobbyComponent implements OnInit {
 
   ) { }
 
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
+
+  ngOnDestroy(): void {
+
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+
+    console.log('before render');
+    var self = this;
+
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+
+    console.log('after render');
+
+  }
+
   ngOnInit() {
 
     // this.dtOptions = {
@@ -36,47 +68,42 @@ export class ServerLobbyComponent implements OnInit {
 
     // };
 
-    this.http.get(this.dataInfo.getAPI() + 'get-all-lobby-info').subscribe((data: any[]) => this.lobbyInf = data);
-  // this.loadServers();
+    // this.http.get(this.dataInfo.getAPI() + 'get-all-lobby-info').subscribe((data: any[]) => this.lobbyInf = data);
+    this.loadServers();
 
   }
-
   // loadServers(): void {
 
-  //   this.dtOptions = {
+    // $.ajax({
+    //   url: 'http://api.com/get-all-lobby-info',
+    //   // url: this.dataInfo.getAPI() +'get-all-lobby-info',
 
-  //     ajax: {
+    //   data: {
+    //      format: 'json'
+    //   },
 
-  //       url: this.dataInfo.getAPI() + 'get-all-lobby-info',
-  //       type: 'GET',
-  //       complete: function(settings, json) {
+    //   dataType: 'jsonp',
+    //   success: function(data) {
 
-  //       }
-  //     },
-  //       columns: [
+    //     var $lobbyName = data.lobbyName;
+    //     var $category = data.Category;
+    //     var $lobbyStatus = data.lobbyStatus;
+    //     var $seats = data.seats;
 
-  //         {
-  //           title: 'Lobby Name',
-  //           data: 'lobbyName'
-  //         },
-  //         {
-  //           title: 'Category',
-  //           data: 'category'
-  //         },
-  //         {
-  //           title: 'Public/Private',
-  //           data: 'lobbyStatus'
-  //         },
-  //         {
-  //           title: 'Seats',
-  //           data: 'seats'
-  //         }
-
-  //       ]
-  //   };
-
+    //   },
+    //   type: 'GET'
+    // });
 
   // }
+
+  loadServers(): void {
+
+    this.dtOptions = {
+
+    };
+
+
+  }
 
 }
 

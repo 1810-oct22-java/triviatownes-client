@@ -1,67 +1,68 @@
-<div id="server-lobby-component" class="container">
-  <!-- add in dtOptions in table tag -->
-  <!-- [dtOptions]="dtOptions"  -->
-    <table datable id="lobbyList" class="table table-dark table-hover">
-      <thead>
-        <tr>
-          <th>Lobby Name</th>
-          <th>Category</th>
-          <th>Public/Private</th>
-          <th>Seats</th>
-        </tr>
-      </thead>
-      <tbody id="lobbyInfo">
-        <!-- <tr *ngFor = "let el of lobbyInf">
-          <td>{{el.lobbyName}}</td>
-          <td>{{el.Category}}</td>
-          <td>{{el.lobbyStatus}}</td>
-          <td>{{el.Seats}}</td>
-        </tr> -->
-        <tr>
-          <td>Lobby 1</td>
-          <td>Entertainment: Films</td>
-          <td>Public</td>
-          <td>4/10</td>
-          <td>
-            <button id="join">Join</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Lobby 2</td>
-          <td>Entertainment: Books</td>
-          <td>Private</td>
-          <td>7/10</td>
-          <td>
-            <button id="join">Join</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Lobby 3</td>
-          <td>Computer Science</td>
-          <td>Public</td>
-          <td>8/10</td>
-          <td>
-            <button id="join">Join</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Lobby 4</td>
-          <td>Science</td>
-          <td>Private</td>
-          <td>10/10</td>
-          <td>
-            <button id="join">Join</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Lobby 5</td>
-          <td>Applied Math</td>
-          <td>Public</td>
-          <td>7/10</td>
-          <td>
-            <button id="join">Join</button>
-        </tr>
-      </tbody>
-    </table>
-
+<div  class = "jumbotron">
+  <div style="width:1000px; margin:0 auto;" id="server-lobby-component" class="container">
+    <!-- add in dtOptions in table tag -->
+    <!-- [dtOptions]="dtOptions"  -->
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>Lobby Name</th>
+            <th>Category</th>
+            <th>Public/Private</th>
+            <th>Seats</th>
+          </tr>
+        </thead>
+        <!-- <tbody id="lobbyInfo">
+          <!-- <tr *ngFor = "let el of lobbyInf">
+            <td>{{el.lobbyName}}</td>
+            <td>{{el.Category}}</td>
+            <td>{{el.lobbyStatus}}</td>
+            <td>{{el.Seats}}</td>
+          </tr> -->
+          <!-- <tr>
+            <td>Lobby 1</td>
+            <td>Entertainment: Films</td>
+            <td>Public</td>
+            <td>4/10</td>
+            <td>
+              <button id="join">Join</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Lobby 2</td>
+            <td>Entertainment: Books</td>
+            <td>Private</td>
+            <td>7/10</td>
+            <td>
+              <button id="join">Join</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Lobby 3</td>
+            <td>Computer Science</td>
+            <td>Public</td>
+            <td>8/10</td>
+            <td>
+              <button id="join">Join</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Lobby 4</td>
+            <td>Science</td>
+            <td>Private</td>
+            <td>10/10</td>
+            <td>
+              <button id="join">Join</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Lobby 5</td>
+            <td>Applied Math</td>
+            <td>Public</td>
+            <td>7/10</td>
+            <td>
+              <button id="join">Join</button>
+          </tr>
+        </tbody> -->
+      </table> 
+  </div>
 </div>
