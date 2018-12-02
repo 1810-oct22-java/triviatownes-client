@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <base href="/create">
+  <title>Document</title>
+</head>
+
+<body>
+  <span class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      {{questions}} Questions
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
+      <br>
+      <a class="dropdown-item" (click)='selectedQuestions(25)'>25</a>
+      <br>
+      <a class="dropdown-item" (click)='selectedQuestions(50)'>50</a>
+    </div>
+  </span>
+  <h3>Lobby Name</h3>
+  <span class="input-group mb-3">
+    <input id="nameInput" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+  </span>
+  <span class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      {{seats}} Seats
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
+      <br>
+      <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
+    </div>
+  </span>
+  <h3>Private Mode</h3>
+  <input type="checkbox" checked data-toggle="toggle" *ngIf="expression">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" (click)='create()'>
+    Create
+  </button>
+  <div class="container">
+    <div class="row">
+      <div id="outerCategory" class="col" *ngFor="let category of categories">
+        <button (click)="selectCategory(category)">
+          <div id="category" class="col-sm-3 card text-white bg-success mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{category}}</div>
+            <div class="card-body">
+              <p class="card-title">{{category}}</p>
+              <p class="card-text">{{category}}</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
