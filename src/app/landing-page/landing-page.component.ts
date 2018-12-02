@@ -12,6 +12,7 @@ export class LandingPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.newUser();
   }
 
 
@@ -20,7 +21,7 @@ export class LandingPageComponent implements OnInit {
     
     $.ajax({
       url: "/", success: function (result) {
-        //load lobby
+        
       }
     });
   }
@@ -32,7 +33,7 @@ export class LandingPageComponent implements OnInit {
     var pin = $('#pin').val();
     console.log(pin);
     $.ajax({
-      url: "lobby",
+      url: "/connect-to-lobby",
       method: "POST",
       data: {pin}
     }).then(function successCallback(response) {
