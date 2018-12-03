@@ -1,0 +1,22 @@
+<div align="center" class="row justify-content-center">
+        <div>
+          <h1 >Join Private</h1>
+        </div>
+        <div>
+          <input id="pin" type="text">
+          <button (click)="joinLobby()">Join</button>
+        </div>
+      </div>
+      <!--Load all the categories-->
+      <div class="grid grid-pad" id="categories" >
+        <div class="container" id="catContainer">
+          <div>
+            <a class="col-4" *ngFor="let category of categories" (click)='pickCategory(category)'>
+              <!--we want to add an image here instead of the h3-->
+              <div class="module hero">
+                <h3>{{category}}</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
