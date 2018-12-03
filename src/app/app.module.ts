@@ -7,6 +7,9 @@ import * as $ from 'jquery';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CreatePageComponent } from './create-page/create-page.component';
+import { RouterModule, Routes } from '@angular/router';
+
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
@@ -14,6 +17,7 @@ import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
 @NgModule({
   declarations: [
     AppComponent,
+    CreatePageComponent,
     ServerLobbyComponent,
     LandingPageComponent,
     LeaderboardPageComponent
@@ -21,6 +25,7 @@ import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     DataTablesModule,
     HttpClientModule
   ],

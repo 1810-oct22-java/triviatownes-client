@@ -1,0 +1,31 @@
+#upperHalf {
+   text-align: center; 
+   align-content: center;
+}
+
+button, input {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#nameInput {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+p {
+    text-decoration: none;
+}
+
+#timesIcon {
+    font-size: 5em;
+}
+
+#timesIconDiv {
+    text-decoration: none;
+    border-radius: 25px;
+    background: #73AD21;
+    //border: 2px solid #73AD21;
+    height: 5em;
+}
+
