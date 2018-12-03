@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
+
+import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,9 +11,11 @@ import { RouterModule, Routes } from '@angular/router';
 export class LandingPageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geo', 'Cars', 'Lit', 'New'];
   
-  apiUrl: String = "http://localhost:8080/TriviaTownesServer/";
-
-  constructor() { }
+  constructor(
+    public envVars: GlobalsService,
+    public router: Router,
+    public globals: GlobalsService
+  ) { }
 
   ngOnInit() {
     this.newUser();
@@ -22,15 +26,17 @@ export class LandingPageComponent implements OnInit {
   newUser(){
     
     $.ajax({
-      url: this.apiUrl + "new-user",
+      url: this.globals.getApiUrl() + "new-user",
       method: "GET",
       crossDomain : true,
+      xhrFields: { withCredentials: true },
       success: function (result) {
-        console.log("is worked");
+        console.log("Created Session");
       },
-      xhrFields: {
-        withCredentials: true
-      },
+      error: function (result) {
+        console.log("Something went wrong");
+        console.log(result);
+      }
     });
   }
 
@@ -43,31 +49,43 @@ export class LandingPageComponent implements OnInit {
     $.ajax({
       url: "/connect-to-lobby",
       method: "POST",
-      data: {pin}
-    }).then(function successCallback(response) {
-      //load lobby
-      
-  }, function errorCallback(response) {
-      //Send user wrong pin error message
-      alert("A room with that pin does not exist");
-});
+      data: {pin},
+      success: function(response){
+        //TODO
+      },
+      error: function(response){
+        alert("There was a problem connecting to lobby...");
+      }
+    });
   }
-  pickCategory(cat) {
-    console.log("picking cat " + cat);
-    //get cat and send it in post
 
+  pickCategory(cat){
+    this.globals.setCategory(cat);
+    this.router.navigate(['/select-lobby']);
+  }
+
+  //This logic will happen on a different page
+  /*
+  pickCategory(cat) {
+
+    //Needed to refrence this object insidee of ajax callbacks
+    var self = this;
+
+    console.log("picking category " + cat);
     $.ajax({
       url: "selectLobby",
       method: "POST",
-      data: {cat}
-    }).then(function successCallback(response) {
-      //load lobby
-      
-  }, function errorCallback(response) {
-      //Send user wrong pin error message
-      alert("There was a problem finding that room");
-});
+      data: {
+        category: cat
+      },
+      success: function(response){
+        self.globals.setCategory(cat);
+        self.router.navigate(['/select-lobby']);
+      },
+      error: function(response){
+        alert("There was a problem loading server list...");
+      }
+    });
   }
-
-
+  */
 }
