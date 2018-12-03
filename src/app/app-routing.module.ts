@@ -3,6 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
 
 
+//ROUTES: EXAMPLE
+/*
+const routes: Routes = [
+
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'employee', component: EmployeeComponent },
+  { path: 'manager', component: ManagerComponent}
+];
+*/
 const routes: Routes = [
 
   { path: 'server-lobby', component: ServerLobbyComponent }
