@@ -15,7 +15,7 @@ const routes: Routes = [
 */
 
 const routes: Routes = [
-  { path: 'landing-page', component: LandingPageComponent},
+  { path: '', component: LandingPageComponent},
   { path: 'leaderboard-page', component: LeaderboardPageComponent}
 ];
 
