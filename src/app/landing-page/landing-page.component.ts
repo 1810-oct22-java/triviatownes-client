@@ -9,6 +9,8 @@ import { RouterModule, Routes } from '@angular/router';
 export class LandingPageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geo', 'Cars', 'Lit', 'New'];
   
+  apiUrl: String = "http://localhost:8080/TriviaTownesServer/";
+
   constructor() { }
 
   ngOnInit() {
@@ -20,9 +22,15 @@ export class LandingPageComponent implements OnInit {
   newUser(){
     
     $.ajax({
-      url: "/", success: function (result) {
-        
-      }
+      url: this.apiUrl + "new-user",
+      method: "GET",
+      crossDomain : true,
+      success: function (result) {
+        console.log("is worked");
+      },
+      xhrFields: {
+        withCredentials: true
+      },
     });
   }
 
