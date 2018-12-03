@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreatePageComponent } from './create-page/create-page.component';
+import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
+import { LandingPageComponent } from 'src/app/landing-page/landing-page.component';
+import { LeaderboardPageComponent} from 'src/app/leaderboard-page/leaderboard-page.component';
 
 // ROUTES: EXAMPLE
 /*
@@ -15,7 +18,10 @@ const routes: Routes = [
 */
 
 const routes: Routes = [
-  { path: 'create', component: CreatePageComponent }
+  { path: '', component: LandingPageComponent},
+  { path: 'create', component: CreatePageComponent },
+  { path: 'leaderboard-page', component: LeaderboardPageComponent},
+  { path: 'server-lobby', component: ServerLobbyComponent }
 ];
 
 @NgModule({
