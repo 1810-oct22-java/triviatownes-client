@@ -1,80 +1,66 @@
-
-
-    <div class="container">
-        <div class="row">
-          <div class="col">
-            1 of 2
-          </div>
-          <div class="col">
-            2 of 2
-          </div>
+<div class="container">
+  <div class="row">
+    <div id="upperHalf">
+      <span class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{questions}} Questions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
+          <br>
+          <a class="dropdown-item" (click)='selectedQuestions(25)'>25</a>
+          <br>
+          <a class="dropdown-item" (click)='selectedQuestions(50)'>50</a>
         </div>
-        <div class="row">
-          <div class="col">
-            1 of 3
-          </div>
-          <div class="col">
-            2 of 3
-          </div>
-          <div class="col">
-            3 of 3
-          </div>
+      </span>
+      <span class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{seats}} Seats
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
+          <br>
+          <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
         </div>
+      </span>
+      <h3>Lobby Name</h3>
+      <div class="input-group mb-3">
+        <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder=""
+          aria-describedby="basic-addon1">
       </div>
-
-
-  <div class="container">
-    <span class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        {{questions}} Questions
+      <div id="privateToggle" (click)="privateOrPublic()">
+        <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
+          data-off="Private" data-onstyle="success" data-offstyle="danger">
+      </div>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="createBtn" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" (click)="create()">
+        Create
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
-        <br>
-        <a class="dropdown-item" (click)='selectedQuestions(25)'>25</a>
-        <br>
-        <a class="dropdown-item" (click)='selectedQuestions(50)'>50</a>
-      </div>
-    </span>
-    <span class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        {{seats}} Seats
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
-        <br>
-        <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
-      </div>
-    </span>
-    <h3>Lobby Name</h3>
-    <div class="input-group mb-3">
-      <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder=""
-        aria-describedby="basic-addon1">
     </div>
-    <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
-      data-off="Private" data-onstyle="success" data-offstyle="danger">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false" (click)='create()'>
-      Create
-    </button>
-    <!-- <div id="categories">
-      <div class="container" id="catContainer">
-        <div>
-          <a class="col-4" *ngFor="let category of categories" (click)='pickCategory()'>
-            <button (click)="selectCategory(category)">
-              <div id="category" class="col-sm-3 card text-white bg-success mb-3" style="max-width: 18rem;">
-                <div class="card-header">{{category}}</div>
-                <div class="card-body">
-                  <p class="card-title">{{category}}</p>
-                  <p class="card-text">{{category}}</p>
-                </div>
-              </div>
-            </button>
-          </a>
-        </div>
+    <div class="container">
+      <div class="row">
+        <button (click)="selectCategory('History')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
+        <button (click)="selectCategory('Math')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
+        <button (click)="selectCategory('English')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
+        <button (click)="selectCategory('Chemistry')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
+        <button (click)="selectCategory('Biology')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
+        <button (click)="selectCategory('Spanish')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="timesIconDiv">
+          <p id="timesIcon" class="fa fa-times"></p>
+        </button>
       </div>
-    </div> -->
+    </div>
   </div>
   <app-categories></app-categories>
+</div>

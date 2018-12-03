@@ -5,18 +5,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreatePageComponent } from './create-page/create-page.component';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from './categories/categories.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CreatePageComponent,
-    CategoriesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
