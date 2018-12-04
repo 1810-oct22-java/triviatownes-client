@@ -29,13 +29,13 @@ p {
     text-decoration: none;
 }
 
-#catIcon {
+.catIcon {
     padding-top: .5em;
     padding-bottom: .5em;
     font-size: 5em;
 }
 
-#catIconButton {
+.catIconButton {
     text-decoration: none;
     border: 3px solid black;
     border-radius: 25px;
@@ -44,10 +44,9 @@ p {
 }
 
 #lowerHalf .container .row {
-    padding-left: 6em;
-    padding-right: 1em;
-    padding-top: 3em;
-    padding-bottom: 1em;
+    // padding-left: 5em;
+    // padding-right: 1em;
+    // padding-bottom: 1em;
 }
 
 .top-buffer {
