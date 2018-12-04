@@ -3,8 +3,16 @@
    align-content: center;
 }
 
-button, input {
+#upperHalf button {
+    color: #999;
+}
+
+#lowerHalf button {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#name {
+    margin: 0 auto;
 }
 
 #nameInput {
@@ -13,18 +21,35 @@ button, input {
     border-radius: 50px;
 }
 
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
 p {
     text-decoration: none;
 }
 
 #catIcon {
+    padding-top: .5em;
+    padding-bottom: .5em;
     font-size: 5em;
 }
 
 #catIconButton {
     text-decoration: none;
+    border: 3px solid black;
     border-radius: 25px;
     background: #50b621;
-    height: 5em;
+    // height: 5em;
 }
 
+#lowerHalf .container .row {
+    padding-left: 6em;
+    padding-right: 1em;
+    padding-top: 3em;
+    padding-bottom: 1em;
+}
+
+.top-buffer {
+    margin-top: 3em; 
+}

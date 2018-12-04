@@ -25,9 +25,8 @@
           <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
         </div>
       </span>
-      <h3>Lobby Name</h3>
-      <div class="input-group mb-3">
-        <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder=""
+      <div id="name" class="input-group mb-3">
+        <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder="Name"
           aria-describedby="basic-addon1">
       </div>
       <div id="privateToggle" (click)="privateOrPublic()">
@@ -42,23 +41,29 @@
     <div id="lowerHalf">
       <div class="container">
         <div class="row">
-          <button (click)="selectCategory('History')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Math')" class="col-xs-12 col-sm-6  col-md-3 col-lg-4" id="catIconButton">
+            <h4>Math</h4>
+            <p id="catIcon" class="fa fa-calculator"></p>
           </button>
-          <button (click)="selectCategory('Math')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Music')" class="col-xs-12 col-sm-6 col-md-offset-1 col-md-3 col-lg-4" id="catIconButton">
+            <h4>Music</h4>
+            <p id="catIcon" class="fa fa-spotify"></p>
           </button>
-          <button (click)="selectCategory('English')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Sports')" class="col-xs-12 col-sm-6 col-md-offset-1 col-md-3  col-lg-4" id="catIconButton">
+            <h4>Sports</h4>
+            <p id="catIcon" class="fa fa-futbol-o"></p>
           </button>
-          <button (click)="selectCategory('Chemistry')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Chemistry')" class="col-xs-12 col-sm-6 col-md-3 col-lg-4 top-buffer" id="catIconButton">
+            <h4>Chemistry</h4>
+            <p id="catIcon" class="fa fa-flask"></p>
           </button>
-          <button (click)="selectCategory('Biology')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Biology')" class="col-xs-12 col-sm-6 col-md-offset-1 col-md-3 col-lg-4 top-buffer" id="catIconButton">
+            <h4>Biology</h4>
+            <p id="catIcon" class="fa fa-heart"></p>
           </button>
-          <button (click)="selectCategory('Spanish')" class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="catIconButton">
-            <p id="catIcon" class="fa fa-times"></p>
+          <button (click)="selectCategory('Language')" class="col-xs-12 col-sm-6 col-md-offset-1 col-md-3 col-lg-4 top-buffer" id="catIconButton">
+            <h4>Language</h4>
+            <p id="catIcon" class="fa fa-language"></p>
           </button>
         </div>
       </div>
