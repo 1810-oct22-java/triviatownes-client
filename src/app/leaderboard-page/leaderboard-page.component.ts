@@ -19,7 +19,9 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   dtTrigger: any = new Subject();
 
-  leaders: { name: string, score: number } [];
+  leaders: { name: string, score: number } [] = [
+    {"name": "Ian", "score": 10}
+  ];
 
 
   lobbyInf: any [];
@@ -56,7 +58,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnInit() {
     this.dummyData();
-    this.loadServers();
 
   }
 
