@@ -29,7 +29,7 @@ p {
     text-decoration: none;
 }
 
-.catIcon {
+p .catIcon {
     padding-top: .5em;
     padding-bottom: .5em;
     font-size: 5em;
@@ -40,19 +40,12 @@ p {
     border: 3px solid black;
     border-radius: 25px;
     background: #50b621;
+    margin-top: 3em;
+    height: 15em;
+    width: 15em;
 }
 
 .catBtnDiv {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-#lowerHalf .container .row {
-    // padding-left: 5em;
-    // padding-right: 1em;
-    // padding-bottom: 1em;
-}
-
-.top-buffer {
-    margin-top: 3em; 
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
