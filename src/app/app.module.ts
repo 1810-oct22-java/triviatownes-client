@@ -13,6 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
+import { WaitingPageComponent } from './waiting-page/waiting-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
     CreatePageComponent,
     ServerLobbyComponent,
     LandingPageComponent,
-    LeaderboardPageComponent
+    LeaderboardPageComponent,
+    WaitingPageComponent
   ],
   imports: [
     BrowserModule,
