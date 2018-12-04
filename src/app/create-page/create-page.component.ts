@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class CreatePageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geography', 'Literature'];
   selectedCategory: string;
-  seats = '';
-  questions = '';
+  seats: string;
+  questions: string;
   private = false;
-  name = '';
+  name: string;
 
   selectCategory(category) {
     this.selectedCategory = category;
@@ -38,9 +38,30 @@ export class CreatePageComponent implements OnInit {
     console.log(this.name);
   }
 
-  // $http.post('/', data, config).then(successCallback, errorCallback);
-
   create() {
+    const x = this;
+    if (x.selectedCategory && x.seats && x.questions && x.name) {
+      $.ajax({
+        url: 'connect-to-lobby',
+        method: 'POST',
+        data: {
+          category: x.selectedCategory,
+          seats: x.seats,
+          questions: x.questions,
+          private: x.private,
+          name: x.name
+        },
+        success: function(res) {
+          console.log('** GAME CREATED **');
+        },
+        error: function(res) {
+          alert('There was a problem connecting to lobby...');
+        }
+      });
+    } else {
+      console.log('create game values missing');
+      alert('Missing values for game creation');
+    }
   }
 
   constructor() { }
