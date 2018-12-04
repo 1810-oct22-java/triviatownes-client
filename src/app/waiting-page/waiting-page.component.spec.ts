@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WaitingComponent } from './waiting.component';
+import { WaitingPageComponent } from './waiting-page.component';
 
-describe('WaitingComponent', () => {
-  let component: WaitingComponent;
-  let fixture: ComponentFixture<WaitingComponent>;
+describe('WaitingPageComponent', () => {
+  let component: WaitingPageComponent;
+  let fixture: ComponentFixture<WaitingPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WaitingComponent ]
+      declarations: [ WaitingPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WaitingComponent);
+    fixture = TestBed.createComponent(WaitingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

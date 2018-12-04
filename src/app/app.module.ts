@@ -13,7 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
-import { WaitingComponent } from './waiting-page/waiting/waiting.component';
+import { WaitingPageComponent } from './waiting-page/waiting-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { WaitingComponent } from './waiting-page/waiting/waiting.component';
     ServerLobbyComponent,
     LandingPageComponent,
     LeaderboardPageComponent,
-    WaitingComponent
+    WaitingPageComponent
   ],
   imports: [
     BrowserModule,

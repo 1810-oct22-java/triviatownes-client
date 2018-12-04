@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-waiting',
-  templateUrl: './waiting.component.html',
-  styleUrls: ['./waiting.component.scss']
+  selector: 'app-waiting-page',
+  templateUrl: './waiting-page.component.html',
+  styleUrls: ['./waiting-page.component.scss']
 })
-export class WaitingComponent implements OnInit {
+export class WaitingPageComponent implements OnInit {
 
   constructor() { }
 
