@@ -1,22 +1,70 @@
 <div align="center" class="row justify-content-center">
-        <div>
-          <h1 >Join Private</h1>
-        </div>
-        <div>
-          <input id="pin" type="text">
-          <button (click)="joinLobby()">Join</button>
-        </div>
+  <div>
+    <h1>Join Private</h1>
+  </div>
+  <div>
+    <input id="pin" type="text">
+    <button (click)="joinLobby()">Join</button>
+  </div>
+</div>
+<!--Load all the categories-->
+<div id="lowerHalf">
+  <div class="container">
+    <div class="row rowDiv">
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Geography')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Geography</h4>
+          <p class="catIcon fa fa-globe"></p>
+        </button>
       </div>
-      <!--Load all the categories-->
-      <div class="grid grid-pad" id="categories" >
-        <div class="container" id="catContainer">
-          <div>
-            <a class="col-4" *ngFor="let category of categories" (click)='pickCategory(category)'>
-              <!--we want to add an image here instead of the h3-->
-              <div class="module hero">
-                <h3>{{category}}</h3>
-              </div>
-            </a>
-          </div>
-        </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('History')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>History</h4>
+          <p class="catIcon fa fa-history"></p>
+        </button>
       </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
+        <button (click)="selectCategory('Sports')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Sports</h4>
+          <p class="catIcon fa fa-futbol-o"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Politics')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Politics</h4>
+          <p class="catIcon fa fa-handshake-o"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Art')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Art</h4>
+          <p class="catIcon fa fa-paint-brush"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Math')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Math</h4>
+          <p class="catIcon fa fa-times"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Computers')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Computers</h4>
+          <p class="catIcon fa fa-desktop"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('Movies')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>Movies</h4>
+          <p class="catIcon fa fa-film"></p>
+        </button>
+      </div>
+      <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4 ">
+        <button (click)="selectCategory('All')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <h4>All</h4>
+          <p class="catIcon fa fa-circle-thin"></p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
