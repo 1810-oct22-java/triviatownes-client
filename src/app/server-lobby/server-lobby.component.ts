@@ -21,6 +21,27 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dtTrigger: any = new Subject();
 
+  lobinfo: any = [
+    {
+      lobbyName: 'Lobby 1',
+      Category: 'Math',
+      lobbyStatus: 'Public',
+      Seats: '4/10',
+    },
+    {
+      lobbyName: 'Lobby 2',
+      Category: 'Science',
+      lobbyStatus: 'Private',
+      Seats: '5/10',
+    },
+    {
+      lobbyName: 'Lobby 3',
+      Category: 'Biology',
+      lobbyStatus: 'Private',
+      Seats: '9/10',
+    },
+  ];
+
   // elements: any [];
 
   // populate elements with lobby info from API
@@ -62,46 +83,82 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
 
-    // this.dtOptions = {
-
-    //   pagingType: 'full_numbers'
-
-    // };
-
     // this.http.get(this.dataInfo.getAPI() + 'get-all-lobby-info').subscribe((data: any[]) => this.lobbyInf = data);
     this.loadServers();
+    var table = $('#lobbyList').DataTable({
+      responsive: true,
+      data: this.lobinfo,
+      columns: [
+        {
+          data: 'lobbyName'
+        },
+        {
+          data: 'Category'
+        },
+        {
+          data: 'lobbyStatus'
+        },
+        {
+          data: 'Seats'
+        },
+        // create three buttons columns
+        {
+          defaultContent: '<button class="showIdButton">Join</button>'
+        }
+      ],
+      language: {
+        search: '_INPUT_',
+        searchPlaceholder: 'Find a lobby..',
+      }
+    });
+
+    var getTable = this;
+
+    // unbind previous event on tbody so that multiple events are not binded to the table whenever this function runs again
+    $('#lobbyInfo tbody td').unbind();
+
+    // defined jquery click event
+    $('#lobbyInfo tbody td').on('click', 'button', function () {
+
+      // the "this" in this function is "this" of jquery object not of component because we did not use an arrow function
+
+      // get row for data
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
+      // this of jquery object
+      if (this.className == 'getLobby') {
+        // use function of current class using reference
+        getTable.showValue(row.data().lobbyName);
+      }
+    })
+
 
   }
-  // loadServers(): void {
 
-    // $.ajax({
-    //   url: 'http://api.com/get-all-lobby-info',
-    //   // url: this.dataInfo.getAPI() +'get-all-lobby-info',
-
-    //   data: {
-    //      format: 'json'
-    //   },
-
-    //   dataType: 'jsonp',
-    //   success: function(data) {
-
-    //     var $lobbyName = data.lobbyName;
-    //     var $category = data.Category;
-    //     var $lobbyStatus = data.lobbyStatus;
-    //     var $seats = data.seats;
-
-    //   },
-    //   type: 'GET'
-    // });
-
-  // }
-
+  showValue(value) {
+    alert(value);
+  }
+  
   loadServers(): void {
 
-    this.dtOptions = {
+    // this.dtOptions = {};
 
-    };
+    $.ajax({
+      url: 'http://api.com/get-all-lobby-info',
+      // url: this.dataInfo.getAPI() +'get-all-lobby-info',
 
+      data: {
+         format: 'json'
+      },
+
+      dataType: 'jsonp',
+      success: function(data) {
+
+
+
+      },
+      type: 'GET'
+    });
 
   }
 
