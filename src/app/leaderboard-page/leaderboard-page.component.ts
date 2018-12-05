@@ -51,7 +51,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
-
     console.log('after render');
 
   }
@@ -62,12 +61,9 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   loadServers(): void {
-
     this.dtOptions = {
 
     };
-
-
   }
 
   dummyData(){
