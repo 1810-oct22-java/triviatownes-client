@@ -41,7 +41,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   rerender(): void {
 
     console.log('before render');
-    var self = this;
+    const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
@@ -69,19 +69,19 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   }
 
-  dummyData(){
-    for(let i = 1; i < 100; i++){
+  dummyData() {
+    for (let i = 1; i < 100; i++) {
       this.leaders[i] = {
-        name: "dang",
+        name: 'dang',
         score: i
-      }
+      };
     }
   }
 
-  getLeaders(){
+  getLeaders() {
     $.ajax({
-      url: "/", success: function (result) {
-        this.leaders= $.parseJSON(result.value());
+      url: '/', success: function (result) {
+        this.leaders = $.parseJSON(result.value());
       }
     });
   }
