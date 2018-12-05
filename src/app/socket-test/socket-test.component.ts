@@ -53,6 +53,8 @@ export class SocketTestComponent implements OnInit {
   
     ngOnInit() {
 
+      
+ 
     }
 
     disconnect(){
