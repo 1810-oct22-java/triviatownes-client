@@ -3,6 +3,7 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-leaderboard-page',
@@ -19,7 +20,9 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   dtTrigger: any = new Subject();
 
-  leaders: { name: string, score: number } [];
+  leaders: { name: string, score: number } [] = [
+    {"name": "Ian", "score": 10}
+  ];
 
   maxPages: number;
   currentPage: number;
@@ -90,6 +93,8 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
     this.dtOptions.pageLength = 10;
 
+    this.dtOptions.dom = "<t>";
+
     this.dtOptions.drawCallback = function(){
 
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -114,6 +119,8 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
           $('#datatable-custom-page-label').val(self.currentPage + "/" + self.maxPages);
         }
       });
+
+      $('#lobbyList_paginate').addClass('hide_elements');
     }
 
 
