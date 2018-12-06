@@ -5,6 +5,7 @@ import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
 import { LandingPageComponent } from 'src/app/landing-page/landing-page.component';
 import { LeaderboardPageComponent} from 'src/app/leaderboard-page/leaderboard-page.component';
 import { WaitingPageComponent } from './waiting-page/waiting-page.component';
+import { GamePageComponent } from './game-page/game-page.component';
 
 // ROUTES: EXAMPLE
 /*
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'create', component: CreatePageComponent },
   { path: 'leaderboard-page', component: LeaderboardPageComponent},
   { path: 'server-lobby', component: ServerLobbyComponent },
-  { path: 'waiting', component: WaitingPageComponent}
+  { path: 'waiting', component: WaitingPageComponent},
+  { path: 'game', component: GamePageComponent}
 ];
 
 @NgModule({
