@@ -240,7 +240,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   rerender(): void {
 
     console.log('before render');
-    var self = this;
+    const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
