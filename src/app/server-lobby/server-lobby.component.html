@@ -2,7 +2,10 @@
   <div style="width:1000px; margin:0 auto;" id="server-lobby-component" class="container">
     <!-- add in dtOptions in table tag -->
     <!-- [dtOptions]="dtOptions"  -->
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="table table-dark table-hover">
+    <div class="wrap">
+        <input id = "datatable-custom-search" class = "data-tables-search" placeholder= " Search.."type="text"/>
+    </div>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="cell-border order-column hover">
         <thead>
           <tr>
             <th>Lobby Name</th>
@@ -19,7 +22,7 @@
             <td>{{el.lobbyStatus}}</td>
             <td>{{el.Seats}}</td>
           </tr> -->
-          <!-- <tr>
+          <tr>
             <td>Lobby 1</td>
             <td>Entertainment: Films</td>
             <td>Public</td>
@@ -63,7 +66,14 @@
             <td>
               <button id="join">Join</button>
           </tr>
-        </tbody> -->
-      </table> 
+        </tbody>
+      </table>
+      <div class = "bottom">
+        <button id = "datatable-custom-next-btn" class = "btn btn-success">Next</button>
+        <button id = "datatable-custom-prev-btn" class = "btn btn-success">Prev</button>
+      </div>
+      <div class = "button-label">
+        <input id = "datatable-custom-page-label" class = "button_label" size = "10"/>
+      </div>
   </div>
 </div>

@@ -1,3 +1,69 @@
+// #lobbyList_filter {
+    
+//     display: none !important;
+//     visibility: hidden !important;
+    
+// }
+// .dataTables_filter {
+//     display: none !important;
+//     visibility: hidden !important;
+// }
+
+.wrap {
+    
+    text-align: center;
+    padding-bottom: 25px;
+
+}
+
+.bottom {
+
+    text-align: center;
+    padding-top: 25px;
+
+}
+
+.btn{
+
+    background-color: #099226;
+    color: black;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.btn:hover {
+
+    background-color: rgb(73, 73, 73); /* Green */
+    color: white;
+}
+
+.button-label {
+
+    text-align: center;
+    padding-top: 10px;
+
+}
+
+.button_label {
+
+    text-align: center;
+
+}
+
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    border-style: solid;
+    border: 2px solid #0a5c83b6;
+    border-radius: 8px;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+    width: 100%;
+}
+
 #lobbyList {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -15,6 +81,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: rgb(37, 57, 238);
+    background-color: #0a5c83b6;
     color: white;
+    
 }
