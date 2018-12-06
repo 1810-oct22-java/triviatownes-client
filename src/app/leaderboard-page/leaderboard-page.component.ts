@@ -86,6 +86,8 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
     var self = this;
 
+    this.dtOptions = {}
+
     this.dtOptions.pageLength = 10;
 
     this.dtOptions.drawCallback = function(){
