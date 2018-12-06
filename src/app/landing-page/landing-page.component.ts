@@ -29,7 +29,7 @@ export class LandingPageComponent implements OnInit {
       url: this.globals.getApiUrl() + 'new-user',
       method: 'GET',
       crossDomain: true,
-      xhrFields: { withCredentials: true },
+      xhrFields: { withCredentials: false },
       success: function (result) {
         console.log('Created Session');
       },
@@ -59,9 +59,9 @@ export class LandingPageComponent implements OnInit {
     });
   }
 
-  pickCategory(cat) {
+  selectCategory(cat){
     this.globals.setCategory(cat);
-    this.router.navigate(['/select-lobby']);
+    this.router.navigate(['/server-lobby']);
   }
 
   // This logic will happen on a different page

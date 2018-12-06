@@ -1,67 +1,86 @@
-#catContainer{
-    align-content: space-around;
-    max-width: 40%;
+#upperHalf {
+  text-align: center; 
+  align-content: center;
 }
-[class*='col-'] {
-    float: left;
-    padding-right: 20px;
-    padding-bottom: 20px;
-  }
-  [class*='col-']:last-of-type {
-    padding-right: 0;
-  }
-  a {
-    text-decoration: none;
-  }
-  *, *:after, *:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  h3 {
-    text-align: center;
-    margin-bottom: 0;
-  }
-  h4 {
-    position: relative;
-  }
-  .grid {
-    margin: 0;
-  }
-  .col-1-4 {
-    width: 25%;
-  }
-  .module {
-    padding: 20px;
-    text-align: center;
-    color: #eee;
-    max-height: 120px;
-    min-width: 120px;
-    max-width: 120px;
-    background-color: #607d8b;
-    border-radius: 2px;
-  }
-  .module:hover {
-    background-color: #eee;
-    cursor: pointer;
-    color: #607d8b;
-  }
-  .grid-pad {
-    padding: 10px 0;
-  }
-  .grid-pad > [class*='col-']:last-of-type {
-    padding-right: 20px;
-  }
-  @media (max-width: 600px) {
-    .module {
-      font-size: 10px;
-      max-height: 75px; }
-  }
-  @media (max-width: 1024px) {
-    .grid {
-      margin: 0;
-    }
-    .module {
-      min-width: 60px;
-    }
-  }
+
+#upperHalf button {
+   color: #999;
+}
+
+#lowerHalf button {
+   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#name {
+   margin: 0 auto;
+}
+
+#nameInput {
+   -webkit-border-radius: 50px;
+   -moz-border-radius: 50px;
+   border-radius: 50px;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+p {
+   text-decoration: none;
+}
+
+// copy under here
+
+.catIcon {
+   padding-top: .5em;
+   padding-bottom: .5em;
+   font-size: 5em;
+}
+
+.catIconButton {
+   text-decoration: none;
+   border: 3px solid black;
+   border-radius: 25px;
+   background: #38c307;
+   margin-top: 3em;
+   height: 15em;
+   width: 15em;
+}
+
+.catBtnDiv {
+   padding-left: 1.5em;
+   padding-right: 1.5em;
+}
+
+.hvr-grow-rotate {
+   display: inline-block;
+   vertical-align: middle;
+   -webkit-transform: perspective(1px) translateZ(0);
+   transform: perspective(1px) translateZ(0);
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+   -webkit-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -webkit-transition-property: transform;
+   transition-property: transform;
+}
+.hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
+   -webkit-transform: scale(1.1) rotate(4deg);
+   transform: scale(1.1) rotate(4deg);
+}
+
+.hvr-fade {
+   display: inline-block;
+   vertical-align: middle;
+   -webkit-transform: perspective(1px) translateZ(0);
+   transform: perspective(1px) translateZ(0);
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+   overflow: hidden;
+   -webkit-transition-duration: 0.5s;
+   transition-duration: 0.5s;
+   -webkit-transition-property: color, background-color;
+   transition-property: color, background-color;
+}
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+   background-color: #2098D1;
+   color: white;
+}
