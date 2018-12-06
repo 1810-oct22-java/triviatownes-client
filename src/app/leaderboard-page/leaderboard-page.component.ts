@@ -37,7 +37,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
     this.dtTrigger.next();
 
     $('#datatable-custom-search').on('input', function() {
-      var newText = $(this).val();
+      var newText = $(this).val() + "";
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.search(newText).draw();
       });
