@@ -51,7 +51,7 @@ export class LandingPageComponent implements OnInit {
       method: 'POST',
       data: { pin },
       success: function (response) {
-        // TODO
+        this.router.navigate(['/waiting']);
       },
       error: function (response) {
         alert('There was a problem connecting to lobby...');

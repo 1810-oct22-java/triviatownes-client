@@ -122,8 +122,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
       $('#lobbyList_paginate').addClass('hide_elements');
     }
-
-
   }
 
   // dummyData(){
