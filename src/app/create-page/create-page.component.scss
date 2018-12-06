@@ -11,9 +11,13 @@ button:focus {
     color: #999;
 }
 
-#nameQSeats {
+#nameQSeats{
     padding-top: 2em;
     white-space: nowrap;
+}
+
+#nameQSeats span, #createBtn, #privateToggle {
+    padding: .25em;
 }
 
 #lowerHalf button {
