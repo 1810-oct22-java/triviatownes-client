@@ -25,8 +25,8 @@
 
 .btn{
 
-    background-color: #099226;
-    color: black;
+    //background-color: #5cb85c;
+    color: #eef7ee;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -50,7 +50,7 @@
 
 }
 
-input[type=text] {
+#datatable-custom-search {
     width: 130px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
@@ -83,5 +83,13 @@ input[type=text]:focus {
     text-align: left;
     background-color: #0a5c83b6;
     color: white;
+    
+}
+
+#lobbyList[_ngcontent-c1] th[_ngcontent-c1]{
+    background-color: 		#5bc0de;
+}
+
+#datatable-custom-page-label {
     
 }
