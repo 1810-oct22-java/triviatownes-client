@@ -48,17 +48,18 @@ p {
 
 .catIconButton {
     text-decoration: none;
-    border: 3px solid black;
+    //border: 3px solid black;
     border-radius: 25px;
-    background: #38c307;
+    background: #5cb85c;
     margin-top: 3em;
     height: 15em;
     width: 15em;
 }
 
 .catBtnDiv {
-    padding-left: 1.5em;
-    padding-right: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hvr-grow-rotate {

@@ -12,6 +12,8 @@ export class WaitingPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  users: String[] = ['Player1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'];
+
   addPlayer() {
 
     var element = $('#username').val();
