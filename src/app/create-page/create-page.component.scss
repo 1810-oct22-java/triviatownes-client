@@ -3,8 +3,25 @@
    align-content: center;
 }
 
-button, input {
+button:focus {
+    outline:0;
+}
+
+#upperHalf button {
+    color: #999;
+}
+
+#nameQSeats {
+    padding-top: 2em;
+    white-space: nowrap;
+}
+
+#lowerHalf button {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+#name {
+    margin: 0 auto;
 }
 
 #nameInput {
@@ -13,19 +30,66 @@ button, input {
     border-radius: 50px;
 }
 
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
 p {
     text-decoration: none;
 }
 
-#timesIcon {
+// copy under here
+
+.catIcon {
+    padding-top: .5em;
+    padding-bottom: .5em;
     font-size: 5em;
 }
 
-#timesIconDiv {
+.catIconButton {
     text-decoration: none;
+    border: 3px solid black;
     border-radius: 25px;
-    background: #73AD21;
-    //border: 2px solid #73AD21;
-    height: 5em;
+    background: #38c307;
+    margin-top: 3em;
+    height: 15em;
+    width: 15em;
 }
 
+.catBtnDiv {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+.hvr-grow-rotate {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+.hvr-grow-rotate:hover, .hvr-grow-rotate:focus, .hvr-grow-rotate:active {
+    -webkit-transform: scale(1.1) rotate(4deg);
+    transform: scale(1.1) rotate(4deg);
+}
+
+.hvr-fade {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    overflow: hidden;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+    background-color: #2098D1;
+    color: white;
+}
