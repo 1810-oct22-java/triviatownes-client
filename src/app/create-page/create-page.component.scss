@@ -3,8 +3,17 @@
    align-content: center;
 }
 
+button:focus {
+    outline:0;
+}
+
 #upperHalf button {
     color: #999;
+}
+
+#nameQSeats {
+    padding-top: 2em;
+    white-space: nowrap;
 }
 
 #lowerHalf button {
