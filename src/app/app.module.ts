@@ -14,6 +14,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ServerLobbyComponent } from './server-lobby/server-lobby.component';
 import { WaitingPageComponent } from './waiting-page/waiting-page.component';
+import { GamePageComponent } from './game-page/game-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { WaitingPageComponent } from './waiting-page/waiting-page.component';
     ServerLobbyComponent,
     LandingPageComponent,
     LeaderboardPageComponent,
-    WaitingPageComponent
+    WaitingPageComponent,
+    GamePageComponent
   ],
   imports: [
     BrowserModule,
