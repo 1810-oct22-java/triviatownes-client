@@ -10,7 +10,7 @@ import { GlobalsService } from '../globals.service';
 })
 export class LandingPageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geo', 'Cars', 'Lit', 'New'];
-  
+
   constructor(
     public envVars: GlobalsService,
     public router: Router,
@@ -22,19 +22,19 @@ export class LandingPageComponent implements OnInit {
   }
 
 
-  //call when a user hits landing page
-  newUser(){
-    
+  // call when a user hits landing page
+  newUser() {
+
     $.ajax({
-      url: this.globals.getApiUrl() + "new-user",
-      method: "GET",
-      crossDomain : true,
-      xhrFields: { withCredentials: true },
+      url: this.globals.getApiUrl() + 'new-user',
+      method: 'GET',
+      crossDomain: true,
+      xhrFields: { withCredentials: false },
       success: function (result) {
-        console.log("Created Session");
+        console.log('Created Session');
       },
       error: function (result) {
-        console.log("Something went wrong");
+        console.log('Something went wrong');
         console.log(result);
       }
     });
@@ -44,27 +44,27 @@ export class LandingPageComponent implements OnInit {
   * Sends pin to servlet
   */
   joinLobby() {
-    var pin = $('#pin').val();
+    const pin = $('#pin').val();
     console.log(pin);
     $.ajax({
-      url: "/connect-to-lobby",
-      method: "POST",
-      data: {pin},
-      success: function(response){
-        //TODO
+      url: '/connect-to-lobby',
+      method: 'POST',
+      data: { pin },
+      success: function (response) {
+        // TODO
       },
-      error: function(response){
-        alert("There was a problem connecting to lobby...");
+      error: function (response) {
+        alert('There was a problem connecting to lobby...');
       }
     });
   }
 
-  pickCategory(cat){
+  selectCategory(cat){
     this.globals.setCategory(cat);
-    this.router.navigate(['/select-lobby']);
+    this.router.navigate(['/server-lobby']);
   }
 
-  //This logic will happen on a different page
+  // This logic will happen on a different page
   /*
   pickCategory(cat) {
 
