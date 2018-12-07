@@ -39,17 +39,22 @@ p {
 
 .catIconButton {
    text-decoration: none;
-   border: 3px solid black;
+   //border: 3px solid black;
    border-radius: 25px;
-   background: #38c307;
+   background:  #5cb85c;
    margin-top: 3em;
    height: 15em;
    width: 15em;
+   margin-left: auto !important;
+   margin-right: auto !important;
 }
 
 .catBtnDiv {
-   padding-left: 1.5em;
-   padding-right: 1.5em;
+   //padding-left: 1.5em;
+   //padding-right: 1.5em;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .hvr-grow-rotate {
@@ -84,3 +89,35 @@ p {
    background-color: #2098D1;
    color: white;
 }
+
+.join-private-label {
+   text-shadow: 1px 3px 2px rgba(0,0,0,0.3);
+   color: white;
+ }
+
+ .categorie-box-label {
+   text-shadow: 1px 3px 2px rgba(0,0,0,0.3);
+   color: white;
+   text-align: center;
+   margin-bottom: 15px;
+ }
+ 
+ .join-private-input {
+   width: 250px;
+   margin-right: 10px;
+   margin-left: auto;
+   display: inline;
+ }
+
+ .join-private-button {
+   display: inline;
+   margin-right: auto;
+   margin-left: auto;
+ }
+
+ .categorie-box-label {
+   text-shadow: 1px 3px 2px rgba(0,0,0,0.3);
+   color: white;
+   text-align: center;
+   margin-bottom: 15px;
+ }

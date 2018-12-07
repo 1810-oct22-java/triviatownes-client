@@ -23,13 +23,13 @@ export class CreatePageComponent implements OnInit {
     console.log(this.selectedCategory);
   }
 
-  selectedSeats(num: string) {
-    this.seats = num;
+  selectedSeats(num: number) {
+    this.seats = num + "";
     console.log(this.seats);
   }
 
-  selectedQuestions(num: string) {
-    this.questions = num;
+  selectedQuestions(num: number) {
+    this.questions = num + "";
     console.log(this.questions);
   }
 
