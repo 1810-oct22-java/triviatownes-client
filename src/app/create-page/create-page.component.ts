@@ -24,12 +24,12 @@ export class CreatePageComponent implements OnInit {
   }
 
   selectedSeats(num: number) {
-    this.seats = num + "";
+    this.seats = num + '';
     console.log(this.seats);
   }
 
   selectedQuestions(num: number) {
-    this.questions = num + "";
+    this.questions = num + '';
     console.log(this.questions);
   }
 
