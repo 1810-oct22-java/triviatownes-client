@@ -20,9 +20,9 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   dtTrigger: any = new Subject();
 
-  leaders: { name: string, score: number } [] = [
-    {"name": "Ian", "score": 10}
-  ];
+  // leaders: { name: string, score: number } [] = [
+  //   {"name": "Ian", "score": 10}
+  // ];
 
   maxPages: number;
   currentPage: number;

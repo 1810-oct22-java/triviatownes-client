@@ -50,7 +50,7 @@
 
 }
 
-#datatable-custom-search {
+input[type=text] {
     width: 130px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
@@ -58,6 +58,7 @@
     border: 2px solid #0a5c83b6;
     border-radius: 8px;
 }
+
 
 /* When the input field gets focus, change its width to 100% */
 input[type=text]:focus {
@@ -88,8 +89,4 @@ input[type=text]:focus {
 
 #lobbyList[_ngcontent-c1] th[_ngcontent-c1]{
     background-color: 		#5bc0de;
-}
-
-#datatable-custom-page-label {
-    
 }

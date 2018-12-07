@@ -1,14 +1,14 @@
-<div  class = "jumbotron">
+<div class="jumbotron">
   <div style="width:1000px; margin:0 auto;" id="server-lobby-component" class="container">
     <!-- add in dtOptions in table tag -->
     <!-- [dtOptions]="dtOptions"  -->
-
-    <input id = "datatable-custom-search" class = "data-tables-search" type="text"/>
-    <button id = "datatable-custom-next-btn" class = "btn btn-success">Next</button>
-    <button id = "datatable-custom-prev-btn" class = "btn btn-success">Prev</button>
-    <input id = "datatable-custom-page-label" class = "form-control"/>
-
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="table table-dark table-hover">
+    <div>
+      <p></p>
+    </div>
+    <div class="wrap">
+      <input id="datatable-custom-search" class="data-tables-search" placeholder=" Search.." type="text" />
+    </div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="stripe order-column hover">
       <thead>
         <tr>
           <th>Tag</th>
@@ -17,126 +17,67 @@
       </thead>
       <tbody>
         <tr>
-          <td>Test</td>
+          <td>Player 1</td>
           <td>10</td>
         </tr>
         <tr>
-          <td>Hello</td>
-          <td>40</td>
+          <td>Player 2</td>
+          <td>1000</td>
         </tr>
         <tr>
-          <td>Text</td>
-          <td>25</td>
+          <td>Player 3</td>
+          <td>1123130</td>
         </tr>
         <tr>
-          <td>Test</td>
+          <td>Player 4</td>
           <td>10</td>
         </tr>
         <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
+          <td>Player 5</td>
           <td>10</td>
         </tr>
         <tr>
-          <td>Hello</td>
-          <td>40</td>
+          <td>Player 6</td>
+          <td>112310</td>
         </tr>
         <tr>
-          <td>Text</td>
-          <td>25</td>
+          <td>Player 7</td>
+          <td>101231</td>
         </tr>
         <tr>
-          <td>Test</td>
-          <td>10</td>
+          <td>Player 8</td>
+          <td>456310</td>
         </tr>
         <tr>
-          <td>Hello</td>
-          <td>40</td>
+          <td>Player 9</td>
+          <td>768457510</td>
         </tr>
         <tr>
-          <td>Text</td>
-          <td>25</td>
+          <td>Player 10</td>
+          <td>10567</td>
         </tr>
         <tr>
-          <td>Test</td>
-          <td>10</td>
+          <td>Player 11</td>
+          <td>1312315430</td>
         </tr>
         <tr>
-          <td>Hello</td>
-          <td>40</td>
+          <td>Player 12</td>
+          <td>12313210</td>
         </tr>
         <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Test</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td>Hello</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Text</td>
-          <td>25</td>
+          <td>Player 13</td>
+          <td>112310</td>
         </tr>
       </tbody>
-    </table> 
+    </table>
+    <div class="input-group" style="width: 170px; margin-left: auto; margin-right: auto; margin-top: 15px;">
+      <span class="input-group-btn">
+        <button id="datatable-custom-prev-btn" class="btn btn-success hvr-backward hvr-sweep-to-left">Prev</button>
+      </span>
+      <input id="datatable-custom-page-label" type="text" class="form-control" style="text-align: center;">
+      <span class="input-group-btn">
+        <button id="datatable-custom-next-btn" class="btn btn-success hvr-forward hvr-sweep-to-right" style="float: left;">Next</button>
+      </span>
+    </div>
   </div>
 </div>
