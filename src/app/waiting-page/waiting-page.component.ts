@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Chat } from '../chat';
+import { Chats } from '../chats';
 
 @Component({
   selector: 'app-waiting-page',
@@ -6,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./waiting-page.component.scss']
 })
 export class WaitingPageComponent implements OnInit {
+
+  chats = Chats;
+  selectedChat: Chat;
+
+  public chatArr = [];
 
   constructor() { }
 

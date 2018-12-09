@@ -71,19 +71,19 @@
         <div class="panel-body">
             <ul class="chat">
                 <li class="left clearfix"><span class="chat-img pull-left">
-                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                    <!-- <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /> -->
                 </span>
-                    <div class="chat-body clearfix">
+                    <div class="chat-body clearfix" *ngFor="let chat of chats" >
                         <div class="header">
-                            <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                            <strong class="primary-font">{{chat.username}}</strong> <small class="pull-right text-muted">
+                                <span class="glyphicon glyphicon-time"></span></small>
                         </div>
                         <p>
-                            Stuff
+                            {{chat.message}}
                         </p>
                     </div>
                 </li>
-                <li class="right clearfix"><span class="chat-img pull-right">
+                <!-- <li class="right clearfix"><span class="chat-img pull-right">
                     <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
                 </span>
                     <div class="chat-body clearfix">
@@ -121,7 +121,7 @@
                             blah blah blah
                         </p>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="panel-footer">
