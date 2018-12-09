@@ -29,7 +29,7 @@ export class WaitingPageComponent implements OnInit {
         $('#tableRow').append(newItem);
   }
 
-  
+
   // getPlayers() {
   //   $.ajax({
   //     type: 'get',
