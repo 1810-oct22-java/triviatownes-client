@@ -80,7 +80,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
-    //this.dummyData();
+    this.getLeaders();
     this.loadServers();
 
   }
@@ -136,7 +136,8 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   getLeaders(){
     $.ajax({
       url: 'http://localhost:8081/TriviaTownesServer/leaders', success: function (result) {
-        this.leaders = $.parseJSON(result.value());
+        this.leaders = JSON.stringify(result);
+        
       }
     });
   }
