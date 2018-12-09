@@ -135,7 +135,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   getLeaders(){
     $.ajax({
-      url: '/', success: function (result) {
+      url: 'http://localhost:8081/TriviaTownesServer/leaders', success: function (result) {
         this.leaders = $.parseJSON(result.value());
       }
     });
