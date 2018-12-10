@@ -29,7 +29,7 @@ export class LandingPageComponent implements OnInit {
       url: this.globals.getApiUrl() + 'new-user',
       method: 'GET',
       crossDomain: true,
-      xhrFields: { withCredentials: false },
+      xhrFields: { withCredentials: true },
       success: function (result) {
         console.log('Created Session');
       },
