@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StompService } from '@stomp/ng2-stompjs';
-import { Message } from '@stomp/stompjs'
+import { Message } from '@stomp/stompjs';
 import { Subscription, Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,7 @@ export class SocketTestComponent implements OnInit {
 
   StompConfig = {
     // Which server?
-    url: 'ws://127.0.0.1:8080/WebSocketExample/chat',
+    url: 'ws://127.0.0.1:8080/WebSocketExperimental/chat',
     headers: {
       test: 'Hello'
     },
@@ -95,9 +95,9 @@ export class SocketTestComponent implements OnInit {
     this.subscribed = false;
   }
 
-  ngOnDestroy() {
-    this.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.unsubscribe();
+  // }
 
   public onSendMessage() {
     const _getRandomInt = (min, max) => {

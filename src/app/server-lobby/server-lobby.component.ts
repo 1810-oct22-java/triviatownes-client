@@ -59,7 +59,7 @@
 //     this.dtTrigger.next();
 
 //     $('#datatable-custom-search').on('input', function() {
-//       var newText = $(this).val() + "";
+//       var newText = $(this).val() + '';
 //       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
 //         dtInstance.search(newText).draw();
 //       });
@@ -96,7 +96,7 @@
 
 //     var table = $('#lobbyList').DataTable({
 //       //  searching set to false
-      
+
 //       // hide entries
 //       bLengthChange: false,
 //       responsive: true,
@@ -116,7 +116,7 @@
 //         },
 //         // create three buttons columns
 //         {
-//           defaultContent: '<button id="showLobby" class="btn btn-indigo btn-sm m-0">Join</button>'
+//           defaultContent: '<button id='showLobby' class='btn btn-indigo btn-sm m-0'>Join</button>'
 //         }
 //       ],
 //       language: {
@@ -133,13 +133,13 @@
 //     // defined jquery click event
 //     $('#lobbyInfo tbody td').on('click', 'button', function () {
 
-//       // the "this" in this function is "this" of jquery object not of component because we did not use an arrow function
+//       // the 'this' in this function is 'this' of jquery object not of component because we did not use an arrow function
 
 //       // get row for data
 //       var tr = $(this).closest('tr');
 //       var row = table.row(tr);
 //       // this of jquery object
-//       if (this.className == 'getLobby') {
+//       if (this.className === 'getLobby') {
 //         // use function of current class using reference
 //         getTable.showValue(row.data().lobbyName);
 //       }
@@ -182,6 +182,8 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GlobalsService } from '../globals.service';
+
 
 @Component({
   selector: 'app-server-lobby',
@@ -201,30 +203,30 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   maxPages: number;
   currentPage: number;
 
-  lobbyInf: any [];
+  lobbyInf: any[];
   constructor(
-
+    public globals: GlobalsService,
     public router: Router
 
   ) { }
 
   ngAfterViewInit(): void {
 
-    var self = this;
+    const self = this;
     this.dtTrigger.next();
 
-    $('#datatable-custom-search').on('input', function() {
-      var newText = $(this).val() + "";
+    $('#datatable-custom-search').on('input', function () {
+      const newText = $(this).val() + '';
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.search(newText).draw();
       });
     });
-    $('#datatable-custom-prev-btn').on('click', function() {
+    $('#datatable-custom-prev-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('previous').draw('page');
       });
     });
-    $('#datatable-custom-next-btn').on('click', function() {
+    $('#datatable-custom-next-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('next').draw('page');
       });
@@ -256,18 +258,25 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
 
     this.loadServers();
+    this.populateTable();
+    // var table = $('#lobbyList').DataTable({
+    // //  searching set to false
+    // bLengthChange: false
 
-      // var table = $('#lobbyList').DataTable({
-      // //  searching set to false
-      // bLengthChange: false
+    // });
 
-      // });
-
+  }
+  populateTable() {
+    const url = 'http://localhost:8080/TriviaTownesServer/api/' + this.globals.getCategory();
+    $.get(url, function (data, status) {
+      console.log(data);
+      console.log('Status: ' + status);
+    });
   }
 
   loadServers(): void {
 
-    var self = this;
+    const self = this;
 
     this.dtOptions = {};
 
@@ -276,32 +285,32 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dtOptions.pageLength = 10;
 
-    this.dtOptions.drawCallback = function(){
+    this.dtOptions.drawCallback = function () {
 
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
 
         self.maxPages = dtInstance.page.info().pages;
         self.currentPage = dtInstance.page.info().page + 1;
 
-        $('#datatable-custom-next-btn').prop("enabled",false);
-        $('#datatable-custom-prev-btn').prop("enabled",false);
+        $('#datatable-custom-next-btn').prop('enabled', false);
+        $('#datatable-custom-prev-btn').prop('enabled', false);
 
-        if(self.currentPage == self.maxPages){
-          $('#datatable-custom-next-btn').prop("enabled",true);
+        if (self.currentPage === self.maxPages) {
+          $('#datatable-custom-next-btn').prop('enabled', true);
         }
-        if(self.currentPage == 1){
-          $('#datatable-custom-prev-btn').prop("enabled",true);
+        if (self.currentPage === 1) {
+          $('#datatable-custom-prev-btn').prop('enabled', true);
         }
-        if(self.maxPages == 0){
-          $('#datatable-custom-next-btn').prop("enabled",true);
-          $('#datatable-custom-prev-btn').prop("enabled",true);
-          $('#datatable-custom-page-label').val("0/0");
+        if (self.maxPages === 0) {
+          $('#datatable-custom-next-btn').prop('enabled', true);
+          $('#datatable-custom-prev-btn').prop('enabled', true);
+          $('#datatable-custom-page-label').val('0/0');
         } else {
-          $('#datatable-custom-page-label').prop("disabled", true);
-          $('#datatable-custom-page-label').val(self.currentPage + "/" + self.maxPages);
+          $('#datatable-custom-page-label').prop('disabled', true);
+          $('#datatable-custom-page-label').val(self.currentPage + '/' + self.maxPages);
         }
       });
-    }
+    };
   }
 }
 
