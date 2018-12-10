@@ -1,17 +1,7 @@
-// #lobbyList_filter {
-    
-//     display: none !important;
-//     visibility: hidden !important;
-    
-// }
-// .dataTables_filter {
-//     display: none !important;
-//     visibility: hidden !important;
-// }
-
 .wrap {
     
     text-align: center;
+    padding-top: 25px;
     padding-bottom: 25px;
 
 }
@@ -23,17 +13,17 @@
 
 }
 
-.btn{
-
-    //background-color: #5cb85c;
+.join{
+    
+    background-color: #DB363C;
     color: #eef7ee;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
-.btn:hover {
+.join:hover {
 
-    background-color: rgb(73, 73, 73); /* Green */
+    background-color: #ff9900;
     color: white;
 }
 
@@ -55,7 +45,7 @@ input[type=text] {
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
     border-style: solid;
-    border: 2px solid #0a5c83b6;
+    border: 2px solid #ff9900;
     border-radius: 8px;
 }
 
@@ -76,19 +66,19 @@ input[type=text]:focus {
     padding: 8px;
 }
 
-#lobbyList tr:hover {background-color: rgb(170, 175, 192);}
+#lobbyList tr:hover {background-color: #DB363C;}
 
 #lobbyList th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #0a5c83b6;
+    background-color: #ff9900;
     color: white;
     
 }
 
 #lobbyList[_ngcontent-c1] th[_ngcontent-c1]{
-    background-color: 		#5bc0de;
+    background-color: 		#ff9900;
 }
 
 // -----------------------------------------

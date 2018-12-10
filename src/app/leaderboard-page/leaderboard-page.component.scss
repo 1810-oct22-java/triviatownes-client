@@ -1,6 +1,7 @@
 .wrap {
     
     text-align: center;
+    padding-top: 25px;
     padding-bottom: 25px;
 
 }
@@ -12,17 +13,32 @@
 
 #lobbyList td, #customers th {
     border: 1px solid #ddd;
-    padding: 8px;
+    // padding: 8px;
 }
 
-#lobbyList tr:hover {background-color: #4CAF50;}
+#lobbyList tr:hover {background-color: #DB363C;}
 
 #lobbyList th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #ff9900;
     color: white;
+}
+
+input[type=text] {
+  width: 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  border-style: solid;
+  border: 2px solid #ff9900;
+  border-radius: 8px;
+}
+
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+  width: 100%;
 }
 
 .hvr-forward {
@@ -78,7 +94,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgb(24, 119, 0);
+    background: #ff9900;
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
     -webkit-transform-origin: 0 50%;
@@ -119,7 +135,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgb(24, 119, 0);
+    background: #ff9900;
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
     -webkit-transform-origin: 100% 50%;
