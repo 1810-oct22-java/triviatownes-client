@@ -81,6 +81,8 @@ export class CreatePageComponent implements OnInit {
         }
       });
     } else {
+console.log(x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username);
+
       console.log('create game values missing');
       alert('Missing values for game creation');
     }
