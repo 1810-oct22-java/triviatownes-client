@@ -12,15 +12,15 @@ import { GlobalsService } from '../globals.service';
   templateUrl: './waiting-page.component.html',
   styleUrls: ['./waiting-page.component.scss']
 })
-export class WaitingPageComponent implements OnInit, OnDestroy,   AfterViewInit {
-
-  users: String[] = ['Player1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'];
+export class WaitingPageComponent implements OnInit, OnDestroy {
 
   // Stream of messages
   private data_subscription: Subscription;
   public data_observable: Observable<Message>;
 
   private _stompService: StompService;
+
+  users: any;
 
   // Subscription status
   public subscribed = false;
@@ -38,11 +38,30 @@ export class WaitingPageComponent implements OnInit, OnDestroy,   AfterViewInit 
     this._stompService = new StompService(this.StompConfig);
     this._stompService.initAndConnect();
 
-    this.data_observable = this._stompService.subscribe('/lobbies-hash/' + this.globals.getCategory().toLowerCase() + '/get-lobby-data');
-    this.data_subscription = this.data_observable.subscribe(this.onDataUpdate);
+    this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
+    this.data_subscription = this.data_observable.subscribe(this.onUpdate);
     this.subscribed = true;
 
     this.startPingingServer(this);
+  }
+
+  public startPingingServer(self: any) {
+
+    self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
+    //setInterval(this.startPingingServer, 2000, self);
+  }
+
+  public onUpdate = (data_observable: Message) => {
+
+    const payload =  JSON.parse(data_observable.body);
+
+    console.log(payload);
+
+    this.users = payload['players'];
+    console.log(this.users[0]['username']);
+    if (payload['status'] === 'ready') {
+      this.router.navigate(['game']);
+    }
   }
 
 
@@ -52,28 +71,12 @@ export class WaitingPageComponent implements OnInit, OnDestroy,   AfterViewInit 
   ) { }
 
   ngOnInit() {
-
-
+    this.globals.setLobbyKey('abc');
+    this.connect();
   }
 
   ngOnDestroy(): void {
-
-    this.dtTrigger.unsubscribe();
     this.unsubscribe();
-  }
-
-  rerender(): void {
-
-    console.log('before render');
-    const self = this;
-
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
   }
 
   public unsubscribe() {
@@ -84,6 +87,4 @@ export class WaitingPageComponent implements OnInit, OnDestroy,   AfterViewInit 
     this.data_observable = null;
     this.subscribed = false;
   }
-
-
 }

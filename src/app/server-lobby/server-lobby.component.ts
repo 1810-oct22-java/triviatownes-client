@@ -67,12 +67,14 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public startPingingServer(self) {
 
+      if(self.subscribed){
       console.log('ping');
-      console.log(this._stompService);
+      console.log(self.currentDataHash);
       self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
-
-    setInterval(this.startPingingServer, 2000, self);
-  }
+ 
+      setInterval(self.startPingingServer, 2000, self);
+      }
+    }
 
   public onDataUpdate = (data_observable: Message) => {
     console.log('Hello');
@@ -149,6 +151,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadServers(): void {
+    
 
     console.log('Loading...');
 
@@ -159,7 +162,11 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         url: self.globals.getApiUrl() + 'lobby-data/data/',
         method: 'GET',
         crossDomain: true,
-        xhrFields: { withCredentials: true }
+        xhrFields: { withCredentials: true },
+        complete: function(data) {
+          console.log(data);
+         self.connect();
+        }
       },
       columns: [
         {
