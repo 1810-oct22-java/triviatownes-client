@@ -12,13 +12,9 @@ import { GlobalsService } from '../globals.service';
   templateUrl: './waiting-page.component.html',
   styleUrls: ['./waiting-page.component.scss']
 })
-<<<<<<< HEAD
 export class WaitingPageComponent{
 /*
   users: String[] = ['Player1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'];
-=======
-export class WaitingPageComponent implements OnInit, OnDestroy {
->>>>>>> 4fae6aa825b588941e460add45a362937b53dfc1
 
   // Stream of messages
   private data_subscription: Subscription;
@@ -93,9 +89,6 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     this.data_observable = null;
     this.subscribed = false;
   }
-<<<<<<< HEAD
 
 */
-=======
->>>>>>> 4fae6aa825b588941e460add45a362937b53dfc1
 }
