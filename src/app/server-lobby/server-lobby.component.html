@@ -3,6 +3,8 @@
     <!-- add in dtOptions in table tag -->
     <!-- [dtOptions]="dtOptions"  -->
     <br>
+    <input [(ngModel)]="username" class = "form-control" placeholder="username" type="text"/>
+    <br>
     <div class="wrap">
         <input id = "datatable-custom-search" class = "data-tables-search" placeholder= " Search.."type="text"/>
     </div>
@@ -15,7 +17,6 @@
               <th>Subscriber Name</th>
               <th>some data</th>
               <th>Subscriber Name</th>
-              <th>some data</th>
           </tr>
       </thead>
       </table>

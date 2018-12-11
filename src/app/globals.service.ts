@@ -8,8 +8,17 @@ export class GlobalsService {
   private category: String;
   private apiUrl: String = 'http://localhost:8080/TriviaTownesServer/';
   private lobbyKey;
+  private username;
 
   constructor() { }
+
+  public getUsername(): String {
+    return this.username;
+  }
+
+  public setUsername(username: String): void {
+    this.username = username;
+  }
 
   public getCategory(): String {
     return this.category;

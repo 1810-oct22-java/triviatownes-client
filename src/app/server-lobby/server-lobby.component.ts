@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { GlobalsService } from '../globals.service';
+import { FormsModule } from '@angular/forms';
 
 
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
 import { Subscription, Observable } from 'rxjs';
-
 
 @Component({
   selector: 'app-server-lobby',
@@ -32,6 +32,8 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   lobbyInf: any [];
 
   currentDataHash = '0';
+
+  username: String;
 
   // Stream of messages
   private data_subscription: Subscription;
@@ -145,16 +147,41 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.globals.setCategory('art');
+    if(this.globals.getCategory() === undefined){
+      this.router.navigate(['']);
+    } else {
+    console.log(this.globals.getCategory());
     this.loadServers();
     //this.connect();
+    }
   }
-  populateTable() {
-    const url = 'http://localhost:8080/TriviaTownesServer/api/' + this.globals.getCategory();
-    $.get(url, function (data, status) {
-      console.log(data);
-      console.log('Status: ' + status);
+
+  joinLobby(key: any){
+
+    var self = this;
+
+    $.ajax ({
+      url: self.globals.getApiUrl() + '/join-waiting',
+      data: {
+        lobbyKey: key,
+        username: self.username
+      },
+      method: 'POST',
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      success: function (res) {
+        console.log(res);
+        self.globals.setLobbyKey(res['lobbyId']);
+        self.globals.setUsername(res['userId']);
+        self.router.navigate(['waiting']);
+      },
+      error: function (res) {
+        console.log('error....');
+        console.log(res);
+        alert('game session is full, please pick another lobby....');
+      }
     });
+
   }
 
   loadServers(): void {
@@ -163,7 +190,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dtOptions = {
       ajax: {
-        url: self.globals.getApiUrl() + 'lobby-data/data/',
+        url: self.globals.getApiUrl() + 'lobby-data/' + self.globals.getCategory().toLowerCase() + '/data/',
         method: 'GET',
         crossDomain: true,
         xhrFields: { withCredentials: true },
@@ -182,10 +209,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           data: 'difficulty'
         },
         {
-          title: 'Scope',
-          data: 'scope'
-        },
-        {
           title: 'Current Players',
           data: 'players'
         },
@@ -200,11 +223,14 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         // (see https://github.com/l-lin/angular-datatables/issues/87)
         $('td', row).unbind('click');
         $('td', row).bind('click', () => {
-          console.log(data);
+         // console.log(data);
 
-          if(data['scope'] === 'private'){
-            
+          if(self.username === undefined){
+            alert('Please enter a username!');
+            return;
           }
+
+          self.joinLobby(data['key']);
 
           //self.someClickHandler(data);
         });

@@ -73,7 +73,7 @@ export class WaitingPageComponent{
   ) { }
 
   ngOnInit() {
-    this.globals.setLobbyKey('abc');
+    this.globals.setLobbyKey('0');
     this.connect();
   }
 

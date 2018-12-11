@@ -3,11 +3,11 @@
     <div id="upperHalf">
       <div id="nameQSeats">
         <span id="name" class="input-group mb-3 form-horizontal">
-          <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder="Name"
+          <input [(ngModel)]="name" id="nameInput" type="text" class="form-control" placeholder="Name"
             aria-describedby="basic-addon1">
         </span>
         <span id="username" class="input-group mb-3 form-horizontal">
-          <input id="usernameInput" #usr (keyup)="setUsername(usr.value)" type="text" class="form-control" placeholder="Username"
+          <input [(ngModel)]="username" id="usernameInput" type="text" class="form-control" placeholder="Username"
             aria-describedby="basic-addon1">
         </span>
         <span class="dropdown col-3 form-horizontal">

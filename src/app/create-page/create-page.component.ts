@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Input, Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import anime from 'animejs';
 import { GlobalsService } from '../globals.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +20,9 @@ export class CreatePageComponent implements OnInit {
   name: string;
   key: string;
 
-  constructor(public globals: GlobalsService) { }
+  constructor(
+      public router: Router,
+      public globals: GlobalsService) { }
 
   ngOnInit () {
   }
@@ -60,13 +64,18 @@ export class CreatePageComponent implements OnInit {
 
   create() {
     const x = this;
-    if (x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username) {
+    if (!(x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username)) {
+      alert('Missing values for game creation');
+      return;
+    }
       $.ajax({
-        url: 'connect-to-lobby',
+        url: x.globals.getApiUrl() + 'create-game',
         method: 'POST',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
         data: {
           category: x.selectedCategory,
-          seats: x.seats,
+          seats: 3,
           questions: x.questions,
           difficulty: x.difficulty,
           username: x.username,
@@ -74,18 +83,17 @@ export class CreatePageComponent implements OnInit {
         },
         success: function (res) {
           console.log('** GAME CREATED **');
+          console.log(res);
+          console.log(res['lobbyId']);
+          x.globals.setLobbyKey(res['lobbyId']);
+          x.globals.setUsername(res['userId']);
+          x.router.navigate(['waiting']);
         },
         error: function (res) {
           console.log(this.data);
           alert('There was a problem connecting to lobby...');
         }
       });
-    } else {
-console.log(x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username);
-
-      console.log('create game values missing');
-      alert('Missing values for game creation');
-    }
   }
 
 }
