@@ -6,6 +6,10 @@
           <input id="nameInput" #box (keyup)="lobbyName(box.value)" type="text" class="form-control" placeholder="Name"
             aria-describedby="basic-addon1">
         </span>
+        <span id="username" class="input-group mb-3 form-horizontal">
+          <input id="usernameInput" #box (keyup)="setUsername(box.value)" type="text" class="form-control" placeholder="Username"
+            aria-describedby="basic-addon1">
+        </span>
         <span class="dropdown col-3 form-horizontal">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -22,6 +26,19 @@
         <span class="dropdown col-3 form-horizontal">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
+            {{difficulty}} Difficulty
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)='selectedDifficulty("Easy")'>Easy</a>
+            <br>
+            <a class="dropdown-item" (click)='selectedDifficulty("Medium")'>Medium</a>
+            <br>
+            <a class="dropdown-item" (click)='selectedDifficulty("Hard")'>Hard</a>
+          </div>
+        </span>
+        <span class="dropdown col-3 form-horizontal">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             {{seats}} Seats
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -31,14 +48,16 @@
           </div>
         </span>
       </div>
-      <div id="privateToggle" class="col-3" (click)="privateOrPublic()">
+      <!-- <div id="privateToggle" class="col-3" (click)="privateOrPublic()">
         <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
           data-off="Private" data-onstyle="success" data-offstyle="danger">
+      </div> -->
+      <div id="createDiv">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="createBtn" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" (click)="create()">
+          Create
+        </button>
       </div>
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="createBtn" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false" (click)="create()">
-        Create
-      </button>
     </div>
     <!-- <div id="penner">
       <div class="line">
@@ -61,61 +80,62 @@
       </div>
     </div> -->
 
-    <!-- COPY UNDER HERE -->
-
+    <hr style = "width: 90%; margin-left: auto; margin-right: auto;">
+    <!--Load all the categories-->
+    <h1 class = "categorie-box-label">Select a Trivia Category</h1>
     <div id="lowerHalf">
-      <div class="container">
-        <div class="row rowDiv">
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('22')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Geography')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Geography</h4>
               <p class="catIcon fa fa-globe"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('23')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('History')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>History</h4>
               <p class="catIcon fa fa-history"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('21')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4">
+            <button (click)="selectCategory('Sports')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Sports</h4>
               <p class="catIcon fa fa-futbol-o"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('24')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Politics')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Politics</h4>
               <p class="catIcon fa fa-handshake-o"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('25')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Art')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Art</h4>
               <p class="catIcon fa fa-paint-brush"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('19')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Math')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Math</h4>
               <p class="catIcon fa fa-times"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('18')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Computers')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Computers</h4>
               <p class="catIcon fa fa-desktop"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('11')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('Movies')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>Movies</h4>
               <p class="catIcon fa fa-film"></p>
             </button>
           </div>
-          <div class="catBtnDiv col-xs-8 col-sm-4 col-md-3 col-lg-4">
-            <button (click)="selectCategory('9')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
+          <div class="catBtnDiv col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+            <button (click)="selectCategory('All')" class="hvr-grow-rotate hvr-fade top-buffer catIconButton">
               <h4>All</h4>
               <p class="catIcon fa fa-circle-thin"></p>
             </button>

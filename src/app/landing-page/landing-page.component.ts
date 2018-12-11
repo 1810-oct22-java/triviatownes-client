@@ -59,7 +59,7 @@ export class LandingPageComponent implements OnInit {
     });
   }
 
-  selectCategory(cat){
+  selectCategory(cat) {
     this.globals.setCategory(cat);
     this.router.navigate(['/server-lobby']);
   }

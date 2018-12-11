@@ -3,12 +3,12 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GlobalsService } from '../globals.service';
+
 
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
 import { Subscription, Observable } from 'rxjs';
-
-import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-server-lobby',
@@ -67,11 +67,11 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public startPingingServer(self) {
 
-      if(self.subscribed){
+      if (self.subscribed) {
       console.log('ping');
       console.log(self.currentDataHash);
       self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
- 
+
       setInterval(self.startPingingServer, 2000, self);
       }
     }
@@ -111,12 +111,12 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         dtInstance.search($(this).val() + '').draw();
       });
     });
-    $('#datatable-custom-prev-btn').on('click', function() {
+    $('#datatable-custom-prev-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('previous').draw('page');
       });
     });
-    $('#datatable-custom-next-btn').on('click', function() {
+    $('#datatable-custom-next-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('next').draw('page');
       });
@@ -149,9 +149,16 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadServers();
     this.connect();
   }
+  populateTable() {
+    const url = 'http://localhost:8080/TriviaTownesServer/api/' + this.globals.getCategory();
+    $.get(url, function (data, status) {
+      console.log(data);
+      console.log('Status: ' + status);
+    });
+  }
 
   loadServers(): void {
-    
+
 
     console.log('Loading...');
 
@@ -201,7 +208,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dtOptions.pageLength = 10;
 
-    this.dtOptions.drawCallback = function(){
+    this.dtOptions.drawCallback = function () {
 
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
 
@@ -211,10 +218,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#datatable-custom-next-btn').prop('enabled', false);
         $('#datatable-custom-prev-btn').prop('enabled', false);
 
-        if(self.currentPage === self.maxPages){
+        if (self.currentPage === self.maxPages) {
           $('#datatable-custom-next-btn').prop('enabled', true);
         }
-        if(self.currentPage === 1){
+        if (self.currentPage === 1) {
           $('#datatable-custom-prev-btn').prop('enabled', true);
         }
         if (self.maxPages === 0) {

@@ -24,7 +24,7 @@ export class GlobalsService {
   }
 
   public getLobbyKey(): String {
-return this.lobbyKey;
+    return this.lobbyKey;
   }
 
   public setLobbyKey(key: String): void {
