@@ -93,7 +93,10 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
         url: 'http://localhost:8081/TriviaTownesServer/leaders',
         method: 'GET',
         crossDomain: true,
-        xhrFields: { withCredentials: true }
+        xhrFields: { withCredentials: true },
+        success: function(data){
+          console.log(data);
+        }
       },
       columns: [
         {

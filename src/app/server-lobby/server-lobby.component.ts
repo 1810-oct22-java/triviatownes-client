@@ -10,7 +10,6 @@ import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
 import { Subscription, Observable } from 'rxjs';
 
-import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-server-lobby',
