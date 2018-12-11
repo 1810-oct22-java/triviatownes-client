@@ -11,16 +11,10 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="table table-dark table-hover">
       <thead>
         <tr>
-          <th>Tag</th>
+          <th>Name</th>
           <th>Score</th>
         </tr>
       </thead>
-      <tbody *ngFor="let leader of leaders">
-        <tr>
-          <td>{{leader.name}}</td>
-          <td>{{leader.score}}</td>
-        </tr>
-      </tbody>
     </table> 
   </div>
 </div>

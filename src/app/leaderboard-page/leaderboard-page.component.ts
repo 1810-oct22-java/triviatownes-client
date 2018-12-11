@@ -20,9 +20,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   dtTrigger: any = new Subject();
 
-  leaders: { name: string, score: number } [] = [
-    {"name": "Ian", "score": 10}
-  ];
 
   maxPages: number;
   currentPage: number;
@@ -80,20 +77,42 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
-    this.getLeaders();
     this.loadServers();
 
   }
 
   loadServers(): void {
 
-    var self = this;
+    console.log('Loading...');
 
-    this.dtOptions = {}
+    const self = this;
+
+    this.dtOptions = {
+      ajax: {
+        url: 'http://localhost:8081/TriviaTownesServer/leaders',
+        method: 'GET',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        success: function(data){
+          console.log(data);
+        }
+      },
+      columns: [
+        {
+          title: 'Name',
+          data: 'name'
+        },
+        {
+          title: 'Score',
+          data: 'score'
+        }
+      ]
+    };
+
+    // hides default search, pagination stuff
+    this.dtOptions.dom = '<t>';
 
     this.dtOptions.pageLength = 10;
-
-    this.dtOptions.dom = "<t>";
 
     this.dtOptions.drawCallback = function(){
 
@@ -102,44 +121,24 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
         self.maxPages = dtInstance.page.info().pages;
         self.currentPage = dtInstance.page.info().page + 1;
 
-        $('#datatable-custom-next-btn').prop("disabled",false);
-        $('#datatable-custom-prev-btn').prop("disabled",false);
+        $('#datatable-custom-next-btn').prop('enabled', false);
+        $('#datatable-custom-prev-btn').prop('enabled', false);
 
-        if(self.currentPage == self.maxPages){
-          $('#datatable-custom-next-btn').prop("disabled",true);
+        if(self.currentPage === self.maxPages){
+          $('#datatable-custom-next-btn').prop('enabled', true);
         }
-        if(self.currentPage == 1){
-          $('#datatable-custom-prev-btn').prop("disabled",true);
+        if(self.currentPage === 1){
+          $('#datatable-custom-prev-btn').prop('enabled', true);
         }
-        if(self.maxPages == 0){
-          $('#datatable-custom-next-btn').prop("disabled",true);
-          $('#datatable-custom-prev-btn').prop("disabled",true);
-          $('#datatable-custom-page-label').val("0/0");
+        if (self.maxPages === 0) {
+          $('#datatable-custom-next-btn').prop('enabled', true);
+          $('#datatable-custom-prev-btn').prop('enabled', true);
+          $('#datatable-custom-page-label').val('0/0');
         } else {
-          $('#datatable-custom-page-label').val(self.currentPage + "/" + self.maxPages);
+          $('#datatable-custom-page-label').prop('disabled', true);
+          $('#datatable-custom-page-label').val(self.currentPage + '/' + self.maxPages);
         }
       });
-
-      $('#lobbyList_paginate').addClass('hide_elements');
-    }
+    };
   }
-
-  // dummyData(){
-  //   for(let i = 1; i < 100; i++){
-  //     this.leaders[i] = {
-  //       name: "dang",
-  //       score: i
-  //     }
-  //   }
-  // }
-
-  getLeaders(){
-    $.ajax({
-      url: 'http://localhost:8081/TriviaTownesServer/leaders', success: function (result) {
-        this.leaders = JSON.stringify(result);
-        
-      }
-    });
-  }
-
 }
