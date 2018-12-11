@@ -11,9 +11,13 @@ button:focus {
     color: #999;
 }
 
-#nameQSeats {
+#nameQSeats{
     padding-top: 2em;
     white-space: nowrap;
+}
+
+#nameQSeats span, #createDiv{
+    padding: .25em;
 }
 
 #lowerHalf button {
@@ -24,7 +28,17 @@ button:focus {
     margin: 0 auto;
 }
 
+#username {
+    margin: 0 auto;
+}
+
 #nameInput {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+#usernameInput {
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
@@ -37,6 +51,13 @@ button:focus {
 p {
     text-decoration: none;
 }
+
+.categorie-box-label {
+    text-shadow: 1px 3px 2px rgba(0,0,0,0.3);
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+  }
 
 // copy under here
 

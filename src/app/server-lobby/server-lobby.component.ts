@@ -3,6 +3,8 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GlobalsService } from '../globals.service';
+
 
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
@@ -67,12 +69,14 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public startPingingServer(self) {
 
+      if(self.subscribed){
       console.log('ping');
-      console.log(this._stompService);
+      console.log(self.currentDataHash);
       self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
-
-    setInterval(this.startPingingServer, 2000, self);
-  }
+ 
+      setInterval(self.startPingingServer, 2000, self);
+      }
+    }
 
   public onDataUpdate = (data_observable: Message) => {
     console.log('Hello');
@@ -109,12 +113,12 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         dtInstance.search($(this).val() + '').draw();
       });
     });
-    $('#datatable-custom-prev-btn').on('click', function() {
+    $('#datatable-custom-prev-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('previous').draw('page');
       });
     });
-    $('#datatable-custom-next-btn').on('click', function() {
+    $('#datatable-custom-next-btn').on('click', function () {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.page('next').draw('page');
       });
@@ -130,7 +134,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   rerender(): void {
 
-    console.log('before render');
     const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -145,12 +148,17 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.globals.setCategory('art');
     this.loadServers();
-    this.connect();
+    //this.connect();
+  }
+  populateTable() {
+    const url = 'http://localhost:8080/TriviaTownesServer/api/' + this.globals.getCategory();
+    $.get(url, function (data, status) {
+      console.log(data);
+      console.log('Status: ' + status);
+    });
   }
 
   loadServers(): void {
-
-    console.log('Loading...');
 
     const self = this;
 
@@ -159,7 +167,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         url: self.globals.getApiUrl() + 'lobby-data/data/',
         method: 'GET',
         crossDomain: true,
-        xhrFields: { withCredentials: true }
+        xhrFields: { withCredentials: true },
       },
       columns: [
         {
@@ -186,7 +194,23 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           title: 'Max Players',
           data: 'maxPlayers'
         }
-      ]
+      ],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        // Unbind first in order to avoid any duplicate handler
+        // (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', row).unbind('click');
+        $('td', row).bind('click', () => {
+          console.log(data);
+
+          if(data['scope'] === 'private'){
+            
+          }
+
+          //self.someClickHandler(data);
+        });
+        return row;
+      }
     };
 
     // hides default search, pagination stuff
@@ -194,7 +218,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dtOptions.pageLength = 10;
 
-    this.dtOptions.drawCallback = function(){
+    this.dtOptions.drawCallback = function () {
 
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
 
@@ -219,6 +243,8 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#datatable-custom-page-label').val(self.currentPage + '/' + self.maxPages);
         }
       });
+
+
     };
   }
 }

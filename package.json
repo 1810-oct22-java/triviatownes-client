@@ -20,7 +20,12 @@
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
     "@stomp/ng2-stompjs": "^7.0.1",
+<<<<<<< HEAD
     "@stomp/stompjs": "^5.1.0-beta.1",
+=======
+    "@stomp/stompjs": "^5.0.2",
+    "@types/ng-stomp": "^0.2.1",
+>>>>>>> 4fae6aa825b588941e460add45a362937b53dfc1
     "angular-datatables": "^7.0.0",
     "animejs": "^2.2.0",
     "core-js": "^2.5.4",
