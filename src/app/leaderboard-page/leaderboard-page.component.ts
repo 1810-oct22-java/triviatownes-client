@@ -77,7 +77,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
-    //this.dummyData();
     this.loadServers();
 
   }
