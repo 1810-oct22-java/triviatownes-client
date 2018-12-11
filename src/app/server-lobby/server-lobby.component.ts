@@ -132,7 +132,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   rerender(): void {
 
-    console.log('before render');
     const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -147,13 +146,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.globals.setCategory('art');
     this.loadServers();
-    this.connect();
+    //this.connect();
   }
 
   loadServers(): void {
-    
-
-    console.log('Loading...');
 
     const self = this;
 
@@ -163,10 +159,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         method: 'GET',
         crossDomain: true,
         xhrFields: { withCredentials: true },
-        complete: function(data) {
-          console.log(data);
-         self.connect();
-        }
       },
       columns: [
         {
@@ -193,7 +185,23 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           title: 'Max Players',
           data: 'maxPlayers'
         }
-      ]
+      ],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        // Unbind first in order to avoid any duplicate handler
+        // (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', row).unbind('click');
+        $('td', row).bind('click', () => {
+          console.log(data);
+
+          if(data['scope'] === 'private'){
+            
+          }
+
+          //self.someClickHandler(data);
+        });
+        return row;
+      }
     };
 
     // hides default search, pagination stuff
@@ -226,6 +234,8 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#datatable-custom-page-label').val(self.currentPage + '/' + self.maxPages);
         }
       });
+
+
     };
   }
 }

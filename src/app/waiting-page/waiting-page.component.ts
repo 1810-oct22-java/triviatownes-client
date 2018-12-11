@@ -48,7 +48,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public startPingingServer(self: any) {
 
     self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
-    //setInterval(this.startPingingServer, 2000, self);
+    setInterval(this.startPingingServer, 2000, self);
   }
 
   public onUpdate = (data_observable: Message) => {
