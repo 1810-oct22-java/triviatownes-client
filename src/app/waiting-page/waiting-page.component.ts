@@ -1,3 +1,5 @@
+import { Chat } from '../chat';
+import { Chats } from '../chats';
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -13,6 +15,11 @@ import { GlobalsService } from '../globals.service';
   styleUrls: ['./waiting-page.component.scss']
 })
 export class WaitingPageComponent implements OnInit, OnDestroy {
+
+  chats = Chats;
+  selectedChat: Chat;
+
+  public chatArr = [];
 
   // Stream of messages
   private data_subscription: Subscription;
@@ -64,6 +71,21 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  // getPlayers() {
+  //   $.ajax({
+  //     type: 'get',
+  //     url: this.url,
+  //     success: function(response, status) {
+  //       this.players = response;
+  //       console.log(this.players);
+  //       // append players to table
+  //     },
+  //     error: function(status, statusText) {
+  //       console.log(`Error: ${status}: ${statusText}`);
+  //     }
+  //   })
+  // }
 
   constructor(
     public router: Router,
