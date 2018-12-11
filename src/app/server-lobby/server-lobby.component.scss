@@ -40,6 +40,8 @@
 
 }
 
+
+
 input[type=text] {
     width: 130px;
     -webkit-transition: width 0.4s ease-in-out;
@@ -47,6 +49,7 @@ input[type=text] {
     border-style: solid;
     border: 2px solid #ff9900;
     border-radius: 8px;
+    outline-width: 0;
 }
 
 
