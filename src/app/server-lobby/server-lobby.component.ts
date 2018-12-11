@@ -1,182 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { LobbyInfoService } from '../lobby-info.service';
-// import { DataTableDirective, DataTablesModule } from 'angular-datatables';
-// import { Router } from '@angular/router';
-// import { HttpClient } from '@angular/common/http';
-// import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-// import { Subject } from 'rxjs';
-
-// @Component({
-//   selector: 'app-server-lobby',
-//   templateUrl: './server-lobby.component.html',
-//   styleUrls: ['./server-lobby.component.scss']
-// })
-// export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
-
-//   @ViewChild(DataTableDirective)
-
-//   dtElement: DataTableDirective;
-
-//   dtOptions: DataTables.Settings;
-
-//   dtTrigger: any = new Subject();
-
-//   lobinfo: any = [
-//     {
-//       lobbyName: 'Lobby 1',
-//       Category: 'Math',
-//       lobbyStatus: 'Public',
-//       Seats: '4/10',
-//     },
-//     {
-//       lobbyName: 'Lobby 2',
-//       Category: 'Science',
-//       lobbyStatus: 'Private',
-//       Seats: '5/10',
-//     },
-//     {
-//       lobbyName: 'Lobby 3',
-//       Category: 'Biology',
-//       lobbyStatus: 'Private',
-//       Seats: '9/10',
-//     },
-//   ];
-
-//   // elements: any [];
-
-//   // populate elements with lobby info from API
-//   // lobbyName, category, lobbyStatus, Seats
-//   lobbyInf: any [];
-//   constructor(
-
-//     public dataInfo: LobbyInfoService,
-//     public router: Router,
-//     private http: HttpClient
-
-//   ) { }
-
-//   ngAfterViewInit(): void {
-//     this.dtTrigger.next();
-
-//     $('#datatable-custom-search').on('input', function() {
-//       var newText = $(this).val() + '';
-//       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-//         dtInstance.search(newText).draw();
-//       });
-//     });
-
-//   }
-
-//   ngOnDestroy(): void {
-
-//     // Do not forget to unsubscribe the event
-//     this.dtTrigger.unsubscribe();
-//   }
-
-//   rerender(): void {
-
-//     console.log('before render');
-//     var self = this;
-
-//     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-//       // Destroy the table first
-//       dtInstance.destroy();
-//       // Call the dtTrigger to rerender again
-//       this.dtTrigger.next();
-//     });
-
-//     console.log('after render');
-
-//   }
-
-//   ngOnInit() {
-
-//     // this.http.get(this.dataInfo.getAPI() + 'get-all-lobby-info').subscribe((data: any[]) => this.lobbyInf = data);
-//     this.loadServers();
-
-//     var table = $('#lobbyList').DataTable({
-//       //  searching set to false
-
-//       // hide entries
-//       bLengthChange: false,
-//       responsive: true,
-//       data: this.lobinfo,
-//       columns: [
-//         {
-//           data: 'lobbyName'
-//         },
-//         {
-//           data: 'Category'
-//         },
-//         {
-//           data: 'lobbyStatus'
-//         },
-//         {
-//           data: 'Seats'
-//         },
-//         // create three buttons columns
-//         {
-//           defaultContent: '<button id='showLobby' class='btn btn-indigo btn-sm m-0'>Join</button>'
-//         }
-//       ],
-//       language: {
-//         search: '_INPUT_',
-//         searchPlaceholder: 'Find a lobby..',
-//       }
-//     });
-
-//     var getTable = this;
-
-//     // unbind previous event on tbody so that multiple events are not binded to the table whenever this function runs again
-//     $('#lobbyInfo tbody td').unbind();
-
-//     // defined jquery click event
-//     $('#lobbyInfo tbody td').on('click', 'button', function () {
-
-//       // the 'this' in this function is 'this' of jquery object not of component because we did not use an arrow function
-
-//       // get row for data
-//       var tr = $(this).closest('tr');
-//       var row = table.row(tr);
-//       // this of jquery object
-//       if (this.className === 'getLobby') {
-//         // use function of current class using reference
-//         getTable.showValue(row.data().lobbyName);
-//       }
-//     });
-
-
-//   }
-
-//   showValue(value) {
-//     alert(value);
-//   }
-
-//   loadServers(): void {
-
-//     // this.dtOptions = {};
-
-//     $.ajax({
-//       url: 'http://api.com/get-all-lobby-info',
-//       // url: this.dataInfo.getAPI() +'get-all-lobby-info',
-
-//       data: {
-//          format: 'json'
-//       },
-
-//       dataType: 'jsonp',
-//       success: function(data) {
-
-
-
-//       },
-//       type: 'GET'
-//     });
-
-//   }
-
-// }
-
 import { Component, OnInit } from '@angular/core';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Router } from '@angular/router';
@@ -184,6 +5,12 @@ import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { GlobalsService } from '../globals.service';
 
+
+import { StompService } from '@stomp/ng2-stompjs';
+import { Message, StompHeaders } from '@stomp/stompjs';
+import { Subscription, Observable } from 'rxjs';
+
+import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-server-lobby',
@@ -203,11 +30,77 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   maxPages: number;
   currentPage: number;
 
-  lobbyInf: any[];
-  constructor(
-    public globals: GlobalsService,
-    public router: Router
+  lobbyInf: any [];
 
+  currentDataHash = '0';
+
+  // Stream of messages
+  private data_subscription: Subscription;
+  public data_observable: Observable<Message>;
+
+  private _stompService: StompService;
+
+  // Subscription status
+  public subscribed = false;
+
+  StompConfig = {
+    url: 'ws://127.0.0.1:8080/TriviaTownesServer/select-lobby-hash',
+    headers: {},
+    heartbeat_in: 0, // Typical value 0 - disabled
+    heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+    reconnect_delay: 0,
+    debug: true // Will log diagnostics on console
+  };
+
+  disconnect() {
+    this._stompService.deactivate();
+  }
+
+  connect() {
+    this._stompService = new StompService(this.StompConfig);
+    this._stompService.initAndConnect();
+
+    this.data_observable = this._stompService.subscribe('/lobbies-hash/' + this.globals.getCategory().toLowerCase() + '/get-lobby-data');
+    this.data_subscription = this.data_observable.subscribe(this.onDataUpdate);
+    this.subscribed = true;
+
+    this.startPingingServer(this);
+  }
+
+  public startPingingServer(self) {
+
+      if(self.subscribed){
+      console.log('ping');
+      console.log(self.currentDataHash);
+      self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
+ 
+      setInterval(self.startPingingServer, 2000, self);
+      }
+    }
+
+  public onDataUpdate = (data_observable: Message) => {
+    console.log('Hello');
+    console.log(data_observable.body);
+    console.log(this.currentDataHash);
+
+    if (this.currentDataHash !== data_observable.body) {
+      this.currentDataHash = data_observable.body;
+      this.rerender();
+    }
+  }
+
+  public unsubscribe() {
+    if (!this.subscribed) {
+      return;
+    }
+    this.data_subscription = null;
+    this.data_observable = null;
+    this.subscribed = false;
+  }
+
+  constructor(
+    public router: Router,
+    public globals: GlobalsService
   ) { }
 
   ngAfterViewInit(): void {
@@ -215,10 +108,9 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
     const self = this;
     this.dtTrigger.next();
 
-    $('#datatable-custom-search').on('input', function () {
-      const newText = $(this).val() + '';
+    $('#datatable-custom-search').on('input', function() {
       self.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.search(newText).draw();
+        dtInstance.search($(this).val() + '').draw();
       });
     });
     $('#datatable-custom-prev-btn').on('click', function () {
@@ -237,34 +129,26 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
 
     this.dtTrigger.unsubscribe();
+    this.unsubscribe();
   }
 
   rerender(): void {
 
-    console.log('before render');
     const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+
       // Destroy the table first
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
-
-
     });
-
   }
 
   ngOnInit() {
-
+    this.globals.setCategory('art');
     this.loadServers();
-    this.populateTable();
-    // var table = $('#lobbyList').DataTable({
-    // //  searching set to false
-    // bLengthChange: false
-
-    // });
-
+    //this.connect();
   }
   populateTable() {
     const url = 'http://localhost:8080/TriviaTownesServer/api/' + this.globals.getCategory();
@@ -278,7 +162,56 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const self = this;
 
-    this.dtOptions = {};
+    this.dtOptions = {
+      ajax: {
+        url: self.globals.getApiUrl() + 'lobby-data/data/',
+        method: 'GET',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+      },
+      columns: [
+        {
+          title: 'Name',
+          data: 'name'
+        },
+        {
+          title: 'Category',
+          data: 'category'
+        },
+        {
+          title: 'Difficulty',
+          data: 'difficulty'
+        },
+        {
+          title: 'Scope',
+          data: 'scope'
+        },
+        {
+          title: 'Current Players',
+          data: 'players'
+        },
+        {
+          title: 'Max Players',
+          data: 'maxPlayers'
+        }
+      ],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        // Unbind first in order to avoid any duplicate handler
+        // (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', row).unbind('click');
+        $('td', row).bind('click', () => {
+          console.log(data);
+
+          if(data['scope'] === 'private'){
+            
+          }
+
+          //self.someClickHandler(data);
+        });
+        return row;
+      }
+    };
 
     // hides default search, pagination stuff
     this.dtOptions.dom = '<t>';
@@ -295,10 +228,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#datatable-custom-next-btn').prop('enabled', false);
         $('#datatable-custom-prev-btn').prop('enabled', false);
 
-        if (self.currentPage === self.maxPages) {
+        if(self.currentPage === self.maxPages){
           $('#datatable-custom-next-btn').prop('enabled', true);
         }
-        if (self.currentPage === 1) {
+        if(self.currentPage === 1){
           $('#datatable-custom-prev-btn').prop('enabled', true);
         }
         if (self.maxPages === 0) {
@@ -310,6 +243,8 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#datatable-custom-page-label').val(self.currentPage + '/' + self.maxPages);
         }
       });
+
+
     };
   }
 }
