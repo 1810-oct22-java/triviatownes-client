@@ -23,6 +23,7 @@
     "@stomp/stompjs": "^5.0.2",
     "@types/ng-stomp": "^0.2.1",
     "angular-datatables": "^7.0.0",
+    "animate.css": "^3.7.0",
     "animejs": "^2.2.0",
     "core-js": "^2.5.4",
     "datatables": "^1.10.18",
