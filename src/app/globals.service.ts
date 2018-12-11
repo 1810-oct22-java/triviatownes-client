@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
 
   private category: String;
-  private apiUrl: String = 'http://localhost:8085/TriviaTownesServer/';
+  private apiUrl: String = 'http://localhost:8080/TriviaTownesServer/';
+  private lobbyKey;
 
   constructor() { }
 
@@ -20,5 +21,13 @@ export class GlobalsService {
 
   public getApiUrl(): String {
     return this.apiUrl;
+  }
+
+  public getLobbyKey(): String {
+return this.lobbyKey;
+  }
+
+  public setLobbyKey(key: String): void {
+    this.lobbyKey = key;
   }
 }
