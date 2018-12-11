@@ -24,9 +24,9 @@ export class GamePageComponent implements OnInit {
   }
 
   loadAnswers(answers: string[]){
-    this.a1 += answers[0];
-    this.a2 += answers[1];
-    this.a3 += answers[2];
+    this.a1 = answers[0];
+    this.a2 = answers[1];
+    this.a3 = answers[2];
     this.a4 += answers[3];
 
   }

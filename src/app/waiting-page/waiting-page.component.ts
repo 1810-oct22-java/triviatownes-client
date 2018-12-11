@@ -71,7 +71,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.globals.setLobbyKey('abc');
+    this.globals.setLobbyKey('0');
     this.connect();
   }
 
