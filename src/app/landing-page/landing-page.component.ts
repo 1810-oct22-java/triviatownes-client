@@ -12,7 +12,7 @@ export class LandingPageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geo', 'Cars', 'Lit', 'New'];
 
   constructor(
-    public envVars: GlobalsService,
+    public envconsts: GlobalsService,
     public router: Router,
     public globals: GlobalsService
   ) { }
@@ -64,28 +64,4 @@ export class LandingPageComponent implements OnInit {
     this.router.navigate(['/server-lobby']);
   }
 
-  // This logic will happen on a different page
-  /*
-  pickCategory(cat) {
-
-    //Needed to refrence this object insidee of ajax callbacks
-    var self = this;
-
-    console.log("picking category " + cat);
-    $.ajax({
-      url: "selectLobby",
-      method: "POST",
-      data: {
-        category: cat
-      },
-      success: function(response){
-        self.globals.setCategory(cat);
-        self.router.navigate(['/select-lobby']);
-      },
-      error: function(response){
-        alert("There was a problem loading server list...");
-      }
-    });
-  }
-  */
 }

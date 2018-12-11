@@ -10,9 +10,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    var Messenger = function (el) {
+    const Messenger = function (el) {
       'use strict';
-      var m = this;
+      const m = this;
 
       m.init = function () {
         m.codeletters = '&#*+%?£@§$';
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
       };
 
       m.generateRandomString = function (length) {
-        var random_text = '';
+        let random_text = '';
         while (random_text.length < length) {
           random_text += m.codeletters.charAt(Math.floor(Math.random() * m.codeletters.length));
         }
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
             m.current_length = m.messages[m.message].length;
           }
 
-          var message = m.generateRandomString(m.current_length);
+          const message = m.generateRandomString(m.current_length);
           $(el).html(message);
 
           setTimeout(m.animateIn, 20);
@@ -54,16 +54,16 @@ export class AppComponent implements OnInit {
       m.animateFadeBuffer = function () {
         if (m.fadeBuffer === false) {
           m.fadeBuffer = [];
-          for (var i = 0; i < m.messages[m.message].length; i++) {
+          for (let i = 0; i < m.messages[m.message].length; i++) {
             m.fadeBuffer.push({ c: (Math.floor(Math.random() * 12)) + 1, l: m.messages[m.message].charAt(i) });
           }
         }
 
-        var do_cycles = false;
-        var message = '';
+        let do_cycles = false;
+        let message = '';
 
-        for (var i = 0; i < m.fadeBuffer.length; i++) {
-          var fader = m.fadeBuffer[i];
+        for (let i = 0; i < m.fadeBuffer.length; i++) {
+          const fader = m.fadeBuffer[i];
           if (fader.c > 0) {
             do_cycles = true;
             fader.c--;
@@ -96,10 +96,10 @@ export class AppComponent implements OnInit {
       };
 
       m.init();
-    }
+    };
 
     console.clear();
-    var messenger = new Messenger($('#scramble'));
+    const messenger = new Messenger($('#scramble'));
 
   }
 

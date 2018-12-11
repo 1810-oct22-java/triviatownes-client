@@ -12,8 +12,6 @@ export class CreatePageComponent implements OnInit {
   selectedCategory: string;
   seats: string;
   questions: string;
-  difficulty: string;
-  // private = false;
   username: string;
   name: string;
   key: string;
@@ -38,10 +36,10 @@ export class CreatePageComponent implements OnInit {
     console.log(this.questions);
   }
 
-  selectedDifficulty(str: string) {
-    this.difficulty = str + '';
-    console.log(this.difficulty);
-  }
+  // selectedDifficulty(str: string) {
+  //   this.difficulty = str + '';
+  //   console.log(this.difficulty);
+  // }
 
   // privateOrPublic() {
   //   this.private = !this.private;
@@ -60,7 +58,7 @@ export class CreatePageComponent implements OnInit {
 
   create() {
     const x = this;
-    if (x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username) {
+    if (x.selectedCategory && x.seats && x.questions && x.name && x.username) {
       $.ajax({
         url: 'connect-to-lobby',
         method: 'POST',
@@ -68,7 +66,6 @@ export class CreatePageComponent implements OnInit {
           category: x.selectedCategory,
           seats: x.seats,
           questions: x.questions,
-          difficulty: x.difficulty,
           username: x.username,
           name: x.name,
         },

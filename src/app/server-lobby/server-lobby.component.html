@@ -3,8 +3,9 @@
     <!-- add in dtOptions in table tag -->
     <!-- [dtOptions]="dtOptions"  -->
     <div class="wrap">
-        <input id = "datatable-custom-search" class = "data-tables-search" placeholder= " Search.."type="text"/>
+        <input id = "datatable-custom-search" class = "wackyInput data-tables-search" placeholder= " Search.."type="text"/>
     </div>
+      <button class = "btn btn-primary refresh-button" (click)="rerender()">Refresh List</button>
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="lobbyList" class="cell-border order-column hover">
         <thead>
           <tr>
