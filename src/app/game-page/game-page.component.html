@@ -20,19 +20,19 @@
             <div *ngIf="isMultipleChoice">
               <div class="row">
                   <div class="col-md-6">
-                      <button type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
                   </div>
                   <div class="col-md-6">
-                      <button type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
                   </div>
               </div>
               <br>
               <div class="row">
                   <div class="col-md-6">
-                      <button type="button" (click)="checkAnswer(2)" class="btn btn-primary btn-lg btn-block">C. {{answers[2]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(2)" class="btn btn-primary btn-lg btn-block">C. {{answers[2]}}</button>
                   </div>
                   <div class="col-md-6">
-                      <button type="button" (click)="checkAnswer(3)" class="btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(3)" class="btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
                   </div>
               </div>
             </div>
@@ -40,10 +40,10 @@
             <div *ngIf="!isMultipleChoice">
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
                         </div>
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                             <h3 class="panel-title"></h3><h4><b>Timer</b></h4>
                         </div>
                         <div style="height: 50px">
-                            <div class="panel-body"><h3 style="margin-top: 0px"><b>5:31</b></h3></div>
+                            <div class="panel-body"><h3 style="margin-top: 0px"><b>{{currentTime}}</b></h3></div>
                         </div>
                     </div>
                 </div>

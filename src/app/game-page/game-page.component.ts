@@ -19,7 +19,8 @@ export class GamePageComponent implements OnInit {
   correctIndex: number;
   answers: string[];
 
-  currentTime: number;
+  // Hardcore time
+  currentTime: number = 25;
 
   currentQuestionNumber: number = 2;
   totalQuestions: number = 15;
@@ -29,6 +30,7 @@ export class GamePageComponent implements OnInit {
   // Player properties
   didAnswer: boolean = false;
   displayMsg: string;
+  points: number;
 
 
   constructor(private sanitizer: DomSanitizer) { }
@@ -72,12 +74,22 @@ export class GamePageComponent implements OnInit {
   checkAnswer(playerAnswer: number){
       this.didAnswer = true;
       if (playerAnswer == this.correctIndex){
-        this.displayMsg = 'Correct!';
+        this.points = this.calculatePoints();
+        this.displayMsg = `Correct! +${this.points} pts.`;
       }
       else{
-        this.displayMsg = 'Incorrect';
+        this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
+        this.points = 0;
       }
   }
+
+  calculatePoints(): number{
+    let correctPoints = this.difficulty;
+    let timeBonus = 1 + (this.currentTime/30);
+    return Math.round(correctPoints*timeBonus);
+  }
+
+
 
 
 

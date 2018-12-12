@@ -30,7 +30,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://192.168.0.45:8080/TriviaTownesServer/join-waiting-lobby',
+    url: 'ws://192.168.61.33:8080/TriviaTownesServer/join-waiting-lobby',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
