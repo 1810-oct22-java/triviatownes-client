@@ -89,7 +89,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
     this.dtOptions = {
       ajax: {
-        url: 'http://localhost:8080/TriviaTownesServer/leaders',
+        url: 'http://localhost:8081/TriviaTownesServer/leaders',
         method: 'GET',
         crossDomain: true,
         dataSrc: '',
@@ -98,7 +98,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
       columns: [
         {
           title: 'Name',
-          data: 'name'
+          data: 'username'
         },
         {
           title: 'Score',
