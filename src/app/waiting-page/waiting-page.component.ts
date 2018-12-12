@@ -30,7 +30,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://192.168.61.33:8080/TriviaTownesServer/join-waiting-lobby',
+    url: 'ws://localhost:8080/TriviaTownesServer/join-waiting-lobby',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
@@ -45,7 +45,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
     this.data_subscription = this.data_observable.subscribe(this.onUpdate);
     this.subscribed = true;
-
+    
     this.startPingingServer(this);
   }
 
@@ -53,7 +53,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
     if(self.subscribed){
       self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
-      setInterval(this.startPingingServer, 2000, self);
+      setInterval(this.startPingingServer, 500, self);
     }
   }
 
@@ -78,7 +78,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     const self = this;
 
     $.ajax({
-      url: self.globals.getApiUrl() + 'start-game',
+      url: self.globals.getApiUrl() + 'start-game-connect',
       method: 'POST',
       data: {
         key: self.globals.getLobbyKey()
@@ -120,7 +120,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     this.data_subscription = null;
     this.data_observable = null;
     this.subscribed = false;
-    this._stompService.disconnect();
+    //this._stompService.disconnect();
     this._stompService.deactivate();
     //this._stompService.
   }
