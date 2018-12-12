@@ -36,6 +36,7 @@ button:focus {
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
+    background-color:rgba(0,0,0,0.5);
 }
 
 #usernameInput {
@@ -120,3 +121,38 @@ p {
     background-color: #DB363C;
     color: white;
 }
+
+.dropbtn {
+    background-color: white;
+    color: white;
+    padding: 12px;
+    font-size: 12px;
+    border: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #DB363C;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #e98c01;}

@@ -157,7 +157,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadServers(): void {
-    
+
     console.log('Loading...');
 
     const self = this;
@@ -203,11 +203,11 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         $('td', row).bind('click', () => {
           console.log(data);
 
-          if(data['scope'] === 'private'){
-            
+          if (data['scope'] === 'private') {
+
           }
 
-          //self.someClickHandler(data);
+          // self.someClickHandler(data);
         });
         return row;
       }
@@ -228,17 +228,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         $('#datatable-custom-next-btn').prop('enabled', false);
         $('#datatable-custom-prev-btn').prop('enabled', false);
 
-<<<<<<< HEAD
         if (self.currentPage === self.maxPages) {
           $('#datatable-custom-next-btn').prop('enabled', true);
         }
         if (self.currentPage === 1) {
-=======
-        if(self.currentPage === self.maxPages){
-          $('#datatable-custom-next-btn').prop('enabled', true);
-        }
-        if(self.currentPage === 1){
->>>>>>> create-page
           $('#datatable-custom-prev-btn').prop('enabled', true);
         }
         if (self.maxPages === 0) {

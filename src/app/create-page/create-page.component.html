@@ -11,7 +11,7 @@
             aria-describedby="basic-addon1">
         </span>
         <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             {{questions}} Questions
           </button>
@@ -21,23 +21,18 @@
             <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
             <br>
             <a class="dropdown-item" (click)='selectedQuestions(20)'>20</a>
+          </div> -->
+          <div class="dropdown">
+            <button class="dropbtn btn btn-success">{{questions}} Questions</button>
+            <div class="dropdown-content">
+              <a (click)='selectedQuestions(5)'>5</a>
+              <a (click)='selectedQuestions(10)'>10</a>
+              <a (click)='selectedQuestions(20)'>20</a>
+            </div>
           </div>
         </span>
-        <!-- <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{difficulty}} Difficulty
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)='selectedDifficulty("Easy")'>Easy</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedDifficulty("Medium")'>Medium</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedDifficulty("Hard")'>Hard</a>
-          </div>
-        </span> -->
         <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             {{seats}} Seats
           </button>
@@ -45,6 +40,13 @@
             <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
             <br>
             <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
+          </div> -->
+          <div class="dropdown">
+            <button class="dropbtn btn btn-success">{{seats}} Seats</button>
+            <div class="dropdown-content">
+              <a (click)='selectedSeats(5)'>5</a>
+              <a (click)='selectedSeats(10)'>10</a>
+            </div>
           </div>
         </span>
       </div>
