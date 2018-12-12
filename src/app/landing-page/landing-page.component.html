@@ -3,8 +3,12 @@
     <h1 class = "join-private-label">Join Private Lobby</h1>
   </div>
   <div>
-    <input class = "form-control join-private-input" id="pin" type="text">
+    <input [(ngModel)]="game_key" class = "form-control join-private-input" id="pin" type="text" placeholder="Enter Lobby Key">
+    <input [(ngModel)]="username" class = "form-control join-private-input" id="username" type="text" placeholder="Enter Username">
+    <p></p>
     <button class = "btn btn-success join-private-button" (click)="joinLobby()">Join</button>
+    <hr style = "width: 90%; margin-left: auto; margin-right: auto;">
+    <h1 class = "categorie-box-label">Creat a New Game Lobby</h1>
   </div>
   <div>
     <button class = "btn btn-success join-private-button" [routerLink]="['/create']">Create Game</button>

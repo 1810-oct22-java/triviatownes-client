@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
@@ -19,6 +19,10 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public data_observable: Observable<Message>;
 
   private _stompService: StompService;
+
+  private gameCategory;
+  private gameNumberOfQuestion;
+  private gameName;
 
   users: any;
 
@@ -47,8 +51,10 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
   public startPingingServer(self: any) {
 
-    self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
-    setInterval(this.startPingingServer, 2000, self);
+    if(self.subscribed){
+      self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
+      setInterval(this.startPingingServer, 2000, self);
+    }
   }
 
   public onUpdate = (data_observable: Message) => {
@@ -57,11 +63,33 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
     console.log(payload);
 
+    console.log(payload['status']);
+
     this.users = payload['players'];
     console.log(this.users[0]['username']);
-    if (payload['status'] === 'ready') {
+    if (payload['status'] === 1) {
+      this.unsubscribe();
       this.router.navigate(['game']);
     }
+  }
+
+  public startGame(): void {
+
+    const self = this;
+
+    $.ajax({
+      url: self.globals.getApiUrl() + 'start-game',
+      method: 'POST',
+      data: {
+        key: self.globals.getLobbyKey()
+      },
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      success: function (res) {
+        self.unsubscribe();
+        self.router.navigate(['game']);
+      },
+    });
   }
 
 
@@ -71,8 +99,17 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.globals.setLobbyKey('0');
-    this.connect();
+    if(!this.globals.getLobbyKey()){
+      this.router.navigate(['']);
+    } else {
+      this.gameCategory = this.globals.getGameCategory();
+      this.gameName = this.globals.getLobbyName();
+      this.gameNumberOfQuestion = this.globals.getLobbyQuestions();
+
+      console.log(this.gameCategory);
+      console.log(this.gameNumberOfQuestion);
+      this.connect();
+    }
   }
 
   ngOnDestroy(): void {
@@ -80,11 +117,11 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   }
 
   public unsubscribe() {
-    if (!this.subscribed) {
-      return;
-    }
     this.data_subscription = null;
     this.data_observable = null;
     this.subscribed = false;
+    this._stompService.disconnect();
+    this._stompService.deactivate();
+    //this._stompService.
   }
 }

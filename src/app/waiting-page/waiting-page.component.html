@@ -5,7 +5,7 @@
     <!-- User List Area -->
     <div class = "col-sm-8 col-md-8">
       <div class = "player-list-label-container">
-        <h1 class = "player-list-label">Lobby Name: <span class = "lobby-name">The Avengers</span></h1>
+        <h1 class = "player-list-label">Lobby Name: <span class = "lobby-name">{{gameName}}</span></h1>
       </div>
       <hr style="border:1px solid #7070db">
       <div class = "container-fluid player-box">
@@ -23,29 +23,20 @@
     <div class = "col-sm-8 col-md-4">
 
       <div class = "ready-button-holder">
-        <button class = "btn btn-success">
+        <button *ngIf="globals.getIsLeader()" class = "btn btn-success" (click)="startGame()">
           Ready
         </button>
       </div>
-
-      <hr style="border:1px solid #7070db">
+      <br>
 
       <form>
           <div class="form-group">
             <label class = "info-label">Quiz Category:</label>
-            <input value="Music" disabled type="text" class="form-control" id="category-box">
-          </div>
-          <div class="form-group">
-            <label class = "info-label">Difficulty:</label>
-            <input value = "Hard" disabled type="text" class="form-control" id="difficulty-box">
-          </div>
-          <div class="form-group">
-            <label class = "info-label">Availability:</label>
-            <input value = "Public" disabled type="text" class="form-control" id="availability-box">
+            <input  value={{gameCategory}} disabled type="text" class="form-control" id="category-box">
           </div>
           <div class="form-group">
             <label class = "info-label"># Questions:</label>
-            <input value = "10" disabled type="text" class="form-control" id="question-number-box">
+            <input value={{gameNumberOfQuestion}}  type="text" class="form-control" id="question-number-box">
           </div>
       </form>
     </div>
