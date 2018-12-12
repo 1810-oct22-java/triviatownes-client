@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-game-page',
@@ -6,30 +7,81 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-page.component.scss']
 })
 export class GamePageComponent implements OnInit {
+  // Hardcode a QuestionBean
+  jsonString: string = '{"isMultipleChoice":true, "category":"geography", "difficulty":"easy", "question":"Which small country is located between the borders of France and Spain?", "correctIndex":2, "answers":["Vatican City", "San Marino", "Andorra", "Lichtenstein"]}';
+  // properties of each question
+  payload: object;
+  questionObj: object;
+  isMultipleChoice: boolean;
+  category: string;
+  difficulty: number;
+  question: string;
+  correctIndex: number;
+  answers: string[];
 
-  answers: string[] = ['This is an answer', 'This is an answer with a lot of words hopefully everything fits', 'Another answer', 'Woohoo'];
-  a1: string = 'A. ';
-  a2: string = 'B. ';
-  a3: string = 'C. ';
-  a4: string = 'D. ';
-  Question: string = 'This is a hardcoded question';
+  currentTime: number;
 
-  currentQuestionNumber: number = 1;
+  currentQuestionNumber: number = 2;
   totalQuestions: number = 15;
+  progressPercent: number;
+  progress;
 
-  constructor() { }
+  // Player properties
+  didAnswer: boolean = false;
+  displayMsg: string;
+
+
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.loadAnswers(this.answers);
+    this.loadQuestion();
+    this.loadProgressBar();
   }
 
-  loadAnswers(answers: string[]){
-    this.a1 = answers[0];
-    this.a2 = answers[1];
-    this.a3 = answers[2];
-    this.a4 += answers[3];
-
+  
+  loadQuestion(){
+//    this.questionObj = this.payload['QuestionBean'];
+    this.questionObj = JSON.parse(this.jsonString);
+    console.log(this.questionObj);
+    this.isMultipleChoice = this.questionObj['isMultipleChoice'];
+    this.category = this.questionObj['category'];
+    this.setDifficulty();
+    this.question = this.questionObj['question'];
+    this.correctIndex = this.questionObj['correctIndex'];
+    this.answers = this.questionObj['answers'];
   }
+
+  // Set difficulty multiplier
+  setDifficulty(){
+    if (this.questionObj['difficulty'] == 'easy'){
+      this.difficulty = 30;
+    }
+    else if (this.questionObj['difficulty'] == 'medium'){
+      this.difficulty = 45;
+    }
+    else if (this.questionObj['difficulty'] == 'hard'){
+      this.difficulty = 60;
+    }
+  }
+
+  loadProgressBar(){
+    this.progressPercent = 100*(this.currentQuestionNumber/this.totalQuestions);
+    this.progress = this.sanitizer.bypassSecurityTrustStyle(`width: ${this.progressPercent}%`);
+  }
+
+  checkAnswer(playerAnswer: number){
+      this.didAnswer = true;
+      if (playerAnswer == this.correctIndex){
+        this.displayMsg = 'Correct!';
+      }
+      else{
+        this.displayMsg = 'Incorrect';
+      }
+  }
+
+
+
+
 
 }
 
