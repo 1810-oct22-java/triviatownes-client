@@ -9,8 +9,49 @@ export class GlobalsService {
   private apiUrl: String = 'http://localhost:8080/TriviaTownesServer/';
   private lobbyKey;
   private username;
+  private gameCategory;
+  private lobbyName;
+  private lobbyQuestions;
+  private isLeader = false;
+  private userId;
 
   constructor() { }
+
+  public getUserId(): String {
+    return this.userId;
+  }
+  public setUserId(userId: String): void {
+    this.userId = userId;
+  }
+
+  public getGameCategory(): String {
+    return this.gameCategory;
+  }
+  public setGameCategory(cat: String): void {
+    this.gameCategory = cat;
+  }
+
+  public getLobbyName(): String {
+    return this.lobbyName;
+  }
+  public setLobbyName(name: String): void {
+    this.lobbyName = name;
+  }
+
+  public getLobbyQuestions(): String {
+    return this.lobbyQuestions;
+  }
+  public setLobbyQuestions(number: String): void {
+    this.lobbyQuestions = number;
+  }
+
+  public getIsLeader(): boolean {
+    return this.isLeader;
+  }
+
+  public setIsLeader(status: boolean) {
+    this.isLeader = status;
+  }
 
   public getUsername(): String {
     return this.username;

@@ -11,6 +11,9 @@ import { GlobalsService } from '../globals.service';
 export class LandingPageComponent implements OnInit {
   categories = ['Science', 'Art', 'History', 'Sports', 'Nature', 'Geo', 'Cars', 'Lit', 'New'];
 
+  username: String;
+  game_key: String;
+
   constructor(
     public envVars: GlobalsService,
     public router: Router,
@@ -44,18 +47,39 @@ export class LandingPageComponent implements OnInit {
   * Sends pin to servlet
   */
   joinLobby() {
-    const pin = $('#pin').val();
-    console.log(pin);
+
+    const self = this;
+
+    if(!(this.username && this.game_key)){
+      alert('Please enter a username and password!');
+      return;
+    }
+
     $.ajax({
-      url: '/connect-to-lobby',
+      url: self.globals.getApiUrl() + '/join-waiting',
       method: 'POST',
-      data: { pin },
-      success: function (response) {
-        this.router.navigate(['/waiting']);
-      },
-      error: function (response) {
-        alert('There was a problem connecting to lobby...');
-      }
+      data: {
+        lobbyKey: self.game_key,
+        username: self.username
+       },
+       crossDomain: true,
+       xhrFields: { withCredentials: true },
+       success: function (res) {
+         console.log(res);
+         self.globals.setLobbyKey(res['lobbyId']);
+         self.globals.setUsername(res['userId']);
+         self.globals.setUsername(self.username);
+         self.globals.setUserId(res['userId']);
+         self.globals.setGameCategory(res['category']);
+         self.globals.setLobbyQuestions(res['questions']);
+         self.globals.setLobbyName(res['lobbyName']);
+         self.router.navigate(['waiting']);
+       },
+       error: function (res) {
+         console.log('error....');
+         console.log(res);
+         alert('game session is full or does not exist, please pick another lobby....');
+       }
     });
   }
 

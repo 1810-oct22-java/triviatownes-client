@@ -64,10 +64,19 @@ export class CreatePageComponent implements OnInit {
 
   create() {
     const x = this;
-    if (!(x.selectedCategory && x.seats && x.questions && x.difficulty && x.name && x.username)) {
-      alert('Missing values for game creation');
-      return;
-    }
+
+    /*
+    if (!(x.selectedCategory && x.seats && x.questions && x.name && x.username)) {
+     alert('Missing values for game creation');
+     return;
+  } */
+
+    x.selectedCategory = 'Sports';
+    x.name = 'Testing Name';
+    x.seats = '4';
+    x.questions = '5';
+    x.username = 'jross';
+
       $.ajax({
         url: x.globals.getApiUrl() + 'create-game',
         method: 'POST',
@@ -77,7 +86,6 @@ export class CreatePageComponent implements OnInit {
           category: x.selectedCategory,
           seats: 3,
           questions: x.questions,
-          difficulty: x.difficulty,
           username: x.username,
           name: x.name,
         },
@@ -86,7 +94,12 @@ export class CreatePageComponent implements OnInit {
           console.log(res);
           console.log(res['lobbyId']);
           x.globals.setLobbyKey(res['lobbyId']);
-          x.globals.setUsername(res['userId']);
+          x.globals.setUsername(x.username);
+          x.globals.setUserId(res['userId']);
+          x.globals.setGameCategory(res['category']);
+          x.globals.setLobbyQuestions(res['questions']);
+          x.globals.setLobbyName(res['lobbyName']);
+          x.globals.setIsLeader(true);
           x.router.navigate(['waiting']);
         },
         error: function (res) {

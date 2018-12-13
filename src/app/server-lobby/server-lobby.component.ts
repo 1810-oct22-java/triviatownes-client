@@ -173,6 +173,11 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(res);
         self.globals.setLobbyKey(res['lobbyId']);
         self.globals.setUsername(res['userId']);
+        self.globals.setUsername(self.username);
+        self.globals.setUserId(res['userId']);
+        self.globals.setGameCategory(res['category']);
+        self.globals.setLobbyQuestions(res['questions']);
+        self.globals.setLobbyName(res['lobbyName']);
         self.router.navigate(['waiting']);
       },
       error: function (res) {
@@ -181,7 +186,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         alert('game session is full, please pick another lobby....');
       }
     });
-
   }
 
   loadServers(): void {
@@ -203,10 +207,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         {
           title: 'Category',
           data: 'category'
-        },
-        {
-          title: 'Difficulty',
-          data: 'difficulty'
         },
         {
           title: 'Current Players',

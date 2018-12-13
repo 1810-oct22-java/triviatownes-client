@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
@@ -22,13 +22,17 @@ export class WaitingPageComponent{
 
   private _stompService: StompService;
 
+  private gameCategory;
+  private gameNumberOfQuestion;
+  private gameName;
+
   users: any;
 
   // Subscription status
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://127.0.0.1:8080/TriviaTownesServer/join-waiting-lobby',
+    url: 'ws://localhost:8080/TriviaTownesServer/join-waiting-lobby',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
@@ -43,14 +47,16 @@ export class WaitingPageComponent{
     this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
     this.data_subscription = this.data_observable.subscribe(this.onUpdate);
     this.subscribed = true;
-
+    
     this.startPingingServer(this);
   }
 
   public startPingingServer(self: any) {
 
-    self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
-    setInterval(this.startPingingServer, 2000, self);
+    if(self.subscribed){
+      self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
+      setInterval(this.startPingingServer, 500, self);
+    }
   }
 
   public onUpdate = (data_observable: Message) => {
@@ -59,11 +65,33 @@ export class WaitingPageComponent{
 
     console.log(payload);
 
+    console.log(payload['status']);
+
     this.users = payload['players'];
     console.log(this.users[0]['username']);
-    if (payload['status'] === 'ready') {
+    if (payload['status'] === 1) {
+      this.unsubscribe();
       this.router.navigate(['game']);
     }
+  }
+
+  public startGame(): void {
+
+    const self = this;
+
+    $.ajax({
+      url: self.globals.getApiUrl() + 'start-game-connect',
+      method: 'POST',
+      data: {
+        key: self.globals.getLobbyKey()
+      },
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      success: function (res) {
+        self.unsubscribe();
+        self.router.navigate(['game']);
+      },
+    });
   }
 
 
@@ -73,8 +101,17 @@ export class WaitingPageComponent{
   ) { }
 
   ngOnInit() {
-    this.globals.setLobbyKey('0');
-    this.connect();
+    if(!this.globals.getLobbyKey()){
+      this.router.navigate(['']);
+    } else {
+      this.gameCategory = this.globals.getGameCategory();
+      this.gameName = this.globals.getLobbyName();
+      this.gameNumberOfQuestion = this.globals.getLobbyQuestions();
+
+      console.log(this.gameCategory);
+      console.log(this.gameNumberOfQuestion);
+      this.connect();
+    }
   }
 
   ngOnDestroy(): void {
@@ -82,12 +119,12 @@ export class WaitingPageComponent{
   }
 
   public unsubscribe() {
-    if (!this.subscribed) {
-      return;
-    }
     this.data_subscription = null;
     this.data_observable = null;
     this.subscribed = false;
+    //this._stompService.disconnect();
+    this._stompService.deactivate();
+    //this._stompService.
   }
 
 */

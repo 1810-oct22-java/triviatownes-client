@@ -2,56 +2,40 @@
   <div class="row">
     <div id="upperHalf">
       <div id="nameQSeats">
-        <span id="name" class="input-group mb-3 form-horizontal">
-          <input [(ngModel)]="name" id="nameInput" type="text" class="form-control" placeholder="Name"
-            aria-describedby="basic-addon1">
+          <h1 class="categorie-box-label">Create New Lobby</h1>
+          <span id="name" class="input-group mb-3 form-horizontal">
+          <input [(ngModel)]="name" id="nameInput" type="text" class="form-control" placeholder="Lobby Name" aria-describedby="basic-addon1">
         </span>
-        <span id="username" class="input-group mb-3 form-horizontal">
-          <input [(ngModel)]="username" id="usernameInput" type="text" class="form-control" placeholder="Username"
-            aria-describedby="basic-addon1">
-        </span>
-        <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{questions}} Questions
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)='selectedQuestions(5)'>5</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedQuestions(10)'>10</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedQuestions(20)'>20</a>
-          </div>
-        </span>
-        <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{difficulty}} Difficulty
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)='selectedDifficulty("Easy")'>Easy</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedDifficulty("Medium")'>Medium</a>
-            <br>
-            <a class="dropdown-item" (click)='selectedDifficulty("Hard")'>Hard</a>
-          </div>
-        </span>
-        <span class="dropdown col-3 form-horizontal">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{seats}} Seats
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="selectedSeats(5)">5</a>
-            <br>
-            <a class="dropdown-item" (click)="selectedSeats(10)">10</a>
-          </div>
-        </span>
+        <div id="inputs" class="form-inline">
+          <span class="dropdown col-3 form-horizontal">
+            <div class="dropdown">
+              <button class="dropbtn btn btn-success">{{questions}} Questions</button>
+              <div class="dropdown-content">
+                <a (click)='selectedQuestions(5)'>5</a>
+                <a (click)='selectedQuestions(10)'>10</a>
+                <a (click)='selectedQuestions(20)'>20</a>
+              </div>
+            </div>
+          </span>
+          <span id="username" class="input-group mb-3 form-horizontal">
+            <input [(ngModel)]="username" id="usernameInput" type="text" class="form-control" placeholder="Username"
+              aria-describedby="basic-addon1">
+          </span>
+          <span class="dropdown col-3 form-horizontal">
+            <div class="dropdown">
+              <button class="dropbtn btn btn-success">{{seats}} Seats</button>
+              <div class="dropdown-content">
+                <a (click)='selectedSeats(5)'>5</a>
+                <a (click)='selectedSeats(10)'>10</a>
+              </div>
+            </div>
+          </span>
+        </div>
       </div>
       <!-- <div id="privateToggle" class="col-3" (click)="privateOrPublic()">
-        <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
+          <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
           data-off="Private" data-onstyle="success" data-offstyle="danger">
-      </div> -->
+        </div> -->
       <div id="createDiv">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="createBtn" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" (click)="create()">
@@ -80,9 +64,9 @@
       </div>
     </div> -->
 
-    <hr style = "width: 90%; margin-left: auto; margin-right: auto;">
+    <hr style="width: 90%; margin-left: auto; margin-right: auto;">
     <!--Load all the categories-->
-    <h1 class = "categorie-box-label">Select a Trivia Category</h1>
+    <h1 class="categorie-box-label">Select a Trivia Category</h1>
     <div id="lowerHalf">
       <div class="container-fluid">
         <div class="row">
