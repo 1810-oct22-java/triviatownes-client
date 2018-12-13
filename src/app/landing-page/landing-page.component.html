@@ -7,14 +7,14 @@
     <input [(ngModel)]="username" class = "form-control join-private-input" id="username" type="text" placeholder="Enter Username">
     <p></p>
     <button class = "btn btn-success join-private-button" (click)="joinLobby()">Join</button>
-    <hr style = "width: 90%; margin-left: auto; margin-right: auto;">
-    <h1 class = "categorie-box-label">Creat a New Game Lobby</h1>
+    <hr style = "width: 90%; margin-left: auto; margin-right: auto; border-color: #6c6b68">
+    <h1 class = "categorie-box-label">Create a New Game Lobby</h1>
   </div>
   <div>
     <button class = "btn btn-success join-private-button" [routerLink]="['/create']">Create Game</button>
   </div>
 </div>
-<hr style = "width: 90%; margin-left: auto; margin-right: auto;">
+<hr style = "width: 90%; margin-left: auto; margin-right: auto; border-color: #6c6b68">
 <!--Load all the categories-->
 <h1 class = "categorie-box-label">Select a Trivia Category</h1>
 <div id="lowerHalf">

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Message, StompHeaders } from '@stomp/stompjs';
 import { Subscription, Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-game-page',
@@ -191,6 +192,14 @@ export class GamePageComponent implements OnInit {
     if (this.globals.getIsLeader()) {
       this.initGame();
     }
+
+    Swal(
+      'Good job!',
+      'You clicked the button!',
+      'success'
+    ).then(() => {
+      window.location.href = '/';
+    });
   }
 
   
