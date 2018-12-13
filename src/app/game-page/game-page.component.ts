@@ -70,27 +70,39 @@ export class GamePageComponent implements OnInit {
     const payload = JSON.parse(data_observable.body);
     console.log(payload);
 
-    if (this.question !== payload['currentQuestion']['question']) {
+    if (this.question !== this.decodeHtml(payload['currentQuestion']['question'])) {
+      this.currentQuestionNumber = payload['currentQuestionNumber'];
+      this.totalQuestions = payload['numberOfQuestions'];
+      this.question = this.decodeHtml(payload['currentQuestion']['question']);
+      this.answers = payload['currentQuestion']['answers'];
+
+      for (let i = 0; i < this.answers.length; i++) {
+        this.answers[i] = this.decodeHtml(this.answers[i]);
+      }
+
+      this.isMultipleChoice = payload['currentQuestion']['multipleChoice'];
+      this.correctIndex = payload['currentQuestion']['correctIndex'];
       this.didAnswer = false;
+      const diff = payload['currentQuestion']['difficulty'];
+      this.setDifficulty(diff);
+      this.loadProgressBar();
     }
 
+    // These need to be updated every refresh
+    this.currentAnswers = payload['numberOfAnswers'];
     this.currentTime = payload['currentCountDown'];
-
-    this.currentQuestionNumber = payload['currentQuestionNumber'];
-    this.totalQuestions = payload['numberOfQuestions'];
-
-    this.question = payload['currentQuestion']['question'];
-    this.answers = payload['currentQuestion']['answers'];
-    this.isMultipleChoice = payload['currentQuestion']['multipleChoice'];
-
     this.players = payload['players'];
-    if(payload['status'] === 2) {
+
+    // Needsto be checked every time
+    if (payload['status'] === 2) {
       this.unsubscribe();
       console.log('game over');
     }
-
-    this.loadProgressBar();
   }
+
+  public decodeHtml(html) {
+    return $('<div>').html(html).text();
+}
 
   initGame() {
 
@@ -110,17 +122,28 @@ export class GamePageComponent implements OnInit {
     });
   }
 
-  /*
+
   sendAnswer() {
 
     const self = this;
 
     $.ajax({
-      url: self.globals.getApiUrl() +
+      url: self.globals.getApiUrl() + 'game-update',
+      method: 'POST',
+      data: {
+        playerId: self.globals.getUserId(),
+        lobbyKey: self.globals.getLobbyKey(),
+        points: this.points
+      },
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      success: function (res) {
+        console.log('Submitted Answer');
+      }
     });
 
   }
-  */
+
 
   connect() {
     this._stompService = new StompService(this.StompConfig);
@@ -193,14 +216,14 @@ export class GamePageComponent implements OnInit {
   }
 
   // Set difficulty multiplier
-  setDifficulty() {
-    if (this.questionObj['difficulty'] === 'easy') {
+  setDifficulty(diff: string) {
+    if (diff === 'easy') {
       this.difficulty = 30;
     }
-    if (this.questionObj['difficulty'] === 'medium') {
+    if (diff === 'medium') {
       this.difficulty = 45;
     }
-    if (this.questionObj['difficulty'] === 'hard') {
+    if (diff === 'hard') {
       this.difficulty = 60;
     }
   }
@@ -219,6 +242,7 @@ export class GamePageComponent implements OnInit {
       this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
       this.points = 0;
     }
+    this.sendAnswer();
   }
 
   calculatePoints(): number{
