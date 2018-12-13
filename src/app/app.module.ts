@@ -19,6 +19,7 @@ import { SocketTestComponent } from './socket-test/socket-test.component';
 
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
+
 /*
 const stompConfig: StompConfig = {
   // Which server?
@@ -51,14 +52,14 @@ const stompConfig: StompConfig = {
     LeaderboardPageComponent,
     WaitingPageComponent,
     GamePageComponent,
-    SocketTestComponent
+    SocketTestComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     DataTablesModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
 

@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'server-lobby', component: ServerLobbyComponent },
   { path: 'waiting', component: WaitingPageComponent },
   { path: 'game', component: GamePageComponent },
-  { path: 'socket-test', component: SocketTestComponent }
+  { path: 'socket-test', component: SocketTestComponent },
+
 ];
 
 @NgModule({

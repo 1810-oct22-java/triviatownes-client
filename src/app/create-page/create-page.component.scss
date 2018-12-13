@@ -3,6 +3,14 @@
    align-content: center;
 }
 
+#inputs {
+    
+}
+
+#upperHalf button {
+    width: 8em;
+}
+
 button:focus {
     outline:0;
 }
@@ -26,10 +34,30 @@ button:focus {
 
 #name {
     margin: 0 auto;
+    width: 20em;
+    height: 4em;
+}
+
+#inputs > span:nth-child(1) {
+    padding-right: 3em;
+}
+
+#inputs > span:nth-child(3) {
+    padding-left: 3em;
+}
+
+#createDiv {
+    padding-top: 1em;
+}
+
+#createBtn {
+    width: 4.5em;
 }
 
 #username {
     margin: 0 auto;
+    padding-left: 4em;
+    padding-right: 1em;
 }
 
 #nameInput {

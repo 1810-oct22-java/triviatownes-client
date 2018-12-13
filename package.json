@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "@stomp/ng2-stompjs": "^7.0.1",
     "@stomp/stompjs": "^5.0.2",
     "@types/ng-stomp": "^0.2.1",
@@ -33,6 +34,7 @@
     "hover.css": "^2.3.2",
     "jquery": "^3.3.1",
     "rxjs": "~6.3.3",
+    "sweetalert2": "^7.32.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },
