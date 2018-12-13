@@ -76,6 +76,7 @@ export class GamePageComponent implements OnInit {
       this.totalQuestions = payload['numberOfQuestions'];
       this.question = this.decodeHtml(payload['currentQuestion']['question']);
       this.answers = payload['currentQuestion']['answers'];
+      Swal.close();
 
       for (let i = 0; i < this.answers.length; i++) {
         this.answers[i] = this.decodeHtml(this.answers[i]);
@@ -98,6 +99,10 @@ export class GamePageComponent implements OnInit {
     if (payload['status'] === 2) {
       this.unsubscribe();
       console.log('game over');
+
+      
+
+
     }
   }
 
@@ -192,14 +197,6 @@ export class GamePageComponent implements OnInit {
     if (this.globals.getIsLeader()) {
       this.initGame();
     }
-
-    Swal(
-      'Good job!',
-      'You clicked the button!',
-      'success'
-    ).then(() => {
-      window.location.href = '/';
-    });
   }
 
   
@@ -247,9 +244,23 @@ export class GamePageComponent implements OnInit {
     if (playerAnswer === this.correctIndex){
       this.points = this.calculatePoints();
       this.displayMsg = `Correct! +${this.points} pts.`;
+      Swal(
+        'Good job!',
+        `Correct! +${this.points} pts.`,
+        'success'
+      ).then(() => {
+        Swal.close();
+      });
     } else {
       this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
       this.points = 0;
+      Swal(
+        'Good Luck Next Time!',
+        `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
+        'error'
+      ).then(() => {
+        Swal.close();
+      });
     }
     this.sendAnswer();
   }
