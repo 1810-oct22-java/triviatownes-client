@@ -13,11 +13,11 @@ button:focus {
 }
 
 #upperHalf button {
+    width: 8em;
     color: #999;
 }
 
 #nameQSeats{
-    padding-top: 2em;
     white-space: nowrap;
 }
 
@@ -31,6 +31,24 @@ button:focus {
 
 #name {
     margin: 0 auto;
+    width: 20em;
+    height: 4em;
+}
+
+#inputs > span:nth-child(1) {
+    padding-right: 3em;
+}
+
+#inputs > span:nth-child(3) {
+    padding-left: 3em;
+}
+
+#createDiv {
+    padding-top: 1em;
+}
+
+#createBtn {
+    width: 4.5em;
 }
 
 #username {
