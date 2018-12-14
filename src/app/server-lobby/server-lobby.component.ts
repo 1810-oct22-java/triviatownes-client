@@ -75,7 +75,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(self.currentDataHash);
       self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
  
-      setInterval(self.startPingingServer, 2000, self);
+      setInterval(self.startPingingServer, 1000, self);
       }
     }
 

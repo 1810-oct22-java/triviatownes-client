@@ -25,6 +25,25 @@ export class CreatePageComponent implements OnInit {
       public globals: GlobalsService) { }
 
   ngOnInit () {
+    this.newUser();
+  }
+
+  // call when a user hits landing page
+  newUser() {
+
+    $.ajax({
+      url: this.globals.getApiUrl() + 'new-user',
+      method: 'GET',
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      success: function (result) {
+        console.log('Created Session');
+      },
+      error: function (result) {
+        console.log('Something went wrong');
+        console.log(result);
+      }
+    });
   }
 
   selectCategory(category) {
