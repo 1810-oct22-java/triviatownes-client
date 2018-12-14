@@ -19,18 +19,18 @@ export class LandingPageComponent implements OnInit {
     public envVars: GlobalsService,
     public router: Router,
     public globals: GlobalsService
-  ) { }
-
-  ngOnInit() {
-    this.playAudio();
-    this.newUser();
-  }
+  ) {}
 
   playAudio() {
     const audio = new Audio();
     audio.src = '/Users/michaelcraig/Documents/revP2/triviatownes-client/src/audio/Price-is-right-losing-horn.mp3';
     audio.load();
     audio.play();
+  }
+
+  ngOnInit() {
+    this.playAudio();
+    this.newUser();
   }
 
 
