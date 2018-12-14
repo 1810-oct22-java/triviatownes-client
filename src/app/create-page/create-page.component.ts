@@ -90,42 +90,41 @@ export class CreatePageComponent implements OnInit {
      return;
   } */
 
-    x.selectedCategory = 'Sports';
-    x.name = 'Testing Name';
-    x.seats = '4';
-    x.questions = '5';
-    x.username = 'jross';
+    x.selectedCategory = 'computer';
+    x.name = 'Trivia Towens';
+    x.seats = '20';
+    x.questions = '3';
+    x.username = 'Ross Boss';
 
-      $.ajax({
-        url: x.globals.getApiUrl() + 'create-game',
-        method: 'POST',
-        crossDomain: true,
-        xhrFields: { withCredentials: true },
-        data: {
-          category: x.selectedCategory,
-          seats: 3,
-          questions: x.questions,
-          username: x.username,
-          name: x.name,
-        },
-        success: function (res) {
-          console.log('** GAME CREATED **');
-          console.log(res);
-          console.log(res['lobbyId']);
-          x.globals.setLobbyKey(res['lobbyId']);
-          x.globals.setUsername(x.username);
-          x.globals.setUserId(res['userId']);
-          x.globals.setGameCategory(res['category']);
-          x.globals.setLobbyQuestions(res['questions']);
-          x.globals.setLobbyName(res['lobbyName']);
-          x.globals.setIsLeader(true);
-          x.router.navigate(['waiting']);
-        },
-        error: function (res) {
-          console.log(this.data);
-          alert('There was a problem connecting to lobby...');
-        }
-      });
+    $.ajax({
+      url: x.globals.getApiUrl() + 'create-game',
+      method: 'POST',
+      crossDomain: true,
+      xhrFields: { withCredentials: true },
+      data: {
+        category: x.selectedCategory,
+        seats: 20,
+        questions: x.questions,
+        username: x.username,
+        name: x.name,
+      },
+      success: function (res) {
+        console.log('** GAME CREATED **');
+        console.log(res);
+        console.log(res['lobbyId']);
+        x.globals.setLobbyKey(res['lobbyId']);
+        x.globals.setUsername(x.username);
+        x.globals.setUserId(res['userId']);
+        x.globals.setGameCategory(res['category']);
+        x.globals.setLobbyQuestions(res['questions']);
+        x.globals.setLobbyName(res['lobbyName']);
+        x.globals.setIsLeader(true);
+        x.router.navigate(['waiting']);
+      },
+      error: function (res) {
+        console.log(this.data);
+        alert('There was a problem connecting to lobby...');
+      }
+    });
   }
-
 }

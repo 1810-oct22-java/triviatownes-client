@@ -13,280 +13,294 @@ import { Subscription, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-game-page',
-  templateUrl: './game-page.component.html',
-  styleUrls: ['./game-page.component.scss']
+ selector: 'app-game-page',
+ templateUrl: './game-page.component.html',
+ styleUrls: ['./game-page.component.scss']
 })
 export class GamePageComponent implements OnInit {
-  // Hardcode a QuestionBean
-  jsonString: string = '{"isMultipleChoice":true, "category":"geography", "difficulty":"easy", "question":"Which small country is located between the borders of France and Spain?", "correctIndex":2, "answers":["Vatican City", "San Marino", "Andorra", "Lichtenstein"]}';
-  // properties of each question
-  payload: object;
-  questionObj: object;
-  isMultipleChoice: boolean;
-  category: string;
-  difficulty: number;
-  question: string;
-  correctIndex: number;
-  answers: string[];
+ // Info being passed to and from server
+ payload: object;
 
-  // Hardcore time
-  currentTime = 20;
+ // Hardcode a QuestionBean
+//  jsonString: string = '{"isMultipleChoice":true, "category":"geography", "difficulty":"easy", "question":"Which small country is located between the borders of France and Spain?", "correctIndex":2, "answers":["Vatican City", "San Marino", "Andorra", "Lichtenstein"]}';
 
-  currentQuestionNumber;
-  totalQuestions;
-  progressPercent: number;
-  progress;
+// properties of each question
+ questionObj: object;
+ isMultipleChoice: boolean;
+ category: string;
+ difficulty: number;
+ question: string;
+ correctIndex: number;
+ answers: string[];
 
-  // Player properties
-  didAnswer = false;
-  displayMsg: string;
-  points: number;
+ // Hardcore time
+ currentTime = 20;
 
-  players: number = 0;
+ currentQuestionNumber: number;
+ totalQuestions: number;
+ progressPercent: number;
+ progress; // For the progress bar
 
-  currentAnswers: number = 0;
+ // Player properties
+ playerId: number;
+ didAnswer = false;
+ displayMsg: string;
+ points: number;
+ // Game properties
+ players = 0;
+ currentAnswers = 0;
 
+ // Stream of messages
+ private data_subscription: Subscription;
+ public data_observable: Observable<Message>;
+ private _stompService: StompService;
+ // Subscription status
+ public subscribed = false;
 
-  // Stream of messages
-  private data_subscription: Subscription;
-  public data_observable: Observable<Message>;
+ StompConfig = {
+   url: this.globals.getSocketUrl() +  'join-game-session',
+   headers: {},
+   heartbeat_in: 0, // Typical value 0 - disabled
+   heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+   reconnect_delay: 0,
+   debug: true // Will log diagnostics on console
+ };
 
-  private _stompService: StompService;
+ constructor(
+   private sanitizer: DomSanitizer,
+   public router: Router,
+   public globals: GlobalsService
+ ) { }
 
-  // Subscription status
-  public subscribed = false;
-
-  StompConfig = {
-    url: 'ws://192.168.0.45:8080/TriviaTownesServer/join-game-session',
-    headers: {},
-    heartbeat_in: 0, // Typical value 0 - disabled
-    heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
-    reconnect_delay: 0,
-    debug: true // Will log diagnostics on console
-  };
-
-  public onDataUpdate = (data_observable: Message) => {
-
-    const payload = JSON.parse(data_observable.body);
-    console.log(payload);
-
-    if (this.question !== this.decodeHtml(payload['currentQuestion']['question'])) {
-      this.currentQuestionNumber = payload['currentQuestionNumber'];
-      this.totalQuestions = payload['numberOfQuestions'];
-      this.question = this.decodeHtml(payload['currentQuestion']['question']);
-      this.answers = payload['currentQuestion']['answers'];
-      Swal.close();
-
-      for (let i = 0; i < this.answers.length; i++) {
-        this.answers[i] = this.decodeHtml(this.answers[i]);
-      }
-
-      this.isMultipleChoice = payload['currentQuestion']['multipleChoice'];
-      this.correctIndex = payload['currentQuestion']['correctIndex'];
-      this.didAnswer = false;
-      const diff = payload['currentQuestion']['difficulty'];
-      this.setDifficulty(diff);
-      this.loadProgressBar();
-    }
-
-    // These need to be updated every refresh
-    this.currentAnswers = payload['numberOfAnswers'];
-    this.currentTime = payload['currentCountDown'];
-    this.players = payload['players'];
-
-    // Needsto be checked every time
-    if (payload['status'] === 2) {
-      this.unsubscribe();
-      console.log('game over');
-
-      Swal(
-        'Good job!',
-        `Correct! +${this.points} pts.`,
-        'success'
-      ).then(() => {
-        Swal.close();
-      });
-    }
-  }
-
-  public decodeHtml(html) {
-    return $('<div>').html(html).text();
-}
-
-  initGame() {
-
-    const self = this;
-
-    $.ajax({
-      url: self.globals.getApiUrl() + 'start-game',
-      method: 'POST',
-      data: {
-        key: self.globals.getLobbyKey()
-      },
-      crossDomain: true,
-      xhrFields: { withCredentials: true },
-      success: function (res) {
-        console.log('Game has started');
-      }
-    });
-  }
-
-
-  sendAnswer() {
-
-    const self = this;
-
-    $.ajax({
-      url: self.globals.getApiUrl() + 'game-update',
-      method: 'POST',
-      data: {
-        playerId: self.globals.getUserId(),
-        lobbyKey: self.globals.getLobbyKey(),
-        points: this.points
-      },
-      crossDomain: true,
-      xhrFields: { withCredentials: true },
-      success: function (res) {
-        console.log('Submitted Answer');
-      }
-    });
-
-  }
-
-
-  connect() {
-    this._stompService = new StompService(this.StompConfig);
-    this._stompService.initAndConnect();
-
-    this.data_observable = this._stompService.subscribe('/send-game-update/' + this.globals.getLobbyKey() + '/get-game-data');
-    this.data_subscription = this.data_observable.subscribe(this.onDataUpdate);
-    this.subscribed = true;
-
-    // Only ping the server if it's the leader
-    if (this.globals.getIsLeader()) {
-      this.startPingingServer(this);
-    }
-  }
-
-  public startPingingServer(self) {
-
-    if (self.subscribed) {
-      console.log('ping');
-      self._stompService.publish('/game-update/' + self.globals.getLobbyKey() + '/get-game-data', '');
-      setInterval(this.startPingingServer, 500, self);
-    }
-  }
-
-  public unsubscribe() {
-    this.data_subscription = null;
-    this.data_observable = null;
-    this.subscribed = false;
-    this._stompService.deactivate();
-  }
-
-
-  constructor(
-    private sanitizer: DomSanitizer,
-    public router: Router,
-    public globals: GlobalsService
-  ) { }
-
-  ngOnInit() {
-
-    if(!this.globals.getLobbyKey()){
-      this.router.navigate(['']);
-    } else {
-      this.loadQuestion();
-      this.loadProgressBar();
-
-      this.connect();
-
-      if (this.globals.getIsLeader()) {
-        this.initGame();
-      }
-    }
-  }
-
+ ngOnInit() {
   
-  loadQuestion(){
-    //this.questionObj = this.payload['QuestionBean'];
-    //this.questionObj = JSON.parse(this.jsonString);
-    //console.log(this.questionObj);
-    //this.isMultipleChoice = this.questionObj['isMultipleChoice'];
-    this.isMultipleChoice = true;
-    //this.category = this.questionObj['category'];
-    this.category = "sports";
-    //this.setDifficulty();
-    //this.question = this.questionObj['question'];
-    this.question = "This question";
-    //this.correctIndex = this.questionObj['correctIndex'];
-    //this.answers = this.questionObj['answers'];
-    this.answers = [
-      "Hello",
-      "Jie",
-      "test",
-      "Be"
-    ]
-  }
+   if (!this.globals.getLobbyKey()) {  // If you don't have a lobby key, navigate home
+     this.router.navigate(['']);
+   } else {                          // Else start game
+//      this.loadQuestion();
+//      this.loadProgressBar();
+     this.connect();
+     this.playerId = Number(this.globals.getUserId()); // Set this player's id
+     if (this.globals.getIsLeader()) {
+       this.initGame();
+     }
+   }
+ }
 
-  // Set difficulty multiplier
-  setDifficulty(diff: string) {
-    if (diff === 'easy') {
-      this.difficulty = 30;
-    }
-    if (diff === 'medium') {
-      this.difficulty = 45;
-    }
-    if (diff === 'hard') {
-      this.difficulty = 60;
-    }
-  }
+ public onDataUpdate = (data_observable: Message) => {
+   const payload = JSON.parse(data_observable.body);
+   console.log(payload);
 
-  loadProgressBar(){
-    this.progressPercent = 100*(this.currentQuestionNumber/this.totalQuestions);
-    this.progress = this.sanitizer.bypassSecurityTrustStyle(`width: ${this.progressPercent}%`);
-  }
+   if (this.question !== this.decodeHtml(payload['currentQuestion']['question'])) {
+     this.currentQuestionNumber = payload['currentQuestionNumber'];
+     this.totalQuestions = payload['numberOfQuestions'];
+     this.question = this.decodeHtml(payload['currentQuestion']['question']);
+     this.answers = payload['currentQuestion']['answers'];
+     Swal.close();
 
-  checkAnswer(playerAnswer: number){
-    this.didAnswer = true;
-    if (playerAnswer === this.correctIndex){
-      this.points = this.calculatePoints();
-      this.displayMsg = `Correct! +${this.points} pts.`;
-      Swal(
-        'Good job!',
-        `Correct! +${this.points} pts.`,
-        'success'
-      ).then(() => {
-        this.sendAnswer();
-        Swal.close();
-      });
-    } else {
-      this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
-      this.points = 0;
-      Swal(
-        'Good Luck Next Time!',
-        `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
-        'error'
-      ).then(() => {
-        this.sendAnswer();
-        Swal.close();
-      });
-    }
-  }
+     for (let i = 0; i < this.answers.length; i++) {
+       this.answers[i] = this.decodeHtml(this.answers[i]);
+     }
 
-  calculatePoints(): number{
-    const correctPoints = this.difficulty;
-    const timeBonus = 1 + (this.currentTime/20);
-    return Math.round(correctPoints*timeBonus);
-  }
+     this.isMultipleChoice = payload['currentQuestion']['multipleChoice'];
+     this.correctIndex = payload['currentQuestion']['correctIndex'];
+     this.didAnswer = false;
+     const diff = payload['currentQuestion']['difficulty'];
+     this.setDifficulty(diff);
+     this.loadProgressBar();
+   }
 
+   // These need to be updated every refresh
+   this.currentAnswers = payload['numberOfAnswers'];
+   this.currentTime = payload['currentCountDown'];
+   this.players = payload['players'];
 
+   // END OF GAME LOGIC
+   if (payload['status'] === 2) {
+     this.unsubscribe();
+     console.log('game over');
+     // Sort the top scores
+     const playerList = payload['topScores'];
+     let playerObj;
+     let place: number;
+     let endMsg: string;
+     playerList.sort((a, b) => a.score < b.score ? -1 : a.score > b.score ? 1 : 0);
+     let index = 1;
+     // Find this player's object and set final place
+     for (const p of playerList) {
+       if (p.playerId === this.playerId) {
+         playerObj = p;
+         place = index;
+       }
+       index++;
+     }
+     // Populate end message
+     if (place === 1){
+       endMsg = `You won 1st place!\nScore: ${playerObj.score}` + '\n' + `Max Streak: ${playerObj.maxStreak}`;
+     }
+     else{
+       endMsg = `You got ${this.ordinal_suffix_of(place)} place!` + '\n' + `Score: ${playerObj.score}\nMax Streak: ${playerObj.maxStreak}\n
+                 1st place winner: ${playerList[0].username}`;
+     }
+    
+     Swal({
+       title: 'Game Over!',
+       text: endMsg,
+       width: 600,
+       backdrop: `
+         rgba(0,0,123,0.4)
+         url("https://sweetalert2.github.io/images/nyan-cat.gif")
+         center left
+         no-repeat
+          ` 
+     }).then(() => {
+       window.location.href = '/';
+     });
+   }
+ }
 
-
-
-
-
+ // Decode out html character references
+ public decodeHtml(html) {
+   return $('<div>').html(html).text();
 }
 
+ordinal_suffix_of(i: number): string {
+ var j = i % 10,
+     k = i % 100;
+ if (j == 1 && k != 11) {
+     return i + 'st';
+ }
+ if (j == 2 && k != 12) {
+     return i + 'nd';
+ }
+ if (j == 3 && k != 13) {
+     return i + 'rd';
+ }
+ return i + 'th';
+}
 
+ initGame() {
+   const self = this;
+   $.ajax({
+     url: self.globals.getApiUrl() + 'start-game',
+     method: 'POST',
+     data: {
+       key: self.globals.getLobbyKey()
+     },
+     crossDomain: true,
+     xhrFields: { withCredentials: true },
+     success: function (res) {
+       console.log('Game has started');
+     }
+   });
+ }
+
+ sendAnswer() {
+   const self = this;
+   $.ajax({
+     url: self.globals.getApiUrl() + 'game-update',
+     method: 'POST',
+     data: {
+       playerId: self.globals.getUserId(),
+       lobbyKey: self.globals.getLobbyKey(),
+       points: this.points
+     },
+     crossDomain: true,
+     xhrFields: { withCredentials: true },
+     success: function (res) {
+       console.log('Submitted Answer');
+     }
+   });
+ }
+
+ // Web sockets
+ connect() {
+   this._stompService = new StompService(this.StompConfig);
+   this._stompService.initAndConnect();
+
+   this.data_observable = this._stompService.subscribe('/send-game-update/' + this.globals.getLobbyKey() + '/get-game-data');
+   this.data_subscription = this.data_observable.subscribe(this.onDataUpdate);
+   this.subscribed = true;
+
+   // Only ping the server if it's the leader
+   if (this.globals.getIsLeader()) {
+     this.startPingingServer(this);
+   }
+ }
+
+ public startPingingServer(self) {
+   if (self.subscribed) {
+     console.log('ping');
+     self._stompService.publish('/game-update/' + self.globals.getLobbyKey() + '/get-game-data', '');
+     setInterval(this.startPingingServer, 500, self);
+   }
+ }
+
+ public unsubscribe() {
+   this.data_subscription = null;
+   this.data_observable = null;
+   this.subscribed = false;
+   this._stompService.deactivate();
+ }
+  loadQuestion(){
+   this.questionObj = this.payload['QuestionBean'];
+   console.log(this.questionObj);
+   this.isMultipleChoice = this.questionObj['isMultipleChoice'];
+   this.category = this.questionObj['category'];
+//    this.setDifficulty();
+   this.question = this.questionObj['question'];
+   this.correctIndex = this.questionObj['correctIndex'];
+   this.answers = this.questionObj['answers'];
+ }
+
+ // Set difficulty multiplier
+ setDifficulty(diff: string) {
+   if (diff === 'easy') {
+     this.difficulty = 30;
+   }
+   if (diff === 'medium') {
+     this.difficulty = 45;
+   }
+   if (diff === 'hard') {
+     this.difficulty = 60;
+   }
+ }
+
+ loadProgressBar(){
+   this.progressPercent = 100*(this.currentQuestionNumber/this.totalQuestions);
+   this.progress = this.sanitizer.bypassSecurityTrustStyle(`width: ${this.progressPercent}%`);
+ }
+
+ checkAnswer(playerAnswer: number){
+   this.didAnswer = true;
+   if (playerAnswer === this.correctIndex){
+     this.points = this.calculatePoints();
+     this.displayMsg = `Correct! +${this.points} pts.`;
+     Swal(
+       'Good job!',
+       `Correct! +${this.points} pts.`,
+       'success'
+     ).then(() => {
+       this.sendAnswer();
+       Swal.close();
+     });
+   } else {
+     this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
+     this.points = 0;
+     Swal(
+       'Good Luck Next Time!',
+       `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
+       'error'
+     ).then(() => {
+       this.sendAnswer();
+       Swal.close();
+     });
+   }
+ }
+
+ calculatePoints(): number{
+   const correctPoints = this.difficulty;
+   const timeBonus = 1 + (this.currentTime/20);
+   return Math.round(correctPoints*timeBonus);
+ }
+}

@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
 
   private category: String;
-  private apiUrl: String = 'http://192.168.0.45:8080/TriviaTownesServer/';
+  private apiUrl: String = 'http://127.0.0.1:8080/TriviaTownesServer/';
+  private socketUrl: String = 'ws://127.0.0.1:8080/TriviaTownesServer/';
   private lobbyKey;
   private username;
   private gameCategory;
@@ -16,6 +17,10 @@ export class GlobalsService {
   private userId;
 
   constructor() { }
+
+  public getSocketUrl(): String {
+    return this.socketUrl;
+  }
 
   public getUserId(): String {
     return this.userId;

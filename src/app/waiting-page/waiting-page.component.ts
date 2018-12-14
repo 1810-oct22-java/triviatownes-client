@@ -15,16 +15,20 @@ import { GlobalsService } from '../globals.service';
 export class WaitingPageComponent implements OnInit, OnDestroy {
 
   // Stream of messages
-  private data_subscription: Subscription;
+  public data_subscription: Subscription;
   public data_observable: Observable<Message>;
 
-  private _stompService: StompService;
+  // Stream of chats
+  public chat_subscription: Subscription;
+  public chat_observable: Observable<Message>;
 
-  private gameCategory;
-  private gameNumberOfQuestion;
-  private gameName;
+  public _stompService: StompService;
 
-  private disconnectOk = false;
+  public gameCategory;
+  public gameNumberOfQuestion;
+  public gameName;
+
+  public disconnectOk = false;
 
   users: any;
 
@@ -32,7 +36,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://192.168.0.45:8080/TriviaTownesServer/join-waiting-lobby',
+    url: this.globals.getSocketUrl() + 'join-waiting-lobby',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
@@ -46,8 +50,12 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
     this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
     this.data_subscription = this.data_observable.subscribe(this.onUpdate);
+
+    this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-chat');
+    this.data_subscription = this.data_observable.subscribe(this.onUpdate);
+
     this.subscribed = true;
-    
+
     this.startPingingServer(this);
   }
 
@@ -57,6 +65,10 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
       self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
       setInterval(this.startPingingServer, 500, self);
     }
+  }
+
+  public onChatUpdate = (data_observable: Message) => {
+
   }
 
   public onUpdate = (data_observable: Message) => {
