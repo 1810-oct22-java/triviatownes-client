@@ -14,6 +14,7 @@ export class LandingPageComponent implements OnInit {
   username: String;
   game_key: String;
 
+
   constructor(
     public envVars: GlobalsService,
     public router: Router,
@@ -21,7 +22,15 @@ export class LandingPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.playAudio();
     this.newUser();
+  }
+
+  playAudio() {
+    const audio = new Audio();
+    audio.src = '/Users/michaelcraig/Documents/revP2/triviatownes-client/src/audio/Price-is-right-losing-horn.mp3';
+    audio.load();
+    audio.play();
   }
 
 

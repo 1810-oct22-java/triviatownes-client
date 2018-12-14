@@ -47,6 +47,8 @@ export class GamePageComponent implements OnInit {
 
   currentAnswers: number = 0;
 
+  audio1 = new Audio('../../audio/Price-is-right-losing-horn.mp3');
+
 
   // Stream of messages
   private data_subscription: Subscription;
@@ -264,6 +266,7 @@ export class GamePageComponent implements OnInit {
     } else {
       this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
       this.points = 0;
+      this.audio1.play();
       Swal(
         'Good Luck Next Time!',
         `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
