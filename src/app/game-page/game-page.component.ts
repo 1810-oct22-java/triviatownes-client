@@ -58,7 +58,7 @@ export class GamePageComponent implements OnInit {
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://127.0.0.1:8080/TriviaTownesServer/join-game-session',
+    url: 'ws://192.168.0.45:8080/TriviaTownesServer/join-game-session',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
@@ -100,9 +100,13 @@ export class GamePageComponent implements OnInit {
       this.unsubscribe();
       console.log('game over');
 
-      
-
-
+      Swal(
+        'Good job!',
+        `Correct! +${this.points} pts.`,
+        'success'
+      ).then(() => {
+        Swal.close();
+      });
     }
   }
 
@@ -189,13 +193,18 @@ export class GamePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadQuestion();
-    this.loadProgressBar();
 
-    this.connect();
+    if(!this.globals.getLobbyKey()){
+      this.router.navigate(['']);
+    } else {
+      this.loadQuestion();
+      this.loadProgressBar();
 
-    if (this.globals.getIsLeader()) {
-      this.initGame();
+      this.connect();
+
+      if (this.globals.getIsLeader()) {
+        this.initGame();
+      }
     }
   }
 
@@ -249,6 +258,7 @@ export class GamePageComponent implements OnInit {
         `Correct! +${this.points} pts.`,
         'success'
       ).then(() => {
+        this.sendAnswer();
         Swal.close();
       });
     } else {
@@ -259,10 +269,10 @@ export class GamePageComponent implements OnInit {
         `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
         'error'
       ).then(() => {
+        this.sendAnswer();
         Swal.close();
       });
     }
-    this.sendAnswer();
   }
 
   calculatePoints(): number{

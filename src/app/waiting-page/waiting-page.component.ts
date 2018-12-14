@@ -24,13 +24,15 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   private gameNumberOfQuestion;
   private gameName;
 
+  private disconnectOk = false;
+
   users: any;
 
   // Subscription status
   public subscribed = false;
 
   StompConfig = {
-    url: 'ws://localhost:8080/TriviaTownesServer/join-waiting-lobby',
+    url: 'ws://192.168.0.45:8080/TriviaTownesServer/join-waiting-lobby',
     headers: {},
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
@@ -87,9 +89,24 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
       xhrFields: { withCredentials: true },
       success: function (res) {
         self.unsubscribe();
+        self.disconnectOk = true;
         self.router.navigate(['game']);
       },
     });
+  }
+
+  public disconnect(): void {
+
+    const self = this;
+
+    if (!this.disconnectOk) {
+      $.ajax({
+        url: self.globals.getApiUrl() + 'disconnect',
+        method: 'GET',
+        crossDomain: true,
+        xhrFields: { withCredentials: true }
+      });
+    }
   }
 
 
@@ -101,6 +118,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if(!this.globals.getLobbyKey()){
       this.router.navigate(['']);
+      return;
     } else {
       this.gameCategory = this.globals.getGameCategory();
       this.gameName = this.globals.getLobbyName();
@@ -113,15 +131,18 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.disconnect();
     this.unsubscribe();
   }
 
   public unsubscribe() {
     this.data_subscription = null;
     this.data_observable = null;
-    this.subscribed = false;
     //this._stompService.disconnect();
-    this._stompService.deactivate();
+    if(this.subscribed){
+      this._stompService.deactivate();
+      this.subscribed = false;
+    }
     //this._stompService.
   }
 }
