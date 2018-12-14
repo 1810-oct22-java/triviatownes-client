@@ -93,7 +93,7 @@ export class CreatePageComponent implements OnInit {
     x.selectedCategory = 'computer';
     x.name = 'Trivia Towens';
     x.seats = '20';
-    x.questions = '3';
+    x.questions = '1';
     x.username = 'Ross Boss';
 
     $.ajax({

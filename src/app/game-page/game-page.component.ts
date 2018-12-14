@@ -162,26 +162,29 @@ public chat_observable: Observable<Message>;
      }
      // Populate end message
      if (place === 1){
-       endMsg = `You won 1st place!\nScore: ${playerObj.score}` + '\n' + `Max Streak: ${playerObj.maxStreak}`;
+       endMsg = `<span class="label label-success" style="font-size: 20px;">` +
+                `You won 1st place! Score: ${playerObj.score}, ` +
+                `Max Streak: ${playerObj.maxStreak}</span>`;
+      }
+      else {
+       endMsg = `1st place winner: ${playerList[0].username}<br>` +
+                `You got ${this.ordinal_suffix_of(place)} place!<br>` +
+                `Score: ${playerObj.score}<br>Max Streak: ${playerObj.maxStreak}<br>`;
      }
-     else{
-       endMsg = `You got ${this.ordinal_suffix_of(place)} place!` + '\n' + `Score: ${playerObj.score}\nMax Streak: ${playerObj.maxStreak}\n
-                 1st place winner: ${playerList[0].username}`;
-     }
-    
+
      Swal({
-       title: 'Game Over!',
-       text: endMsg,
-       width: 600,
-       backdrop: `
-         rgba(0,0,123,0.4)
-         url("https://sweetalert2.github.io/images/nyan-cat.gif")
-         center left
-         no-repeat
-          ` 
-     }).then(() => {
-       window.location.href = '/';
-     });
+      title: 'Game Over!',
+      html: endMsg,
+      width: 600,
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("https://sweetalert2.github.io/images/nyan-cat.gif")
+        center left
+        no-repeat
+         ` 
+      }).then(() => {
+        window.location.href = '/';
+      });
    }
  }
 
