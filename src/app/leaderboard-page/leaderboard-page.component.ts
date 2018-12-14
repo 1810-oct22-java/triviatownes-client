@@ -103,6 +103,14 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
         {
           title: 'Score',
           data: 'score'
+        },
+        {
+          title: 'Max Streak',
+          data: 'max_streak'
+        },
+        {
+          title: 'Total Correct',
+          data: 'number_correct'
         }
       ]
     };
