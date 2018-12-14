@@ -20,19 +20,19 @@
             <div *ngIf="isMultipleChoice">
               <div class="row">
                   <div class="col-md-6">
-                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="answer-button btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
                   </div>
                   <div class="col-md-6">
-                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="answer-button btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
                   </div>
               </div>
               <br>
               <div class="row">
                   <div class="col-md-6">
-                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(2)" class="btn btn-primary btn-lg btn-block">C. {{answers[2]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(2)" class="answer-button btn btn-primary btn-lg btn-block">C. {{answers[2]}}</button>
                   </div>
                   <div class="col-md-6">
-                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(3)" class="btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
+                      <button [disabled]="didAnswer" type="button" (click)="checkAnswer(3)" class="answer-button btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
                   </div>
               </div>
             </div>
@@ -40,10 +40,10 @@
             <div *ngIf="!isMultipleChoice">
                     <div class="row">
                         <div class="col-md-6">
-                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="answer-button btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
                         </div>
                         <div class="col-md-6">
-                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="answer-button btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
                         </div>
                     </div>
                   </div>
@@ -84,4 +84,60 @@
     </div>
 </div>
 
+</div>
+
+<div class="chatcontainer" style = "margin-left: auto; margin-right: auto;">
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="accordion">
+            <span class="glyphicon glyphicon-comment"></span> Chat
+            <div class="btn-group pull-right">
+                <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+            </div>
+        </div>
+    <div class="panel-collapse collapse" id="collapseOne">
+        <div class="panel-body panel-body-extra">
+            <ul class="chat">
+                <ng-template ngFor let-chat [ngForOf]="chats">
+                    <li *ngIf="chat.id !== userId" class="right clearfix">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    {{chat.time}}
+                                </small>
+                            </div>
+                            <p>
+                                <strong>{{chat.username}}</strong>: {{chat.message}}
+                            </p>
+                        </div>
+                    </li>
+                    <li *ngIf="chat.id === userId" class="left clearfix">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    {{chat.time}}
+                                </small>
+                            </div>
+                            <p>
+                                <strong>You</strong>: {{chat.message}}
+                            </p>
+                        </div>
+                    </li>
+                </ng-template>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <div class="input-group">
+                <input id="message_input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                <span class="input-group-btn">
+                    <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage()" >
+                        Send</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>

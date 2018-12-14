@@ -50,12 +50,19 @@ export class GamePageComponent implements OnInit {
  players = 0;
  currentAnswers = 0;
 
+ public userId;
+
  // Stream of messages
  private data_subscription: Subscription;
  public data_observable: Observable<Message>;
+// Stream of chats
+public chat_subscription: Subscription;
+public chat_observable: Observable<Message>;
  private _stompService: StompService;
  // Subscription status
  public subscribed = false;
+
+ public chats = [];
 
  StompConfig = {
    url: this.globals.getSocketUrl() +  'join-game-session',
@@ -79,6 +86,8 @@ export class GamePageComponent implements OnInit {
    } else {                          // Else start game
 //      this.loadQuestion();
 //      this.loadProgressBar();
+      this.userId = this.globals.getUserId();
+
      this.connect();
      this.playerId = Number(this.globals.getUserId()); // Set this player's id
      if (this.globals.getIsLeader()) {
@@ -86,6 +95,23 @@ export class GamePageComponent implements OnInit {
      }
    }
  }
+
+ public onChatUpdate = (chat_observable: Message) => {
+
+  const payload = JSON.parse(chat_observable.body);
+  console.log(payload);
+  const message_user = payload['username'];
+  const message_body = payload['message'];
+  const userId = payload['userId'];
+  const time = payload['time'];
+
+  this.chats.push({
+    username: message_user,
+    message: message_body,
+    id: userId,
+    time: time
+  });
+}
 
  public onDataUpdate = (data_observable: Message) => {
    const payload = JSON.parse(data_observable.body);
@@ -195,6 +221,19 @@ ordinal_suffix_of(i: number): string {
    });
  }
 
+   public sendMessage() {
+
+    const username = this.globals.getUsername();
+    const message = $('#message_input').val();
+    $('#message_input').val('');
+
+    this._stompService.publish('/game-update/' + this.globals.getLobbyKey() + '/recive-chat-game', JSON.stringify({
+      username: username,
+      message: message,
+      userId: this.globals.getUserId()
+    }));
+  }
+
  sendAnswer() {
    const self = this;
    $.ajax({
@@ -220,6 +259,13 @@ ordinal_suffix_of(i: number): string {
 
    this.data_observable = this._stompService.subscribe('/send-game-update/' + this.globals.getLobbyKey() + '/get-game-data');
    this.data_subscription = this.data_observable.subscribe(this.onDataUpdate);
+   
+   
+   this.chat_observable = this._stompService.subscribe('/send-game-update/' + this.globals.getLobbyKey().toLowerCase() + '/send-chat');
+   this.chat_subscription = this.chat_observable.subscribe(this.onChatUpdate);
+
+   
+   
    this.subscribed = true;
 
    // Only ping the server if it's the leader

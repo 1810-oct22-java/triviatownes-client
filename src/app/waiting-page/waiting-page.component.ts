@@ -30,6 +30,10 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
   public disconnectOk = false;
 
+  public userId;
+
+  public chats = [];
+
   users: any;
 
   // Subscription status
@@ -51,8 +55,8 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
     this.data_subscription = this.data_observable.subscribe(this.onUpdate);
 
-    this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-chat');
-    this.data_subscription = this.data_observable.subscribe(this.onUpdate);
+    this.chat_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-chat');
+    this.chat_subscription = this.chat_observable.subscribe(this.onChatUpdate);
 
     this.subscribed = true;
 
@@ -67,8 +71,21 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onChatUpdate = (data_observable: Message) => {
+  public onChatUpdate = (chat_observable: Message) => {
 
+    const payload = JSON.parse(chat_observable.body);
+    console.log(payload);
+    const message_user = payload['username'];
+    const message_body = payload['message'];
+    const userId = payload['userId'];
+    const time = payload['time'];
+
+    this.chats.push({
+      username: message_user,
+      message: message_body,
+      id: userId,
+      time: time
+    });
   }
 
   public onUpdate = (data_observable: Message) => {
@@ -85,6 +102,19 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
       this.unsubscribe();
       this.router.navigate(['game']);
     }
+  }
+
+  public sendMessage() {
+
+    const username = this.globals.getUsername();
+    const message = $('#message_input').val();
+    $('#message_input').val('');
+
+    this._stompService.publish('/waiting-update/' + this.globals.getLobbyKey() + '/recive-chat', JSON.stringify({
+      username: username,
+      message: message,
+      userId: this.globals.getUserId()
+    }));
   }
 
   public startGame(): void {
@@ -128,13 +158,14 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if(!this.globals.getLobbyKey()){
+    if(!this.globals.getLobbyKey()) {
       this.router.navigate(['']);
       return;
     } else {
       this.gameCategory = this.globals.getGameCategory();
       this.gameName = this.globals.getLobbyName();
       this.gameNumberOfQuestion = this.globals.getLobbyQuestions();
+      this.userId = this.globals.getUserId();
 
       console.log(this.gameCategory);
       console.log(this.gameNumberOfQuestion);
@@ -150,6 +181,9 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public unsubscribe() {
     this.data_subscription = null;
     this.data_observable = null;
+    this.chat_observable = null;
+    this.chat_subscription = null;
+
     //this._stompService.disconnect();
     if(this.subscribed){
       this._stompService.deactivate();
