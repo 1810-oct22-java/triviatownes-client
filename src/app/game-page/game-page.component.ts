@@ -250,11 +250,26 @@ export class GamePageComponent implements OnInit {
     this.progress = this.sanitizer.bypassSecurityTrustStyle(`width: ${this.progressPercent}%`);
   }
 
+  incorrectAudio() {
+    const audio = new Audio();
+    audio.src = '../../../assets/audio/Price-is-right-losing-horn.mp3';
+    audio.load();
+    audio.play();
+  }
+
+  correctAudio() {
+    const audio = new Audio();
+    audio.src = '../../../assets/audio/applause-8.mp3';
+    audio.load();
+    audio.play();
+  }
+
   checkAnswer(playerAnswer: number){
     this.didAnswer = true;
     if (playerAnswer === this.correctIndex){
       this.points = this.calculatePoints();
       this.displayMsg = `Correct! +${this.points} pts.`;
+      this.correctAudio();
       Swal(
         'Good job!',
         `Correct! +${this.points} pts.`,
@@ -266,7 +281,7 @@ export class GamePageComponent implements OnInit {
     } else {
       this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
       this.points = 0;
-      this.audio1.play();
+      this.incorrectAudio();
       Swal(
         'Good Luck Next Time!',
         `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
