@@ -22,7 +22,7 @@ export class GamePageComponent implements OnInit {
  payload: object;
 
  // Hardcode a QuestionBean
-//  jsonString: string = '{"isMultipleChoice":true, "category":"geography", "difficulty":"easy", "question":"Which small country is located between the borders of France and Spain?", "correctIndex":2, "answers":["Vatican City", "San Marino", "Andorra", "Lichtenstein"]}';
+ // jsonString: string = '{"isMultipleChoice":true, "category":"geography", "difficulty":"easy", "question":"Which small country is located between the borders of France and Spain?", "correctIndex":2, "answers":["Vatican City", "San Marino", "Andorra", "Lichtenstein"]}';
 
 // properties of each question
  questionObj: object;
@@ -320,11 +320,28 @@ ordinal_suffix_of(i: number): string {
    this.progress = this.sanitizer.bypassSecurityTrustStyle(`width: ${this.progressPercent}%`);
  }
 
+
+ // audio files
+
+ incorrectAudio() {
+  const audio = new Audio();
+  audio.src = '../../../assets/audio/Price-is-right-losing-horn.mp3';
+  audio.load();
+  audio.play();
+}
+ correctAudio() {
+  const audio = new Audio();
+  audio.src = '../../../assets/audio/applause-8.mp3';
+  audio.load();
+  audio.play();
+}
+
  checkAnswer(playerAnswer: number){
    this.didAnswer = true;
    if (playerAnswer === this.correctIndex){
      this.points = this.calculatePoints();
      this.displayMsg = `Correct! +${this.points} pts.`;
+     this.correctAudio();
      Swal(
        'Good job!',
        `Correct! +${this.points} pts.`,
@@ -335,6 +352,7 @@ ordinal_suffix_of(i: number): string {
    } else {
      this.displayMsg = `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`;
      this.points = 0;
+     this.incorrectAudio();
      Swal(
        'Good Luck Next Time!',
        `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
