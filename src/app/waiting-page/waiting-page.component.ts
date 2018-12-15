@@ -12,7 +12,9 @@ import { GlobalsService } from '../globals.service';
   templateUrl: './waiting-page.component.html',
   styleUrls: ['./waiting-page.component.scss']
 })
-export class WaitingPageComponent implements OnInit, OnDestroy {
+export class WaitingPageComponent{
+/*
+  users: String[] = ['Player1', 'Player 2', 'Player 3', 'Player 4', 'Player 5'];
 
   // Stream of messages
   public data_subscription: Subscription;
@@ -196,4 +198,6 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     }
     //this._stompService.
   }
+
+*/
 }
