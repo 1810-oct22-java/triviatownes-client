@@ -34,10 +34,8 @@
                   <div class="col-md-6">
                       <button [disabled]="didAnswer" type="button" (click)="checkAnswer(3)" class="answer-button btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
                   </div>
-              </div>
-            </div>
-            <!-- ngIf true/false -->
-            <div *ngIf="!isMultipleChoice">
+                  <!-- ngIf multiple choice -->
+                  <div *ngIf="isMultipleChoice">
                     <div class="row">
                         <div class="col-md-6">
                             <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="answer-button btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
@@ -46,17 +44,37 @@
                             <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="answer-button btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(2)" class="answer-button btn btn-primary btn-lg btn-block">C. {{answers[2]}}</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button [disabled]="didAnswer" type="button" (click)="checkAnswer(3)" class="answer-button btn btn-primary btn-lg btn-block">D. {{answers[3]}}</button>
+                        </div>
+                    </div>
                   </div>
-
-              <hr>
-
-              <div id = "displayMsg" *ngIf="didAnswer">{{displayMsg}}</div>
-
-          </div>
-      </div>
-
-
-      <div class="col-md-3" style="text-align: center">
+                  <!-- ngIf true/false -->
+                  <div *ngIf="!isMultipleChoice">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <button [disabled]="didAnswer" type="button" (click)="checkAnswer(0)" class="answer-button btn btn-primary btn-lg btn-block">A. {{answers[0]}}</button>
+                              </div>
+                              <div class="col-md-6">
+                                  <button [disabled]="didAnswer" type="button" (click)="checkAnswer(1)" class="answer-button btn btn-primary btn-lg btn-block">B. {{answers[1]}}</button>
+                              </div>
+                          </div>
+                        </div>
+      
+                    <hr>
+      
+                    <div id = "displayMsg" *ngIf="didAnswer">{{displayMsg}}</div>
+      
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="text-align: center">
         <div class = "container-fluid">
             <div class = "row">
                 <div class="col-md-6">

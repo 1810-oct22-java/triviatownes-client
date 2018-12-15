@@ -14,11 +14,12 @@ export class LandingPageComponent implements OnInit {
   username: String;
   game_key: String;
 
+
   constructor(
     public envVars: GlobalsService,
     public router: Router,
     public globals: GlobalsService
-  ) { }
+  ) {}
 
    // Decode out html character references
  public decodeHtml(html) {
