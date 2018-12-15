@@ -330,7 +330,6 @@ ordinal_suffix_of(i: number): string {
        `Correct! +${this.points} pts.`,
        'success'
      ).then(() => {
-       this.sendAnswer();
        Swal.close();
      });
    } else {
@@ -341,10 +340,10 @@ ordinal_suffix_of(i: number): string {
        `Wrong. The Correct answer is: ${this.answers[this.correctIndex]}`,
        'error'
      ).then(() => {
-       this.sendAnswer();
        Swal.close();
      });
    }
+   this.sendAnswer();
  }
 
  calculatePoints(): number{

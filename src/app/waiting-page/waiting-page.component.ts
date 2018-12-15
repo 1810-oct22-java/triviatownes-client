@@ -41,7 +41,9 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
   StompConfig = {
     url: this.globals.getSocketUrl() + 'join-waiting-lobby',
-    headers: {},
+    headers: {
+
+    },
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
     reconnect_delay: 0,
@@ -52,7 +54,8 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     this._stompService = new StompService(this.StompConfig);
     this._stompService.initAndConnect();
 
-    this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-waiting');
+    this.data_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/' +
+    this.userId + '/send-waiting');
     this.data_subscription = this.data_observable.subscribe(this.onUpdate);
 
     this.chat_observable = this._stompService.subscribe('/waiting/' + this.globals.getLobbyKey().toLowerCase() + '/send-chat');
@@ -66,7 +69,8 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public startPingingServer(self: any) {
 
     if(self.subscribed){
-      self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/update-waiting');
+      self._stompService.publish('/waiting-update/' + self.globals.getLobbyKey() + '/' +
+      self.userId +  '/update-waiting');
       setInterval(this.startPingingServer, 500, self);
     }
   }
@@ -169,6 +173,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
       console.log(this.gameCategory);
       console.log(this.gameNumberOfQuestion);
+      console.log(this.userId);
       this.connect();
     }
   }
