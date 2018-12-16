@@ -42,9 +42,9 @@
     </div>
   </div>
 </div>
-<div class="chatcontainer" style = "margin-left: auto; margin-right: auto;">
+<div class="chatcontainer" style = "margin-left: auto; margin-right: auto; float: right;">
     <div class="panel panel-primary">
-        <div class="panel-heading" id="accordion">
+        <div class="panel-heading" id="accordion" style="background: #e98c01;">
             <span class="glyphicon glyphicon-comment"></span> Chat
             <div class="btn-group pull-right">
                 <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -53,10 +53,10 @@
             </div>
         </div>
     <div class="panel-collapse collapse" id="collapseOne">
-        <div class="panel-body">
+        <div class="panel-body panel-body-extra">
             <ul class="chat">
                 <ng-template ngFor let-chat [ngForOf]="chats">
-                    <li *ngIf="chat.id !== userId" class="right clearfix">
+                    <li *ngIf="chat.id !== userId" class="left clearfix">
                         <div class="chat-body clearfix">
                             <div class="header">
                                 <small class=" text-muted">
@@ -69,7 +69,7 @@
                             </p>
                         </div>
                     </li>
-                    <li *ngIf="chat.id === userId" class="left clearfix">
+                    <li *ngIf="chat.id === userId" class="right clearfix">
                         <div class="chat-body clearfix">
                             <div class="header">
                                 <small class=" text-muted">

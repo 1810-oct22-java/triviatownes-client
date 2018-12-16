@@ -84,17 +84,16 @@ export class CreatePageComponent implements OnInit {
   create() {
     const x = this;
 
-    /*
-    if (!(x.selectedCategory && x.seats && x.questions && x.name && x.username)) {
-     alert('Missing values for game creation');
-     return;
-  } */
-
-    x.selectedCategory = 'computer';
+    //x.selectedCategory = 'computer';
     x.name = 'Trivia Towens';
     x.seats = '20';
     x.questions = '3';
     x.username = 'Ross Boss';
+
+    if (!(x.selectedCategory && x.seats && x.questions && x.name && x.username)) {
+     alert('Missing values for game creation');
+     return;
+    }
 
     $.ajax({
       url: x.globals.getApiUrl() + 'create-game',
@@ -103,7 +102,7 @@ export class CreatePageComponent implements OnInit {
       xhrFields: { withCredentials: true },
       data: {
         category: x.selectedCategory,
-        seats: 20,
+        seats: x.seats,
         questions: x.questions,
         username: x.username,
         name: x.name,

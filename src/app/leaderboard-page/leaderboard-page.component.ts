@@ -87,9 +87,35 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   loadServers(): void {
 
-    var self = this;
+    const self = this;
 
-    this.dtOptions = {}
+    this.dtOptions = {
+      ajax: {
+        url: 'http://localhost:8080/TriviaTownesServer/leaders',
+        method: 'GET',
+        crossDomain: true,
+        xhrFields: { withCredentials: true },
+        dataSrc: '',
+      },
+      columns: [
+        {
+          title: 'Username',
+          data: 'username'
+        },
+        {
+          title: 'Score',
+          data: 'score'
+        },
+        {
+          title: 'Max Streak',
+          data: 'maxStreak'
+        },
+        {
+          title: 'Right Answers',
+          data: 'rightAnswers'
+        }
+      ]
+    };
 
     this.dtOptions.pageLength = 10;
 
@@ -132,13 +158,5 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   //     }
   //   }
   // }
-
-  getLeaders(){
-    $.ajax({
-      url: '/', success: function (result) {
-        this.leaders = $.parseJSON(result.value());
-      }
-    });
-  }
 
 }
