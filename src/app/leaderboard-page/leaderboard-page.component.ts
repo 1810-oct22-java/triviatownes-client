@@ -102,18 +102,18 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
         self.maxPages = dtInstance.page.info().pages;
         self.currentPage = dtInstance.page.info().page + 1;
 
-        $('#datatable-custom-next-btn').prop("disabled",false);
-        $('#datatable-custom-prev-btn').prop("disabled",false);
+        $('#datatable-custom-next-btn').prop("enabled",false);
+        $('#datatable-custom-prev-btn').prop("enabled",false);
 
         if(self.currentPage == self.maxPages){
-          $('#datatable-custom-next-btn').prop("disabled",true);
+          $('#datatable-custom-next-btn').prop("enabled",true);
         }
         if(self.currentPage == 1){
-          $('#datatable-custom-prev-btn').prop("disabled",true);
+          $('#datatable-custom-prev-btn').prop("enabled",true);
         }
         if(self.maxPages == 0){
-          $('#datatable-custom-next-btn').prop("disabled",true);
-          $('#datatable-custom-prev-btn').prop("disabled",true);
+          $('#datatable-custom-next-btn').prop("enabled",true);
+          $('#datatable-custom-prev-btn').prop("enabled",true);
           $('#datatable-custom-page-label').val("0/0");
         } else {
           $('#datatable-custom-page-label').val(self.currentPage + "/" + self.maxPages);
