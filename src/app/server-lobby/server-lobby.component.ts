@@ -71,8 +71,8 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
   public startPingingServer(self) {
 
       if(self.subscribed){
-      console.log('ping');
-      console.log(self.currentDataHash);
+      //console.log('ping');
+      //console.log(self.currentDataHash);
       self._stompService.publish('/lobby-hash-update/' + self.globals.getCategory().toLowerCase() + '/get-lobby-data', '');
  
       setInterval(self.startPingingServer, 1000, self);
@@ -80,9 +80,9 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   public onDataUpdate = (data_observable: Message) => {
-    console.log('Hello');
-    console.log(data_observable.body);
-    console.log(this.currentDataHash);
+    // console.log('Hello');
+    // console.log(data_observable.body);
+    // console.log(this.currentDataHash);
 
     if (this.currentDataHash !== data_observable.body) {
       this.currentDataHash = data_observable.body;
@@ -150,7 +150,7 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.globals.getCategory() === undefined){
       this.router.navigate(['']);
     } else {
-    console.log(this.globals.getCategory());
+    // console.log(this.globals.getCategory());
     this.loadServers();
     //this.connect();
     }
@@ -170,7 +170,6 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
       crossDomain: true,
       xhrFields: { withCredentials: true },
       success: function (res) {
-        console.log(res);
         self.globals.setLobbyKey(res['lobbyId']);
         self.globals.setUsername(res['userId']);
         self.globals.setUsername(self.username);
@@ -178,11 +177,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
         self.globals.setGameCategory(res['category']);
         self.globals.setLobbyQuestions(res['questions']);
         self.globals.setLobbyName(res['lobbyName']);
+        self.globals.setScope(res['scope']);
         self.router.navigate(['waiting']);
       },
       error: function (res) {
-        console.log('error....');
-        console.log(res);
         alert('game session is full, please pick another lobby....');
       }
     });

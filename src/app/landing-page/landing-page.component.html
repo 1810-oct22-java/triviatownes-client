@@ -3,20 +3,30 @@
     <h1 class = "join-private-label">Join Private Lobby</h1>
   </div>
   <div>
-    <input [(ngModel)]="game_key" class = "form-control join-private-input" id="pin" type="text" placeholder="Enter Lobby Key">
-    <input [(ngModel)]="username" class = "form-control join-private-input" id="username" type="text" placeholder="Enter Username">
+    <input [(ngModel)]="game_key" class = "form-control join-private-input" id="pin" type="text" maxlength="10" placeholder="Enter Lobby Key">
+    <input [(ngModel)]="username" class = "form-control join-private-input" id="username" type="text" maxlength="10" placeholder="Enter Username">
     <p></p>
     <button class = "btn btn-success join-private-button" (click)="joinLobby()">Join</button>
     <hr style = "width: 90%; margin-left: auto; margin-right: auto; border-color: #6c6b68">
-    <h1 class = "categorie-box-label">Create a New Game Lobby</h1>
   </div>
   <div>
-    <button class = "btn btn-success join-private-button" [routerLink]="['/create']">Create Game</button>
+    <div class = "container-fluid">
+      <div class = "row">
+        <div class = "col-md-offset-2 col-md-4">
+          <h1 class = "categorie-box-label">Create Game</h1>
+          <button class = "btn btn-success join-private-button" [routerLink]="['/create']">Create Game</button>
+        </div>
+        <div class = "col-md-4">
+          <h1 class = "categorie-box-label">Leaderboards</h1>
+          <button class = "btn btn-primary join-private-button" [routerLink]="['/leaderboard-page']">See Leaderboards</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <hr style = "width: 90%; margin-left: auto; margin-right: auto; border-color: #6c6b68">
 <!--Load all the categories-->
-<h1 class = "categorie-box-label">Select a Trivia Category</h1>
+<h1 class = "categorie-box-label">Find Game by Category</h1>
 <div id="lowerHalf">
   <div class="container-fluid">
     <div class="row">

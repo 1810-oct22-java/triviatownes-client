@@ -43,7 +43,7 @@ export class LandingPageComponent implements OnInit {
       },
       error: function (result) {
         console.log('Something went wrong');
-        console.log(result);
+        //console.log(result);
       }
     });
   }
@@ -70,7 +70,7 @@ export class LandingPageComponent implements OnInit {
        crossDomain: true,
        xhrFields: { withCredentials: true },
        success: function (res) {
-         console.log(res);
+         // console.log(res);
          self.globals.setLobbyKey(res['lobbyId']);
          self.globals.setUsername(res['userId']);
          self.globals.setUsername(self.username);
@@ -78,11 +78,12 @@ export class LandingPageComponent implements OnInit {
          self.globals.setGameCategory(res['category']);
          self.globals.setLobbyQuestions(res['questions']);
          self.globals.setLobbyName(res['lobbyName']);
+         self.globals.setScope(res['scope']);
          self.router.navigate(['waiting']);
        },
        error: function (res) {
-         console.log('error....');
-         console.log(res);
+         // console.log('error....');
+         // console.log(res);
          alert('game session is full or does not exist, please pick another lobby....');
        }
     });

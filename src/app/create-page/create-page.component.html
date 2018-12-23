@@ -4,7 +4,7 @@
       <div id="nameQSeats">
           <h1 class="categorie-box-label">Create New Lobby</h1>
           <span id="name" class="input-group mb-3 form-horizontal">
-          <input [(ngModel)]="name" id="nameInput" type="text" class="form-control" placeholder="Lobby Name" aria-describedby="basic-addon1">
+          <input [(ngModel)]="name" id="nameInput" type="text" class="form-control" placeholder="Lobby Name" maxlength="10" aria-describedby="basic-addon1">
         </span>
         <div id="inputs" class="form-inline">
           <span class="dropdown col-3 form-horizontal">
@@ -18,7 +18,7 @@
             </div>
           </span>
           <span id="username" class="input-group mb-3 form-horizontal">
-            <input [(ngModel)]="username" id="usernameInput" type="text" class="form-control" placeholder="Username"
+            <input [(ngModel)]="username" id="usernameInput" type="text" class="form-control" maxlength="10" placeholder="Username"
               aria-describedby="basic-addon1">
           </span>
           <span class="dropdown col-3 form-horizontal">
@@ -33,9 +33,10 @@
         </div>
       </div>
       <!-- <div id="privateToggle" class="col-3" (click)="privateOrPublic()">
-          <input (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
+          <span style="color: white;margin-right: 1em;"> Public</span>
+          <input id="tester" (click)="private=!private" type="checkbox" checked data-toggle="toggle" data-style="ios" data-on="Public"
           data-off="Private" data-onstyle="success" data-offstyle="danger">
-        </div> -->
+      </div> -->
       <div id="createDiv">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="createBtn" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" (click)="create()">

@@ -105,7 +105,7 @@ export class AppComponent implements OnInit{
 
         } else {
 
-          setTimeout(m.cycleText, 5000);
+          setTimeout(m.cycleText, 20000);
 
         }
       };

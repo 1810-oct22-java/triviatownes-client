@@ -32,6 +32,9 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
   public userId;
 
+  public gameKey;
+  public scope;
+
   public chats = [];
 
   users: any;
@@ -47,7 +50,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
     heartbeat_in: 0, // Typical value 0 - disabled
     heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
     reconnect_delay: 0,
-    debug: true // Will log diagnostics on console
+    debug: false // Will log diagnostics on console
   };
 
   connect() {
@@ -78,7 +81,6 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
   public onChatUpdate = (chat_observable: Message) => {
 
     const payload = JSON.parse(chat_observable.body);
-    console.log(payload);
     const message_user = payload['username'];
     const message_body = payload['message'];
     const userId = payload['userId'];
@@ -96,12 +98,7 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
 
     const payload =  JSON.parse(data_observable.body);
 
-    console.log(payload);
-
-    console.log(payload['status']);
-
     this.users = payload['players'];
-    console.log(this.users[0]['username']);
     if (payload['status'] === 1) {
       this.unsubscribe();
       this.router.navigate(['game']);
@@ -170,16 +167,19 @@ export class WaitingPageComponent implements OnInit, OnDestroy {
       this.gameName = this.globals.getLobbyName();
       this.gameNumberOfQuestion = this.globals.getLobbyQuestions();
       this.userId = this.globals.getUserId();
+      this.gameKey = this.globals.getLobbyKey();
 
-      console.log(this.gameCategory);
-      console.log(this.gameNumberOfQuestion);
-      console.log(this.userId);
+      if (this.globals.getScope() === 'true') {
+        this.scope = 'private';
+      } else {
+        this.scope = 'public';
+      }
+
       this.connect();
     }
   }
 
   ngOnDestroy(): void {
-    this.disconnect();
     this.unsubscribe();
   }
 

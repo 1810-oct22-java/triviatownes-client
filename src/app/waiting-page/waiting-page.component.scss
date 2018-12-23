@@ -14,6 +14,19 @@
     //width: 15em;
 }
 
+.current-user-div {
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+
+    border-radius: 10px;
+    background: #0275d8;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    color: white;
+    height: 40px;
+    font-size: 20px;
+}
+
 .lobby-name {
     color: #e6eeff;
 }

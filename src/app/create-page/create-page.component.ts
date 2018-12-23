@@ -15,7 +15,7 @@ export class CreatePageComponent implements OnInit {
   seats: string;
   questions: string;
   difficulty: string;
-  // private = false;
+  private = false;
   username: string;
   name: string;
   key: string;
@@ -41,59 +41,62 @@ export class CreatePageComponent implements OnInit {
       },
       error: function (result) {
         console.log('Something went wrong');
-        console.log(result);
+        //console.log(result);
       }
     });
   }
 
   selectCategory(category) {
     this.selectedCategory = category;
-    console.log(this.selectedCategory);
+    //console.log(this.selectedCategory);
   }
 
   selectedSeats(num: number) {
     this.seats = num + '';
-    console.log(this.seats);
+    //console.log(this.seats);
   }
 
   selectedQuestions(num: number) {
     this.questions = num + '';
-    console.log(this.questions);
+    //console.log(this.questions);
   }
 
   selectedDifficulty(str: string) {
     this.difficulty = str + '';
-    console.log(this.difficulty);
+    //console.log(this.difficulty);
   }
 
-  // privateOrPublic() {
-  //   this.private = !this.private;
-  //   console.log(this.private);
-  // }
+  privateOrPublic() {
+    this.private = !this.private;
+    //console.log(this.private);
+  }
 
   lobbyName(str: string) {
     this.name = str;
-    console.log(this.name);
+    //console.log(this.name);
   }
 
   setUsername (str: string) {
     this.username = str;
-    console.log(this.username);
+    //console.log(this.username);
   }
 
   create() {
     const x = this;
 
-    //x.selectedCategory = 'computer';
-    x.name = 'Trivia Towens';
-    x.seats = '20';
-    x.questions = '3';
-    x.username = 'Ross Boss';
-
     if (!(x.selectedCategory && x.seats && x.questions && x.name && x.username)) {
      alert('Missing values for game creation');
      return;
     }
+
+    let scope: string;
+    if (this.private === true) {
+      scope = 'true';
+    } else {
+      scope = 'false';
+    }
+
+    x.globals.setScope(scope);
 
     $.ajax({
       url: x.globals.getApiUrl() + 'create-game',
@@ -106,11 +109,12 @@ export class CreatePageComponent implements OnInit {
         questions: x.questions,
         username: x.username,
         name: x.name,
+        private: scope
       },
       success: function (res) {
-        console.log('** GAME CREATED **');
-        console.log(res);
-        console.log(res['lobbyId']);
+        // console.log('** GAME CREATED **');
+        // console.log(res);
+        // console.log(res['lobbyId']);
         x.globals.setLobbyKey(res['lobbyId']);
         x.globals.setUsername(x.username);
         x.globals.setUserId(res['userId']);
@@ -121,7 +125,7 @@ export class CreatePageComponent implements OnInit {
         x.router.navigate(['waiting']);
       },
       error: function (res) {
-        console.log(this.data);
+        //console.log(this.data);
         alert('There was a problem connecting to lobby...');
       }
     });

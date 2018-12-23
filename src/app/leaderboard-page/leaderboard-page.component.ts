@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ThrowStmt } from '@angular/compiler';
+import { GlobalsService } from '../globals.service';
 
 @Component({
   selector: 'app-leaderboard-page',
@@ -29,7 +30,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   lobbyInf: any [];
   constructor(
-
+    public globals: GlobalsService,
     public router: Router
 
   ) { }
@@ -65,7 +66,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
   rerender(): void {
 
-    console.log('before render');
     const self = this;
 
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -91,7 +91,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
     this.dtOptions = {
       ajax: {
-        url: 'http://localhost:8080/TriviaTownesServer/leaders',
+        url: self.globals.getApiUrl() + 'leaders',
         method: 'GET',
         crossDomain: true,
         xhrFields: { withCredentials: true },
@@ -114,8 +114,11 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
           title: 'Right Answers',
           data: 'rightAnswers'
         }
-      ]
+      ],
+      order: [[1, 'desc']]
     };
+
+    //this.dtOptions.order = 1;
 
     this.dtOptions.pageLength = 10;
 

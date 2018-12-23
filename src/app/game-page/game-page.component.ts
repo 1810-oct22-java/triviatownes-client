@@ -70,7 +70,7 @@ public chat_observable: Observable<Message>;
    heartbeat_in: 0, // Typical value 0 - disabled
    heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
    reconnect_delay: 0,
-   debug: true // Will log diagnostics on console
+   debug: false // Will log diagnostics on console
  };
 
  constructor(
@@ -83,9 +83,18 @@ public chat_observable: Observable<Message>;
   
    if (!this.globals.getLobbyKey()) {  // If you don't have a lobby key, navigate home
      this.router.navigate(['']);
-   } else {                          // Else start game
-//      this.loadQuestion();
-//      this.loadProgressBar();
+   } else {
+     
+    this.question = "Loading Questions....";
+    this.currentQuestionNumber = 1;
+    this.totalQuestions = 1;
+
+    this.currentTime = 20;
+    this.currentAnswers = 0;
+
+    // Else start game
+    //      this.loadQuestion();
+    //      this.loadProgressBar();
       this.userId = this.globals.getUserId();
 
      this.connect();
@@ -99,7 +108,6 @@ public chat_observable: Observable<Message>;
  public onChatUpdate = (chat_observable: Message) => {
 
   const payload = JSON.parse(chat_observable.body);
-  console.log(payload);
   const message_user = payload['username'];
   const message_body = payload['message'];
   const userId = payload['userId'];
@@ -115,7 +123,6 @@ public chat_observable: Observable<Message>;
 
  public onDataUpdate = (data_observable: Message) => {
    const payload = JSON.parse(data_observable.body);
-   console.log(payload);
 
    if (this.question !== this.decodeHtml(payload['currentQuestion']['question'])) {
      this.currentQuestionNumber = payload['currentQuestionNumber'];
@@ -144,13 +151,12 @@ public chat_observable: Observable<Message>;
    // END OF GAME LOGIC
    if (payload['status'] === 2) {
      this.unsubscribe();
-     console.log('game over');
      // Sort the top scores
      const playerList = payload['topScores'];
      let playerObj;
      let place: number;
      let endMsg: string;
-     playerList.sort((a, b) => a.score < b.score ? -1 : a.score > b.score ? 1 : 0);
+     playerList.sort((a, b) => a.score < b.score ? 1 : a.score > b.score ? -1 : 0);
      let index = 1;
      // Find this player's object and set final place
      for (const p of playerList) {
@@ -217,10 +223,7 @@ ordinal_suffix_of(i: number): string {
        key: self.globals.getLobbyKey()
      },
      crossDomain: true,
-     xhrFields: { withCredentials: true },
-     success: function (res) {
-       console.log('Game has started');
-     }
+     xhrFields: { withCredentials: true }
    });
  }
 
@@ -248,10 +251,7 @@ ordinal_suffix_of(i: number): string {
        points: this.points
      },
      crossDomain: true,
-     xhrFields: { withCredentials: true },
-     success: function (res) {
-       console.log('Submitted Answer');
-     }
+     xhrFields: { withCredentials: true }
    });
  }
 
@@ -279,7 +279,6 @@ ordinal_suffix_of(i: number): string {
 
  public startPingingServer(self) {
    if (self.subscribed) {
-     console.log('ping');
      self._stompService.publish('/game-update/' + self.globals.getLobbyKey() + '/get-game-data', '');
      setInterval(this.startPingingServer, 500, self);
    }
@@ -293,7 +292,6 @@ ordinal_suffix_of(i: number): string {
  }
   loadQuestion(){
    this.questionObj = this.payload['QuestionBean'];
-   console.log(this.questionObj);
    this.isMultipleChoice = this.questionObj['isMultipleChoice'];
    this.category = this.questionObj['category'];
 //    this.setDifficulty();
