@@ -106,6 +106,10 @@ export class ServerLobbyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
 
+    // enable angular datatable functions in
+    // custom elements to be implemented while maintaining full
+    // functionality of the angular datatables, such as search,
+    // pagination, and refresh.
     const self = this;
     this.dtTrigger.next();
 
