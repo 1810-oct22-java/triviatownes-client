@@ -80,7 +80,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
-    //this.dummyData();
     this.loadServers();
 
   }
@@ -89,6 +88,7 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
 
     const self = this;
 
+    //Sets the options with an AJAX request so the leaders are from the database
     this.dtOptions = {
       ajax: {
         url: self.globals.getApiUrl() + 'leaders',
@@ -117,8 +117,6 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
       ],
       order: [[1, 'desc']]
     };
-
-    //this.dtOptions.order = 1;
 
     this.dtOptions.pageLength = 10;
 
@@ -152,14 +150,4 @@ export class LeaderboardPageComponent implements OnInit, AfterViewInit, OnDestro
       $('#lobbyList_paginate').addClass('hide_elements');
     }
   }
-
-  // dummyData(){
-  //   for(let i = 1; i < 100; i++){
-  //     this.leaders[i] = {
-  //       name: "dang",
-  //       score: i
-  //     }
-  //   }
-  // }
-
 }
